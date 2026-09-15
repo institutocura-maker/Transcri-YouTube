@@ -1,0 +1,40 @@
+variante,canonico,codigo_base,tipo,origem,observacao,status_aprovacao
+Alusbel,Yel Luzbel,RC-142,nome_proprio,guia-5.1,Grafia canônica oficial sem hífen,aprovada
+Eelusbel,Yel Luzbel,RC-142,nome_proprio,guia-5.1,,aprovada
+Elusbel,Yel Luzbel,RC-142,nome_proprio,guia-5.1,,aprovada
+Luz Bel,Yel Luzbel,RC-142,nome_proprio,guia-5.1,,aprovada
+Uri Alusbel,Yel Luzbel,RC-142,nome_proprio,guia-5.1,,aprovada
+Sofia,Sophia,RC-009,nome_proprio,guia-5.1,Padronização mandatória com dígrafo ph,aprovada
+Lémion,Len Mion,RC-074,nome_proprio,guia-5.1,Duas palavras individualizadas sem acentuação gráfica,aprovada
+Demion,Len Mion,RC-074,nome_proprio,guia-5.1,Variante citada no Guia mas ausente da base,conflito
+Jabé,Javé,RC-001,nome_proprio,guia-5.1,Entidade demiúrgica,aprovada
+Javert,Javé,RC-001,nome_proprio,guia-5.1,,aprovada
+Xavé,Javé,RC-001,nome_proprio,guia-5.1,,aprovada
+Yahé,Javé,RC-001,nome_proprio,guia-5.1,,aprovada
+Jean Van Hollen,Jan Val Ellam,RC-071,nome_proprio,guia-5.1,,aprovada
+Yavain Lan,Jan Val Ellam,RC-071,nome_proprio,guia-5.1,,aprovada
+Jean Vaillelin,Jan Val Ellam,RC-071,nome_proprio,guia-5.1,,aprovada
+Jane Miranda,Jeane Miranda,SEM-CODIGO,nome_proprio,guia-5.1,Grafia canônica ausente do Índice Mestre: criar registro,conflito
+Jeanne Miranda,Jeane Miranda,SEM-CODIGO,nome_proprio,guia-5.1,Grafia canônica ausente do Índice Mestre: criar registro,conflito
+Ohm,Ohm (Zion),RC-252,nome_proprio,guia-5.1,CONFLITO DE CÓDIGOS: o Guia diz RC-092=Codificador e RC-252=Quarto Logos; na base é o inverso (RC-092 = Quarto Logos (Olm / Codificador de Zian); RC-252 = Olm (Codificador de Zion/Zian)),conflito
+Olm,Olm (Logos),RC-092,nome_proprio,guia-5.1,Ver observação da linha anterior,conflito
+biodemo,Biodemos,RC-036,termo_tecnico,guia-5.2,Base registra também RC-026 / RC-186 / RC-401,aprovada
+radiato,Radiatas,RC-093,termo_tecnico,guia-5.2,Base registra o plural Radiatas e Cérebro Radiata (RC-631): uniformizar singular/plural,conflito
+Asfésian,Asphezian,RC-025,termo_tecnico,guia-5.2,CONFLITO: Guia determina Asfezion; a base registra Asphezian (RC-025 em análise),conflito
+Fessien,Asphezian,RC-025,termo_tecnico,guia-5.2,Ver linha anterior,conflito
+Asfezion,Asphezian,RC-025,termo_tecnico,guia-5.2,Grafia que o Guia considera canônica mas que não existe na base,conflito
+WD,Wyrd / Urd,RC-658,termo_tecnico,relacoes,RC-560 documenta WD como variação de STT fundida em RC-658,aprovada
+Terra Atlântis,Terra Atlantis,B017;B018;B039,obra,guia-5.3,Título sem acento circunflexo conforme catálogo oficial,aprovada
+Quarto Logo,O Quarto Logos,B016,obra,guia-5.3,Grafia obrigatória com terminação em S,aprovada
+ao alcanção,ao alcançar,SEM-CODIGO,erro_stt,guia-5.4,Correção morfológica de terminação verbal,aprovada
+quebra dos lágrimas mentais,quebra dos lacres mentais,SEM-CODIGO,erro_stt,guia-5.4,Ruído fonético em expressão conceitual,aprovada
+churto,surto,SEM-CODIGO,erro_stt,guia-5.4,Correção ortográfica contextual,aprovada
+degotificação,decodificação,SEM-CODIGO,erro_stt,guia-5.4,Adequação terminológica padrão,aprovada
+pressionificou,personificou,SEM-CODIGO,erro_stt,guia-5.4,Ajuste semântico e lexical,aprovada
+afitar,fitar,SEM-CODIGO,erro_stt,guia-5.4,Supressão de prótese espúria na raiz verbal,aprovada
+elogismo,ilogismo,SEM-CODIGO,erro_stt,guia-5.4,ilogismo não consta da base nem de dicionário corrente: validar com o autor,conflito
+Os Deselados,Os Exilados,SEM-CODIGO,obra,guia-5.4,Obra externa fora da aba Bibliografia,aprovada
+Raymond Czel,Ray Kurzweil,EXTERNO,externo,guia-5.4,Autor externo: criar camada Externos,aprovada
+Manuel Kant,Immanuel Kant,EXTERNO,externo,guia-5.4,Padronização acadêmica,aprovada
+Emanuel Kant,Immanuel Kant,EXTERNO,externo,guia-5.4,Padronização acadêmica,aprovada
+Sherminetro,Sherminator,EXTERNO,externo,guia-5.4,Pseudônimo recorrente no canal: criar registro,aprovada

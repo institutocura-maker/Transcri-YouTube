@@ -1,0 +1,7 @@
+# Ambiente de ferramentas do Transcri-YouTube
+# Instalação sugerida (o repositório não versiona o venv):
+#   python3 -m venv .venv && . .venv/bin/activate && pip install -r ferramentas/requirements.txt
+openpyxl>=3.1          # leitura da base-terminologica.xlsx
+rapidfuzz>=3.0         # similaridade de strings (Levenshtein normalizado)
+numpy>=1.26            # exigido por rapidfuzz.process.cdist
+python-docx>=1.1       # montagem do DOCX final (rc_docx.py)

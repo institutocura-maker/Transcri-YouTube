@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editores / SO
+.DS_Store
+Thumbs.db
+~$*.docx
+~$*.xlsx
+
+# Artefatos grandes ou regeneráveis (manter fora do Git)
+*.log
+40-final.pdf
+
+# Diagnóstico bruto em JSON: regenerável por `ferramentas/rc_diagnostico.py`
+analise/**/diagnostico.json
