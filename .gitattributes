@@ -1,6 +1,15 @@
 # Normalização: fim de linha LF no repositório, independentemente do SO de quem clona.
 * text=auto eol=lf
 
+# O BRUTO É EVIDÊNCIA: nunca normalizar. `* text=auto eol=lf` reescreveria CRLF->LF
+# no repositório e o clone passaria a ter bytes diferentes dos capturados — o portão G1
+# (sha256 contra metadados.yaml) reprovaria, e com razão. Incidente real de 16/09/2026:
+# um `git add --renormalize .` trocou o blob do bruto sem tocar no arquivo de trabalho.
+transcricoes/**/00-fonte/transcricao-bruta.txt -text
+transcricoes/**/00-fonte/*.vtt -text
+transcricoes/**/00-fonte/*.srt -text
+transcricoes/**/00-fonte/*.txt -text
+
 # Binários — sem diff textual, sem normalização de linha
 *.docx binary
 *.xlsx binary
