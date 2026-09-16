@@ -39,12 +39,20 @@ import rc_lexicon as L  # noqa: E402
 try:
     from docx import Document
     from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_LINE_SPACING
-    from docx.shared import Pt
+    from docx.shared import Pt, RGBColor
 except ImportError as exc:  # pragma: no cover
     raise SystemExit("python-docx não instalado. Rode: pip install -r ferramentas/requirements.txt") from exc
 
 NOTA_RE = re.compile(r"\[NOTA:[^\]]*\]")
+# Marcadores editoriais que CITAM o bruto de propósito. O QA de sobrevivência de
+# variantes não pode punir uma [NOTA] que documenta a forma ouvida ("Xavé" -> Javé),
+# senão o revisor é incentivado a apagar a evidência em vez de registrá-la.
+MARCADOR_RE = re.compile(r"\[(?:NOTA|A CONFIRMAR|INAUDÍVEL|ANÚNCIO):?[^\]]*\]")
 NEGRITO_RE = re.compile(r"\*\*(.+?)\*\*")
+# Ordem importa: a NOTA é casada antes dos asteriscos para que o markup interno
+# (*título de livro*) não vire run separado — dentro da nota tudo já sai em itálico.
+INLINE_RE = re.compile(NOTA_RE.pattern + r"|\*\*(.+?)\*\*|\*(.+?)\*")
+ASTERISCO_RE = re.compile(r"\*+")
 
 
 # --------------------------------------------------------------------------------------
@@ -112,18 +120,25 @@ def analisar_blocos(arquivos: list[Path], formas: list[str]) -> list[dict]:
 # --------------------------------------------------------------------------------------
 
 def _run(par, texto: str, fonte: str, tamanho: int) -> None:
-    """Escreve um trecho aplicando **negrito** e deixando [NOTA: ...] em itálico."""
+    """Escreve um trecho aplicando **negrito**, *itálico* e [NOTA: ...] em itálico menor.
+
+    Dentro de uma NOTA os asteriscos são descartados: a nota inteira já sai em itálico,
+    então manter o markup só sujaria o produto de leitura com "*The Singularity Is Near*".
+    """
     pos = 0
-    for m in re.finditer(r"\*\*(.+?)\*\*|" + NOTA_RE.pattern, texto):
+    for m in INLINE_RE.finditer(texto):
         if m.start() > pos:
             par.add_run(texto[pos:m.start()])
-        if m.group(1):
+        if m.group(0).startswith("[NOTA"):
+            r = par.add_run(ASTERISCO_RE.sub("", m.group(0)))
+            r.italic = True
+            r.font.size = Pt(tamanho - 1)
+        elif m.group(1):
             r = par.add_run(m.group(1))
             r.bold = True
         else:
-            r = par.add_run(m.group(0))
+            r = par.add_run(m.group(2))
             r.italic = True
-            r.font.size = Pt(tamanho - 1)
         pos = m.end()
     if pos < len(texto):
         par.add_run(texto[pos:])
@@ -160,21 +175,21 @@ def montar(itens: list[dict], saida: Path, titulo: str, subtitulo: str,
 
     for item in itens:
         tipo, texto = item["tipo"], item["texto"]
-        if tipo == "h1":
-            p = doc.add_paragraph()
-            p.paragraph_format.space_before = Pt(12)
+        if tipo in ("h1", "h2", "h3"):
+            nivel = int(tipo[1])
+            # estilo Heading dá painel de navegação num documento de ~20 mil palavras;
+            # a formatação do run é sobrescrita logo abaixo para manter a tipografia fixa
+            # exigida pelo Guia (corpo 12 pt, preto, sem o azul padrão dos templates).
+            p = doc.add_paragraph(style=f"Heading {nivel}")
+            p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+            p.paragraph_format.space_before = Pt(12 if nivel == 1 else 10)
+            p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.SINGLE
             r = p.add_run(texto)
-            r.bold = True
-            r.font.size = Pt(tamanho + 2)
+            r.bold = nivel <= 2
+            r.italic = nivel == 3
+            r.font.size = Pt(tamanho + (2 if nivel == 1 else 1 if nivel == 2 else 0))
             r.font.name = fonte
-        elif tipo in ("h2", "h3"):
-            p = doc.add_paragraph()
-            p.paragraph_format.space_before = Pt(10)
-            r = p.add_run(texto)
-            r.bold = tipo == "h2"
-            r.italic = tipo == "h3"
-            r.font.size = Pt(tamanho + (1 if tipo == "h2" else 0))
-            r.font.name = fonte
+            r.font.color.rgb = RGBColor(0, 0, 0)
         elif tipo == "citacao":
             p = doc.add_paragraph()
             p.paragraph_format.left_indent = Pt(24)
@@ -192,19 +207,35 @@ def montar(itens: list[dict], saida: Path, titulo: str, subtitulo: str,
 # Controle de qualidade
 # --------------------------------------------------------------------------------------
 
+# Só estas decisões obrigam o texto final. "recusada" e "aceita-parcial" existem
+# justamente para registrar que a variante sobrevive POR DECISÃO HUMANA — cobrar a
+# substituição nesses casos empurraria o revisor a corromper o texto para agradar o QA.
+COBRADAS = {"aceita"}
+
+
 def validar(itens: list[dict], csv_variantes: Path | None) -> list[str]:
-    """QA: procura no texto final variantes que deveriam ter sido substituídas."""
+    """QA: procura no texto final variantes cuja substituição foi ADJUDICADA como aceita.
+
+    Se o CSV traz a coluna `adjudicacao` (gerada pelo registro de decisões da revisão),
+    apenas as linhas `aceita` são cobradas. Sem a coluna, vale o comportamento antigo
+    (`status_aprovacao` em aprovada/proposta), para não quebrar pipelines legados.
+    """
     texto = " ".join(i["texto"] for i in itens)
-    nb = L.norm(texto)
+    # expurga o conteúdo dos marcadores editoriais: eles citam o bruto de propósito
+    nb = L.norm(MARCADOR_RE.sub(" ", texto))
     problemas = []
     if not csv_variantes or not csv_variantes.exists():
         return problemas
     with csv_variantes.open(encoding="utf-8-sig", newline="") as fh:
         for linha in csv.DictReader(fh):
-            if linha.get("status_aprovacao", "").lower() not in {"aprovada", "proposta"}:
-                continue
-            if linha.get("classe") not in ("variante", "truncamento", "semente-guia"):
-                continue
+            if "adjudicacao" in linha:
+                if (linha.get("adjudicacao") or "").strip().lower() not in COBRADAS:
+                    continue
+            else:
+                if linha.get("status_aprovacao", "").lower() not in {"aprovada", "proposta"}:
+                    continue
+                if linha.get("classe") not in ("variante", "truncamento", "semente-guia"):
+                    continue
             v = L.norm(linha["variante"])
             if not v:
                 continue
@@ -240,11 +271,12 @@ def main(argv: list[str] | None = None) -> int:
           f"negritos={negritos} notas={notas} formas_no_lexico={len(formas)}")
     problemas = validar(itens, args.validar)
     if problemas:
-        print(f"[qa] {len(problemas)} variantes não substituídas:")
+        print(f"[qa] {len(problemas)} variantes ADJUDICADAS como aceitas ainda sobrevivem no texto:")
         for p in problemas[:20]:
             print("     -", p)
         return 1
-    print("[qa] nenhuma variante aprovada/proposta sobreviveu no texto final.")
+    print("[qa] OK: nenhuma variante adjudicada como 'aceita' sobrevive no texto final."
+          " (recusas e aceitações parciais estão registradas na coluna adjudicacao)")
     return 0
 
 

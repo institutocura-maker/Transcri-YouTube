@@ -2,7 +2,7 @@
 
 - **Fonte:** `/home/user/Transcri-YouTube/Revelações Cósmicas Urgente – Jan Val Ellam.txt`
 - **Base:** `base-terminologica.xlsx` — 946 termos, 104 obras; **90** termos relevantes para este texto
-- **Sementes de variantes carregadas:** 372 (10 marcadas como conflito)
+- **Sementes de variantes carregadas:** 375 (10 marcadas como conflito)
 
 ## 1. Estrutura do texto
 
@@ -35,7 +35,7 @@
 
 ## 2. Cobertura da base
 
-- superfícies da base presentes literalmente: **96** (úteis, descartando genéricos e glossas: **67)**
+- superfícies da base presentes literalmente: **100** (úteis, descartando genéricos e glossas: **71)**
 - termos da base sem nenhuma ocorrência literal: **864** de 946
 
 ### Ocorrências exatas mais frequentes
@@ -81,7 +81,7 @@
 | 8 | Brama | Brahma | RC-037 | aprovada |
 | 4 | Trump | Donald Trump | EXTERNO | aprovada |
 | 3 | Robson Pinheiro | Robson Pinheiro | EXTERNO | aprovada |
-| 3 | Tati Quântica | Tati Quântica | EXTERNO | a confirmar |
+| 3 | Tati Quântica | Tati Quântica | EXTERNO | aprovada |
 | 3 | Matrix | Matrix | EXTERNO | aprovada |
 | 3 | Instagram | Instagram | EXTERNO | aprovada |
 | 2 | Sofia | Sophia | RC-009 | aprovada |
@@ -89,6 +89,7 @@
 | 2 | Terry Fabris | Terry Fabris | EXTERNO | aprovada |
 | 2 | Gordon Moore | Gordon Moore | EXTERNO | aprovada |
 | 2 | Lei de Gordon Moore | Lei de Moore | EXTERNO | aprovada |
+| 2 | Sidarta | Siddhartha Gautama | EXTERNO | aprovada |
 | 2 | Google | Google | EXTERNO | aprovada |
 | 2 | Texas | Texas | EXTERNO | aprovada |
 | 1 | Xavé | Javé | RC-001 | aprovada |
@@ -104,11 +105,15 @@
 | 1 | Nick Bostron | Nick Bostrom | EXTERNO | aprovada |
 | 1 | Utopia Profunda | Deep Utopia (2024) | EXTERNO | aprovada |
 | 1 | Intel | Intel | EXTERNO | aprovada |
-| 1 | Paranormal Experience | Paranormal Experience | EXTERNO | a confirmar |
+| 1 | Sherminetro | Alexandre Sherminator | EXTERNO | aprovada |
+| 1 | Paranormal Experience | Paranormal Experience | EXTERNO | aprovada |
 | 1 | YouTube | YouTube | EXTERNO | aprovada |
 | 1 | mit | MIT | EXTERNO | aprovada |
 | 1 | Harvard | Harvard | EXTERNO | aprovada |
 | 1 | Elon Musk | Elon Musk | EXTERNO | aprovada |
+| 1 | Sidarta Galutama | Siddhartha Gautama | EXTERNO | aprovada |
+| 1 | Guru de Malá | Guru de Malá | EXTERNO | aprovada |
+| 1 | Alexandre Sherminator | Alexandre Sherminator | EXTERNO | aprovada |
 
 ### 3.1 Sementes suspensas (colisão com Externos ou homografia interna)
 
@@ -126,11 +131,12 @@ Formas que a base propunha substituir automaticamente, mas que ou pertencem a en
 | anda | Anda (Hiranyagarbha | RC-037 | forma do vocabulário comum pt-BR — só corrige com confirmação contextual |
 | Shiva | Shiva como Primeiro Demo | RC-810 | a forma é canônica de outro termo (homografia) — decide o contexto |
 | Yel | Elm | RC-454 | a forma é canônica de outro termo (homografia) — decide o contexto |
+| Alexandre Magno | Definição Sintética | RC-850 | colide com entidade da camada Externos |
 | Midana | Nidana | RC-154 | a forma é canônica de outro termo (homografia) — decide o contexto |
 
 ## 4. Candidatos adjudicáveis a variante terminológica
 
-61 formas passaram pelo triplo filtro (concordância das duas métricas ≥ 0.75, alvo de confiança não-baixa e forma fora do vocabulário comum). Outras 783 formas ficaram acima do corte frouxo de similaridade e foram descartadas como colisão com vocabulário comum — permanecem em `diagnostico.json`.
+61 formas passaram pelo triplo filtro (concordância das duas métricas ≥ 0.75, alvo de confiança não-baixa e forma fora do vocabulário comum). Outras 790 formas ficaram acima do corte frouxo de similaridade e foram descartadas como colisão com vocabulário comum — permanecem em `diagnostico.json`.
 
 ### 4.1 Variantes e truncamentos reais (31 itens) — fila de correção
 
