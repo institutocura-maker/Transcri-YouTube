@@ -176,6 +176,55 @@ de curadoria: 10 termos novos (RC-947 a RC-956).
 
 ---
 
+### 2.6 Camadas de texto — bruto, derivado e saída (norma de 16/09/2026)
+
+Uma pasta de transcrição guarda **até três textos**. Confundir as camadas é o erro mais caro deste
+fluxo: o que a casa assina é a saída, mas o único irrefutável é o bruto.
+
+| camada | arquivo canônico | natureza | portão |
+|---|---|---|---|
+| fonte | `00-fonte/transcricao-bruta.txt` | saída do STT, **imutável** | G1 (sha256) |
+| trabalho | `00-fonte/transcricao-pontuada.txt` | **derivado** de outra ferramenta (NotebookLM e afins) | G9 |
+| saída | `20-blocos/bloco-NN.md` + `30-produto/*.docx` | texto revisado, assinado | G2, G3, G5, G6 |
+
+Regras:
+
+1. **Derivado nunca vira fonte.** Ele é conveniência de trabalho — pontuação nativa, segmentação por
+   turno, menos lacunas. Se o derivado se perde, o que sobrevive é o bruto; por isso o bruto é
+   imutável e o derivado é **medido**.
+2. **Registro obrigatório** em `00-fonte/metadados.yaml`, bloco `derivado:`: `arquivo`,
+   `ferramenta`, `sha256`, `divergencia_maxima` (teto padrão `0.05`) e `palavras_mascaradas`
+   (lista de `mascara` → `restaurar_para`). Sem registro o G9 responde `N/A` e a camada não existe
+   oficialmente — não é derivado, é arquivo solto.
+3. **Teto de divergência.** O G9 mede divergência lexical derivado × bruto (palavras do bruto
+   ausentes **+** palavras a mais, sobre o total das duas contagens). Acima do teto aquilo não é
+   reescrita do mesmo áudio, é outro texto: a revisão volta ao bruto. Referência medida nesta
+   transcrição: **3,00%** (18.806 × 18.815 palavras), com 93% dos *hapax* comuns e 9 de 16
+   marcadores orais em contagem idêntica — é o mesmo ASR do YouTube sob uma camada de reescrita, não
+   um segundo motor (ver `docs/pareceres/parecer-motor-stt.md`).
+4. **Palavra mascarada se restaura do bruto, e o asterisco nunca chega à saída.** Camadas de
+   segurança de terceiros mascaram vocabulário (`merda` → `m****`, `bandido` → `b******`), inclusive
+   em trecho teológico ("os europeus viam Jesus como um b******"). O revisor confere cada máscara no
+   bruto, escreve a palavra real no bloco e registra o par no `metadados.yaml`. O G9 localiza as
+   máscaras **pelo contexto no bruto** — não por comprimento+inicial, que dá falso positivo — e
+   falha nos quatro modos de estragar: derivado trocado (sha256), divergência acima do teto, palavra
+   não restaurada, asterisco no texto revisado, máscara sem registro.
+5. **Onde começa o corpo** tem uma resposta só, em `ferramentas/rc_leitura.py`: (i) marcador
+   `Transcrição Automática` → corpo é o que vem depois dele; (ii) sem marcador, a linha mais longa,
+   se cobrir ≥ 80% dos caracteres do arquivo; (iii) nada disso, o arquivo inteiro **com aviso**
+   gravado em `metadados.yaml` (`aviso_corpo`, `criterio_corpo`). Arquivo paragraphado não é mais
+   medido como se o corpo fosse o parágrafo mais longo — nesse erro silencioso o derivado desta
+   transcrição teria 771 palavras em vez de 18.815, com o QA verde.
+6. **Duas réguas de contagem coexistem** e nenhuma está errada: `rc_leitura` conta palavras por
+   `PALAVRA_RE` (`[\wÀ-ÿ']+`, que separa em hífen e barra) e é a régua do `metadados.yaml`
+   (18.806 no bruto); `rc_diagnostico` conta por `split()` (18.781 no mesmo corpo). A divergência do
+   item 3 é imune a isso porque compara bruto e derivado **com a mesma régua**. Qualquer número
+   citado em relatório deve dizer de qual instrumento veio.
+7. Nomes ASCII, sem espaço e sem acento (Plano de Organização). O cabeçalho do vídeo (título, canal,
+   URL) fica **fora** do corpo e fora do produto (§1.2).
+
+---
+
 ## 3. As cinco camadas de correção (ordem de aplicação)
 
 Aplicar nesta ordem. Camada posterior não desfaz camada anterior.
@@ -325,7 +374,15 @@ Nenhum número é alterado sem fonte registrada.
 
 ## 8. Pontuação e segmentação
 
-O bruto desta transcrição: **18.781 palavras em 1 parágrafo, com 1 vírgula e 19 pontos** (73 dois-pontos, 117 aspas). A segmentação é, portanto, a maior parte do trabalho.
+> **Atualizado em 16/09/2026.** Havendo **derivado pontuado** (§2.6), pontuação e segmentação vêm
+> prontas dele e esta seção deixa de ser *criação* para ser **conferência**: o padrão passa a ser
+> aceitar a pontuação nativa e intervir só com motivo. Sem derivado, as regras abaixo continuam
+> sendo o trabalho manual, na íntegra. Foi essa a razão da adoção do texto pontuado como camada de
+> trabalho: mediana de sentença 331 → 11 palavras, maior sentença 2.604 → 75, segmentos 8 → 295
+> (295 são as linhas não vazias do arquivo inteiro, cabeçalho incluído — a régua do `rc_perfil_stt`;
+> só o corpo são 287, pela do `rc_leitura`).
+
+O bruto desta transcrição: **18.806 palavras em 1 parágrafo, com 1 vírgula e 15 pontos** (71 dois-pontos, 117 aspas) — régua do `rc_leitura`; o `rc_diagnostico` reporta 18.781 na sua régua própria (§2.6, item 6). Sem derivado, a segmentação é a maior parte do trabalho.
 
 1. **Parágrafo novo** a cada mudança de assunto, de interlocutor ou de movimento argumentativo.
 2. **Vírgula** em: aposto, vocativo, oração intercalada, adjunto deslocado, enumeração. Não separar sujeito de verbo.
@@ -334,10 +391,30 @@ O bruto desta transcrição: **18.781 palavras em 1 parágrafo, com 1 vírgula e
 5. **Ponto de interrogação/interrogação retórica** apenas quando a entonação do áudio confirmar; senão, ponto final.
 6. **Não criar** travessão de diálogo: a diarização usa rótulos (§9).
 7. Frases de mais de ~60 palavras podem ser divididas **somente** onde já há conjunção coordenativa; nunca reescrever a ordem.
+8. **Nenhuma intervenção de pontuação pode alterar palavra** (com derivado). Pontuar é o trabalho; reescrever é censura — foi assim que a camada de reescrita zerou a variante RC-954 ("expiação **e** provas" → "**em** provas") e trocou "calmeias" por "colmeias" em 1 de 2 ocorrências. Palavra que muda sem registro é o que o G9 chama de divergência, e ela tem teto (§2.6, item 3).
+9. A métrica de aceite da **saída** continua valendo: ≥ 1 vírgula a cada 25 palavras, medida no produto revisado (§14), nunca no bruto.
 
 ---
 
 ## 9. Diarização — opção B (rótulos inferidos explícitos)
+
+> **Atualizado em 16/09/2026.** O derivado pontuado já **segmenta por turno de fala** (287
+> segmentos de corpo contra 1 parágrafo no bruto), então a diarização deixa de exigir que o revisor descubra onde
+> começa cada fala: a fronteira vem dada. O que continua sendo trabalho da casa é **nomear** o
+> falante, por inferência — o derivado não sabe quem é quem. A forma do rótulo também mudou,
+> conforme despacho do Comandante: **negrito inline no início do parágrafo do turno**, e não mais
+> caixa alta em linha própria. O desvio praticado nos blocos 01–08 desta transcrição fica assim
+> incorporado à norma.
+
+Forma vigente:
+
+```
+**[GURU DE MALÁ]** Então você acha que a gente tá vivendo um choque de realidade?
+
+**[JAN VAL ELLAM]** Tá. E não é de hoje.
+```
+
+Forma anterior (aceita em material já publicado, não usar em revisão nova):
 
 ```
 [APRESENTADOR] Então você acha que a gente tá vivendo um choque de realidade?
@@ -347,12 +424,13 @@ O bruto desta transcrição: **18.781 palavras em 1 parágrafo, com 1 vírgula e
 
 Regras:
 
-1. Rótulos em caixa alta, entre colchetes, em linha própria.
+1. Rótulo em **negrito inline**, entre colchetes, no início do parágrafo do turno — um parágrafo por turno, mesmo que a fala seja curta. Nomes de falantes desta transcrição, conforme despacho: `[GURU DE MALÁ]`, `[ALEXANDRE SHERMINATOR]`, `[JAN VAL ELLAM]`.
 2. Inferência por: vocativo ("meu querido"), tema (doutrina = Jan), papel (pergunta = apresentador), mudança de estilo.
 3. **Inferência duvidosa** → `[FALANTE?]` antes do rótulo.
 4. Trecho sem identificação possível → `[SEM DIARIZAÇÃO]`.
-5. Rótulos não entram no texto falado: são metadados de leitura.
+5. Rótulos não entram no texto falado: são metadados de leitura — por isso vão em negrito, fora do corpo da frase, e por isso o G2 não os confunde com conteúdo.
 6. Convidados nomeados: `[TERRY FABRIS]`, `[ROBSON PINHEIRO]` — grafia conforme camada Externos.
+7. A segmentação herdada do derivado é **conferida**, não aceita às cegas: a mesma camada que acerta o turno também suprimiu "full megante" e trocou "cabeça" por "cadecia". Fronteira de turno duvidosa se resolve ouvindo; lacuna `[INAUDÍVEL]` é decisão editorial do revisor (§12), não do derivado.
 
 ---
 
@@ -417,6 +495,23 @@ python ferramentas/rc_diagnostico.py "<Título>.txt" --kb KB-RC \
 
 Saídas usadas no dia a dia: `diagnostico.md` (leitura), `variantes-propostas.csv` (fila de decisão), `ausentes-da-base.csv` (novos registros), `dossie-bloco.txt` (recorte enxuto da base, ≈1.153 tokens).
 
+Havendo **derivado** (§2.6) — texto pontuado de outra ferramenta, por exemplo:
+
+```bash
+# 3) colocar o derivado no lugar certo e registrá-lo: ele mora em 00-fonte/, nunca na raiz
+git mv Opcao-B.txt transcricoes/<slug>/00-fonte/transcricao-pontuada.txt
+sha256sum transcricoes/<slug>/00-fonte/transcricao-pontuada.txt   # -> derivado.sha256 no metadados.yaml
+
+# 4) conferir a camada de trabalho ANTES de revisar uma linha sequer
+python ferramentas/rc_qa.py transcricoes/<slug> --portao G9
+```
+
+O G9 na preparação responde três perguntas de uma vez: o derivado é o arquivo registrado (sha256),
+ele é o mesmo áudio (divergência ≤ teto) e o que ele mascarou está mapeado. Rodar isso depois de
+revisar oito blocos custa caro; rodar antes custa dez segundos. As máscaras que o G9 listar vão para
+`derivado.palavras_mascaradas` no `metadados.yaml` com a palavra do bruto ao lado — é a lista de
+Find&Replace que deixa de ser manual.
+
 ### 13.2 Divisão em 8 blocos
 
 Dividir por **fronteiras de assunto**, não por contagem fixa de palavras: cada bloco deve começar e terminar num ponto de virada temática. Para 18.781 palavras, isso dá blocos de ~2.350 palavras (≈16 minutos de áudio cada).
@@ -427,7 +522,7 @@ Dividir por **fronteiras de assunto**, não por contagem fixa de palavras: cada 
 2. Ouvir/conferir os trechos marcados `[INAUDÍVEL]` e `[A CONFIRMAR]`.
 3. Aplicar as camadas na ordem do §3.
 4. Adjudicar cada linha da fila `variantes-propostas.csv` que caia no bloco: **aceitar / recusar / decidir por contexto**, registrando o motivo.
-5. Segmentar parágrafos e pontuar (§8); diarizar (§9); podar disfluência leve (§10).
+5. Segmentar parágrafos e pontuar (§8); diarizar (§9); podar disfluência leve (§10). Com derivado (§2.6), os três já vêm prontos: conferem-se, restaurando do bruto toda palavra mascarada que cair no bloco.
 6. Marcar anúncios (§11) e inserir marcadores (§12).
 7. Gravar `transcricoes/<slug>/20-blocos/bloco-NN.md`.
 8. Revisão de fechamento do bloco: ler em voz alta; nada de termo canônico sem conferência na ficha.
@@ -462,6 +557,10 @@ O `--lexico` aplica negrito na **primeira menção** de cada termo canônico; `-
 | Parágrafos | ≥ 120 (bruto: 1) | métrica `paragrafos` |
 | Virgulas/pontos proporcionais | ≥ 1 vírgula a cada 25 palavras | métrica `pontuacao` |
 | Dossiê por bloco | ≤ 2.000 tokens | `dossie-bloco.txt` |
+| Divergência lexical derivado × bruto | ≤ `derivado.divergencia_maxima` (padrão 0,05) | portão **G9** |
+| Palavra mascarada no derivado sem restauração | **0** | portão **G9** |
+| Asterisco de censura na saída (`20-blocos/`, `30-produto/`) | **0** | portão **G9**; `grep -c '\*\*\*\*'` |
+| Derivado sem sha256 registrado | **0** | portão **G9** |
 
 **Precisão esperada dos instrumentos** (medida nesta transcrição): camada de sementes/Quarentena ≈ 100% após as 11 suspensões automáticas; fila fuzzy ≈ 40% — **ela é triagem de recall, nunca decisão**. Subir o corte de similaridade destrói recall (0,85 → 11 propostas e só 4 das 10 variantes-chave; 0,90 → 4 propostas e 2 de 10), por isso o padrão permanece 0,75–0,80 com adjudicação humana obrigatória.
 
@@ -497,7 +596,8 @@ Regras de governança:
 | `ferramentas/rc_diagnostico.py` | varredura completa: exatas, sementes, fuzzy adjudicável, ausentes | `transcricoes/<slug>/*` |
 | `ferramentas/rc_docx.py` | monta o .docx revisado (negrito de 1ª menção, validação) | `<Título> (revisado).docx` |
 | `ferramentas/md_para_docx.py` | converte documentos de governança (.md → .docx) | `.docx` |
-| `ferramentas/rc_qa.py` | os oito portões de qualidade, por transcrição ou `--tudo` | stdout, `--json` para o CI |
+| `ferramentas/rc_qa.py` | os **nove** portões de qualidade, por transcrição ou `--tudo` | stdout, `--json` para o CI |
+| `ferramentas/rc_leitura.py` | onde começa o corpo de um STT: critério único em cascata (§2.6, item 5), usado por `rc_novo`, `rc_indice` e `rc_qa` | dict de medição + aviso quando precisa chutar |
 | `ferramentas/rc_indice.py` | catálogo das transcrições + fiscalização do padrão Y (§2.5) | `transcricoes/_indice.csv` e `.md` |
 | `ferramentas/rc_novo.py` | cria a pasta de transcrição nova a partir de `transcricoes/_modelo/` | `transcricoes/<slug>/` |
 | `ferramentas/rc_ledger.py` | livro-razão da adjudicação: pendências, decisões, sobrevivências | `10-diagnostico/variantes-propostas.csv` |
@@ -510,8 +610,8 @@ Arquivos de controle: `ferramentas/dados/vocabular-guarda-pt.txt` (1.878 formas 
 
 *Revelações Cósmicas Urgente – Jan Val Ellam*, executado em 16/09/2026 com `--kb KB-RC`:
 
-- 18.781 palavras · 101.468 caracteres · 3.171 tipos lexicais · ≈125 minutos de áudio
-- 1 parágrafo · 1 vírgula · 19 pontos · 73 dois-pontos · 117 aspas
+- 18.781 palavras (régua `split()` do `rc_diagnostico`; 18.806 na régua `PALAVRA_RE` do `rc_leitura`, que é a gravada em `metadados.yaml` — §2.6, item 6) · 101.468 caracteres · 3.171 tipos lexicais · ≈125 minutos de áudio
+- 1 parágrafo · 1 vírgula · 15 pontos · 71 dois-pontos · 117 aspas
 - 115 palavras repetidas consecutivamente · marcadores orais: então 132, aí 123, tá 87, né 49, eh 45, uhum 31, cara 26
 - 96 superfícies da base presentes · 783 candidatos brutos · 61 adjudicáveis (31 na fila de substituição) · 145 entidades ausentes
 - 372 sementes carregadas → 32 atingidas, **11 suspensas** (homografia, guarda ou colisão com Externos)

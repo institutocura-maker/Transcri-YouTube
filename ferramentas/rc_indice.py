@@ -23,6 +23,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import rc_qa as QA  # noqa: E402
+import rc_leitura as RL  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
 TRANSCRICOES = RAIZ / "transcricoes"
@@ -49,17 +50,15 @@ def _contar(texto: str) -> int:
 
 
 def _corpo(pasta: Path) -> str:
-    """Corpo do bruto: a linha mais longa do arquivo.
+    """Corpo do bruto, pelo mesmo critério único que o `rc_novo.py` grava em metadados.yaml.
 
-    O STT do YouTube entrega cabeçalho curto e o texto inteiro numa linha só. Usar a
-    linha mais longa evita chutar um número fixo de linhas de cabeçalho, que muda de
-    vídeo para vídeo.
+    Era "a linha mais longa": certo para o STT do YouTube, fracionário e silencioso para um STT
+    paragraphado. Ver `rc_leitura.py` — a coluna `palavras_brutas` do catálogo sai daqui.
     """
     arq = pasta / "00-fonte" / "transcricao-bruta.txt"
     if not arq.exists():
         return ""
-    linhas = arq.read_text(encoding="utf-8").splitlines()
-    return max(linhas, key=len) if linhas else ""
+    return RL.localizar_corpo(RL.ler_texto(arq))["corpo"]
 
 
 def medir(pasta: Path) -> dict:

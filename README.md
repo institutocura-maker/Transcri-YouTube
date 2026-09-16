@@ -33,7 +33,8 @@ ferramentas/     somente código
   rc_curadoria.py aplica a fila na KB: variante só entra se estiver atestada no bruto
   rc_termo.py    cria termo novo (ficha + canonico.json) a partir de especificação validada
   rc_indice.py   gera e confere o catálogo
-  rc_qa.py       os oito portões de qualidade
+  rc_qa.py       os nove portões de qualidade
+  rc_leitura.py  onde começa o corpo de um STT — critério único, avisado, usado por todas
   rc_perfil_stt.py  perfil comparativo de motores de STT (os quatro eixos do parecer)
   dados/         sementes de variantes, externos.csv, vocabulário-guarda
 
@@ -41,7 +42,7 @@ transcricoes/    UM DIRETÓRIO POR VÍDEO, autossuficiente
   _indice.csv    catálogo derivado do disco (não editar à mão)
   _modelo/       esqueleto que o rc_novo.py copia
   <AAAA-MM-DD-slug>/
-    00-fonte/       bruto imutável + metadados.yaml (com sha256) + política de mídia
+    00-fonte/       bruto imutável + derivado de trabalho + metadados.yaml (com sha256) + mídia
     10-diagnostico/ saída do motor + livro-razão da adjudicação
     20-blocos/      bloco-01.md … bloco-NN.md + notas-de-revisao.md
     30-produto/     transcricao-revisada.docx
@@ -110,7 +111,25 @@ ver `upload/README.md`.
 
 Fluxo completo, papéis e convenções: **`.github/CONTRIBUTING.md`**.
 
-## Os oito portões
+## As três camadas de texto
+
+Toda pasta guarda até três textos, e confundir as camadas é o erro mais caro que existe aqui:
+
+| Camada | Arquivo | Natureza | Quem fiscaliza |
+|---|---|---|---|
+| fonte | `00-fonte/transcricao-bruta.txt` | saída do STT **imutável** | G1 (sha256) |
+| trabalho | `00-fonte/transcricao-pontuada.txt` | **derivado** de outra ferramenta (ex.: NotebookLM) | G9 |
+| saída | `20-blocos/bloco-NN.md` + `30-produto/*.docx` | o que a casa assina | G2, G3, G5, G6 |
+
+Um derivado **nunca** vira fonte: se o reprocessamento se perde, o que sobrevive é o bruto. Por
+isso o derivado entra com sha256, proveniência e teto de divergência registrados em
+`metadados.yaml`, e o G9 confere os três — inclusive **palavras mascaradas** por camadas de
+segurança de terceiros (`m****` no lugar de `merda`), que o G1 não pega porque ele confere
+assinatura, não conteúdo. A régua de "onde começa o corpo" é uma só, em `rc_leitura.py`: ela
+resolve arquivos de linha única e arquivos paragraphados, e quando precisa chutar, avisa no
+`metadados.yaml`.
+
+## Os nove portões
 
 **O CI está ativo** desde 16/09/2026: `.github/workflows/qa.yml` (instalado pelo Comandante no
 commit `5744f1f`) roda os portões, o catálogo e os testes em todo PR que toque `transcricoes/`,
@@ -131,6 +150,7 @@ Rode os três comandos acima antes de pedir merge, mesmo com CI ativo: o CI é a
 | G6 | produto reproduzível | o `.docx` publicado não corresponde aos `.md` |
 | G7 | índice consistente | o catálogo diz uma coisa, a pasta diz outra |
 | G8 | higiene | arquivo >5 MB fora do LFS, `~$trava` do Office, espaço ou acento em caminho de máquina |
+| G9 | derivado e divergência | o texto de trabalho não é o mesmo áudio, foi trocado, ou censurou palavra que ninguém restaurou |
 
 Três estados por portão: `OK`, `FALHA` e `N/A` — não se cobra `.docx` de quem ainda não revisou nada.
 

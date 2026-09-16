@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""rc_qa — os oito portões de qualidade de uma transcrição.
+"""rc_qa — os nove portões de qualidade de uma transcrição.
 
 Por que um script só para isto: o QA existia, mas espalhado e dependente de memória.
 Cada portão responde a um modo concreto de o trabalho estragar — e todos já aconteceram
@@ -13,6 +13,12 @@ nesta ou noutra forma durante a primeira transcrição:
     G6  produto reproduzível    o .docx publicado não corresponde aos .md
     G7  índice consistente      o catálogo diz uma coisa, a pasta diz outra
     G8  higiene                 arquivo pesado, nome com espaço, ~$trava do Word
+    G9  derivado e divergência  a camada de reescrita mascarou palavra, e ela não voltou
+
+O G9 nasceu medido, não imaginado: sobre a transcrição de referência, o derivado pontuado
+(NotebookLM, 16/09/2026) mascarou cinco palavras com asterisco — três "merda" e duas "bandido",
+estas num trecho sobre Jesus — e o portão G1 continuaria verde, porque confere sha256, não
+conteúdo. Ver `docs/pareceres/parecer-motor-stt.md`.
 
 Três estados por portão: OK, FALHA e N/A (o portão não se aplica ao estágio em que a
 transcrição está — não faz sentido cobrar .docx de quem ainda não revisou nada).
@@ -28,6 +34,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+from collections import Counter
 import json
 import re
 import sys
@@ -328,6 +335,259 @@ def g8_higiene(pasta: Path, meta: dict) -> tuple[str, str]:
     return OK, "nenhum arquivo acima de 5 MB, sem travas do Office, nomes ASCII e sem espaço"
 
 
+# --------------------------------------------------------------------------------------
+# G9 — derivado e divergência
+# --------------------------------------------------------------------------------------
+
+MASCARA_RE = re.compile(r"\w*\*{2,}\w*")
+TOKEN_RE = re.compile(r"[\w'’]+", re.U)
+DIVERGENCIA_MAXIMA = 0.05
+
+
+def _tokens(texto: str) -> list[str]:
+    return [L.norm(t) for t in TOKEN_RE.findall(texto)]
+
+
+def divergencia_lexical(bruto: str, derivado: str) -> dict:
+    """Diferença entre dois textos pelo multiconjunto de palavras — sem alinhamento, sem chute.
+
+    É a medida que diz se o derivado é o mesmo conteúdo: 3% é uma camada de reescrita pontuando o
+    mesmo reconhecimento de fala; 40% seria um resumo, e nenhum resumo pode virar texto de revisão.
+    """
+    cb, cd = Counter(_tokens(bruto)), Counter(_tokens(derivado))
+    perdas, ganhos = cb - cd, cd - cb
+    total = max(sum(cb.values()), 1)
+    return {"palavras_bruto": sum(cb.values()), "palavras_derivado": sum(cd.values()),
+            "perdas": sum(perdas.values()), "ganhos": sum(ganhos.values()),
+            "divergencia": (sum(perdas.values()) + sum(ganhos.values())) / total,
+            "formas_perdidas": perdas}
+
+
+TOKEN_MASCARA_RE = re.compile(r"[\w'’\*]+")
+MASCARA_FORTE_RE = re.compile(r"\*{2,}")
+
+
+def _tokens_com_mascara(texto: str) -> list[str]:
+    """Tokens preservando a máscara de censura. `\w` não captura asterisco: "m****," viraria "m"."""
+    return [t.strip(".,;:!?«»\"'()—–") for t in TOKEN_MASCARA_RE.findall(texto)]
+
+
+def _posicoes_por_contexto(nb: list[str], antes: list[str], depois: list[str],
+                           janela: int) -> list[int]:
+    """Posições do bruto onde o contexto de `janela` palavras (de um lado ou dos dois) confere."""
+    pos = []
+    for j in range(len(nb)):
+        a, d = nb[max(0, j - janela):j], nb[j + 1:j + 1 + janela]
+        if antes and a[-len(antes):] != antes:
+            continue
+        if depois and d[:len(depois)] != depois:
+            continue
+        pos.append(j)
+    return pos
+
+
+def localizar_mascaras(bruto: str, derivado: str, formas_perdidas: Counter | None = None,
+                       janela_max: int = 3) -> list[dict]:
+    """Para cada máscara do derivado, lê no BRUTO a palavra que está naquele lugar.
+
+    Quatro defesas, e cada uma existe porque sem ela o portão já respondeu errado nesta transcrição:
+
+    1. **contexto**, não comprimento+inicial — `m****` casava com "merda" (a censurada) e também com
+       "medio" (perdida por outra razão);
+    2. **trecho contíguo como unidade** — "merda merda merda" virou `m****, m****, m****`: a
+       vizinhança imediata de uma máscara é outra máscara, que não carrega contexto nenhum. Busca-se
+       o que está antes e depois do trecho inteiro, e as k palavras escondidas saem juntas;
+    3. **busca graduada** — a camada mexe na vizinhança ("advogado **de** acusação" virou "**e**
+       acusação"), então tenta 3 palavras dos dois lados, depois 2, depois 1, e só então um lado só;
+    4. **a palavra tem que ter sumido do derivado** — se ela continua lá, não foi ela que a máscara
+       escondeu. Sem isto, contexto de um lado só casava `m****` com o artigo "a".
+
+    Ambiguidade não vira palpite: se o contexto casa em mais de uma posição com palavras diferentes,
+    desce um degrau; se nada alinha, devolve `palavra_no_bruto: None` e o portão avisa.
+    """
+    nb = _tokens(bruto)
+    toks = _tokens_com_mascara(derivado)
+    perdidas = set(formas_perdidas or ())
+
+    indices = [i for i, t in enumerate(toks) if MASCARA_FORTE_RE.search(t)]
+    trechos: list[list[int]] = []
+    for i in indices:
+        if trechos and i == trechos[-1][-1] + 1:
+            trechos[-1].append(i)
+        else:
+            trechos.append([i])
+
+    uteis = [i for i, t in enumerate(toks) if not MASCARA_FORTE_RE.search(t) and L.norm(t)]
+    achados: list[dict] = []
+    for trecho in trechos:
+        k = len(trecho)
+        i0, i1 = trecho[0], trecho[-1]
+        antes_pool = [L.norm(toks[i]) for i in uteis if i < i0][-janela_max:]
+        depois_pool = [L.norm(toks[i]) for i in uteis if i > i1][:janela_max]
+        mascaras = [toks[i] for i in trecho]
+        achado = None
+        for exigir_ausencia in (True, False):
+            for lados in ("ambos", "antes", "depois"):
+                for janela in range(janela_max, 0, -1):
+                    antes = antes_pool[-janela:] if lados in ("ambos", "antes") else []
+                    depois = depois_pool[:janela] if lados in ("ambos", "depois") else []
+                    if not antes and not depois:
+                        continue
+                    candidatos = []
+                    for j0 in range(len(nb) - k + 1):
+                        if antes and nb[j0 - len(antes):j0] != antes:
+                            continue
+                        if depois and nb[j0 + k:j0 + k + len(depois)] != depois:
+                            continue
+                        palavras = nb[j0:j0 + k]
+                        if exigir_ausencia and perdidas and not all(w in perdidas for w in palavras):
+                            continue
+                        candidatos.append((j0, palavras))
+                    if not candidatos:
+                        continue
+                    # comprimento da máscara é evidência forte: "b******" tem 7 como "bandido"
+                    mesmo_len = [(j0, w) for j0, w in candidatos
+                                 if all(len(m) == len(x) for m, x in zip(mascaras, w))]
+                    if mesmo_len:
+                        candidatos = mesmo_len
+                    distintas = sorted({tuple(w) for _, w in candidatos})
+                    if len(distintas) != 1:
+                        continue  # ambíguo: desce um degrau em vez de chutar
+                    palavras = distintas[0]
+                    j0 = candidatos[0][0]
+                    achado = {"palavras": list(palavras),
+                              "confianca": (f"contexto de {janela} palavra(s) "
+                                            f"{'dos dois lados' if lados == 'ambos' else 'só de ' + lados}"
+                                            + (" · trecho ausente do derivado"
+                                               if all(w in perdidas for w in palavras)
+                                               else " · SEM confirmação de ausência")),
+                              "contexto_no_bruto": " ".join(antes + list(palavras) + depois)}
+                    break
+                if achado:
+                    break
+            if achado:
+                break
+        for posicao, (m, palavra) in enumerate(zip(mascaras, (achado or {}).get(
+                "palavras", [None] * k))):
+            achados.append({
+                "mascara": m, "posicao": trecho[posicao], "palavra_no_bruto": palavra,
+                "confianca": (achado or {}).get("confianca", "sem alinhamento"),
+                "contexto_no_bruto": (achado or {}).get(
+                    "contexto_no_bruto",
+                    " ".join(antes_pool[-3:] + ["?"] * k + depois_pool[:3])),
+                "trecho": k,
+            })
+    return achados
+
+
+def restaurar_mascara(mascara: str, formas_perdidas: Counter) -> list[str]:
+    """Que palavra do bruto a máscara esconde: mesmo comprimento, mesma inicial, e sumiu do derivado.
+
+    É o cruzamento com a fonte original que poupa o "Find & Replace" manual: `b******` (7 letras,
+    começa com b, ausente no derivado) devolve `bandido` — e o revisor sabe o que restaurar.
+    """
+    m = mascara.strip()
+    if not m or not m[0].isalpha():
+        return []
+    # só a inicial é normalizada: o comprimento da máscara é o comprimento da palavra escondida,
+    # e L.norm() derrubaria os asteriscos ("b******" -> "b"), zerando o comprimento
+    letra = L.norm(m[0])
+    return sorted({w for w in formas_perdidas
+                   if len(w) == len(m) and w and L.norm(w[0]) == letra})
+
+
+def g9_derivado_divergencia(pasta: Path, meta: dict) -> tuple[str, str]:
+    """G9 — o derivado é íntegro, a divergência está no teto e a censura foi desfeita.
+
+    Fiscaliza a arquitetura de três camadas (despacho de 16/09/2026): o bruto continua sendo a
+    autoridade; o derivado é texto de trabalho. Três modos de estragar, nesta ordem:
+
+      1. o derivado não é o que foi registrado (sha256) — alguém mexeu no arquivo;
+      2. o derivado diverge demais do bruto — não é reescrita, é outro texto (resumo, tradução);
+      3. a camada mascarou palavra e ela não voltou — asterisco chegando ao produto final.
+
+    A conferência é feita sobre `20-blocos/`, porque o G6 já garante que o .docx publicado é
+    idêntico aos blocos: cobrar dos dois seria cobrar duas vezes a mesma coisa.
+    """
+    der = meta.get("derivado")
+    if not isinstance(der, dict) or not der.get("arquivo"):
+        return NA, "sem camada derivada em metadados.yaml (esta transcrição trabalha direto do bruto)"
+    arq = pasta / "00-fonte" / str(der["arquivo"])
+    bruto_arq = pasta / "00-fonte" / "transcricao-bruta.txt"
+    if not arq.exists():
+        return FALHA, f"derivado registrado não existe: 00-fonte/{der['arquivo']}"
+    if not bruto_arq.exists():
+        return FALHA, "sem transcricao-bruta.txt: não há fonte contra que cruzar o derivado"
+
+    texto_der = arq.read_bytes().decode("utf-8-sig", errors="replace")
+    texto_bruto = bruto_arq.read_bytes().decode("utf-8-sig", errors="replace")
+
+    # 1. integridade
+    esperado = str(der.get("sha256", "")).strip().lower()
+    real = hashlib.sha256(arq.read_bytes()).hexdigest()
+    if not esperado:
+        return FALHA, "metadados.yaml não registra o sha256 do derivado — sem integridade verificável"
+    if esperado != real:
+        return FALHA, f"derivado ALTERADO: sha256 {real[:12]}… != {esperado[:12]}… registrado"
+
+    # 2. divergência
+    div = divergencia_lexical(texto_bruto, texto_der)
+    try:
+        teto = float(der.get("divergencia_maxima", DIVERGENCIA_MAXIMA))
+    except (TypeError, ValueError):
+        teto = DIVERGENCIA_MAXIMA
+    if div["divergencia"] > teto:
+        return FALHA, (f"derivado diverge {div['divergencia']:.2%} do bruto (teto {teto:.0%}): "
+                       f"{div['perdas']} palavras do bruto ausentes, {div['ganhos']} a mais — "
+                       f"isso não é reescrita do mesmo áudio, é outro texto")
+
+    # 3. censura: o que a camada mascarou, lido no bruto pelo contexto, e restaurado nos blocos?
+    yaml_txt = (pasta / "00-fonte" / "metadados.yaml").read_text(encoding="utf-8")
+    blocos = _texto_blocos(pasta)
+    nblocos = L.norm(blocos)
+    locais = localizar_mascaras(texto_bruto, texto_der, div["formas_perdidas"])
+    problemas, notas, sem_registro = [], [], []
+    for loc in locais:
+        m, palavra = loc["mascara"], loc["palavra_no_bruto"]
+        if f'mascara: "{m}"' not in yaml_txt and f"mascara: {m}" not in yaml_txt:
+            sem_registro.append(m)
+        if palavra is None:
+            problemas.append(f"'{m}' não localizada no bruto pelo contexto "
+                             f"('{loc['contexto_no_bruto']}') — conferir à mão; candidatas por "
+                             f"comprimento+inicial: "
+                             f"{', '.join(restaurar_mascara(m, div['formas_perdidas'])) or 'nenhuma'}")
+            continue
+        if f"restaurar_para: {palavra}" not in yaml_txt:
+            problemas.append(f"'{palavra}' (mascarada como '{m}', lida no bruto pelo contexto "
+                             f"'{loc['contexto_no_bruto']}') não está registrada em "
+                             f"palavras_mascaradas.restaurar_para")
+        if m in blocos:
+            problemas.append(f"a máscara '{m}' foi copiada para o texto revisado")
+        elif blocos and not re.search(L.fronteira(palavra), nblocos):
+            problemas.append(f"'{palavra}' — censurada no derivado como '{m}' — não foi restaurada "
+                             f"no texto revisado ({div['formas_perdidas'][palavra]}× no bruto)")
+        else:
+            notas.append(f"'{m}'→{palavra} ({loc['confianca']})")
+    for m in sorted(set(sem_registro)):
+        candidatas = restaurar_mascara(m, div["formas_perdidas"])
+        problemas.append(f"máscara '{m}' ({[x['mascara'] for x in locais].count(m)}×) não registrada "
+                         f"em palavras_mascaradas — candidatas no bruto por comprimento+inicial: "
+                         f"{', '.join(candidatas) or 'nenhuma'}")
+    if re.search(r"\*{4,}", blocos):
+        problemas.append("asteriscos em sequência (4+) no texto revisado — censura não desfeita")
+    # deduplica notas preservando a ordem ('m****'→merda aparece 3 vezes)
+    notas = list(dict.fromkeys(notas))
+
+    resumo = (f"derivado íntegro (sha256 {real[:12]}…); divergência {div['divergencia']:.2%} "
+              f"≤ teto {teto:.0%}")
+    if problemas:
+        return FALHA, resumo + "; " + "; ".join(problemas)
+    if locais:
+        return OK, (resumo + f"; {len(locais)} tokens mascarados no derivado, registrados e "
+                             f"restaurados nos blocos ({'; '.join(notas)})")
+    return OK, resumo + "; nenhuma palavra mascarada pela camada de reescrita"
+
+
 PORTOES = [
     ("G1", "bruto intacto", g1_bruto_intacto),
     ("G2", "blocos íntegros", g2_blocos_integros),
@@ -337,6 +597,7 @@ PORTOES = [
     ("G6", "produto reproduzível", g6_produto_reproduzivel),
     ("G7", "índice consistente", g7_indice_consistente),
     ("G8", "higiene", g8_higiene),
+    ("G9", "derivado e divergência", g9_derivado_divergencia),
 ]
 
 

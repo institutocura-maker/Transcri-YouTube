@@ -23,7 +23,6 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
-import hashlib
 import re
 import shutil
 import sys
@@ -31,6 +30,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import rc_indice as IND  # noqa: E402
+import rc_leitura as RL  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
 TRANSCRICOES = RAIZ / "transcricoes"
@@ -38,7 +38,6 @@ MODELO = TRANSCRICOES / "_modelo"
 
 SLUG_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-[a-z0-9]+(?:-[a-z0-9]+)*$")
 DATA_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-PALAVRA_RE = re.compile(r"[\wÀ-ÿ']+")
 
 
 def validar_slug(slug: str) -> str | None:
@@ -60,25 +59,13 @@ def validar_slug(slug: str) -> str | None:
 
 
 def medir_bruto(arq: Path) -> dict:
-    """Números do bruto, incluindo onde o corpo começa.
+    """Números do bruto, incluindo onde o corpo começa — pelo critério único de `rc_leitura`.
 
-    O STT do YouTube entrega um cabeçalho curto e o texto inteiro numa linha só. O corpo
-    é detectado como a linha mais longa — o número de linhas de cabeçalho varia de vídeo
-    para vídeo e chutá-lo produziria metadados mentirosos.
+    Antes era `max(linhas, key=len)`, que funciona para o STT do YouTube (corpo numa linha só) e
+    produz metadados fracionários EM SILÊNCIO sobre um STT paragraphado. A cascata agora é
+    marcador → linha mais longa → arquivo inteiro, e o critério usado fica gravado no YAML.
     """
-    dados = arq.read_bytes()
-    linhas = dados.decode("utf-8", errors="replace").splitlines()
-    corpo = max(linhas, key=len) if linhas else ""
-    indice = linhas.index(corpo) if corpo else 0
-    return {
-        "bytes": len(dados),
-        "linhas": len(linhas),
-        "sha256": hashlib.sha256(dados).hexdigest(),
-        "linhas_cabecalho": indice,
-        "corpo_linha": indice + 1,
-        "corpo_caracteres": len(corpo),
-        "corpo_palavras": len(PALAVRA_RE.findall(corpo)),
-    }
+    return RL.medir_arquivo(arq)
 
 
 def substituir(pasta: Path, mapa: dict[str, str]) -> int:
@@ -148,8 +135,11 @@ def main(argv: list[str] | None = None) -> int:
     IND.main([])  # regenera o catálogo com a linha nova
     print(f"[ok] {destino.relative_to(RAIZ)} criada ({trocas} arquivos preenchidos)")
     print(f"     bruto: {numeros['bytes']} bytes, {numeros['linhas']} linhas, "
-          f"corpo na linha {numeros['corpo_linha']} ({numeros['corpo_palavras']} palavras)")
+          f"corpo na linha {numeros['corpo_linha']} ({numeros['corpo_palavras']} palavras, "
+          f"{numeros['corpo_segmentos']} segmentos, critério: {numeros['criterio_corpo']})")
     print(f"     sha256: {numeros['sha256']}")
+    if numeros.get("aviso_corpo"):
+        print(f"     [AVISO] {numeros['aviso_corpo']}", file=sys.stderr)
     print()
     print("     próximos passos:")
     print(f"       1. conferir 00-fonte/metadados.yaml (url, duração, chamada) e preencher o que falta")

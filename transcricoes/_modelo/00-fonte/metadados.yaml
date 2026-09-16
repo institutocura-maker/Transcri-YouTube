@@ -32,7 +32,27 @@ bruto:
   corpo_linha: {{corpo_linha}}             # linha onde o corpo começa (1-based)
   corpo_caracteres: {{corpo_caracteres}}
   corpo_palavras: {{corpo_palavras}}       # tokenizador: sequência de letras/dígitos/apóstrofo
+  corpo_segmentos: {{corpo_segmentos}}     # linhas não vazias do corpo (turnos, se o STT os separa)
+  criterio_corpo: {{criterio_corpo}}       # marcador | linha-mais-longa | arquivo-inteiro (rc_leitura.py)
+  cobertura_maior_linha: {{cobertura_maior_linha}}   # < 0,80 com critério "arquivo-inteiro" = conferir
   pontuacao_original: nenhuma              # STT puro não entrega vírgula, ponto nem interrogação
+
+# Camada derivada (arquitetura de três camadas, despacho de 16/09/2026). Preencher SÓ se existir
+# um texto de trabalho derivado do bruto — ex.: pontuação/segmentação por outra ferramenta.
+# O derivado NUNCA é a fonte: a autoridade sobre o que foi dito é `bruto` acima, e o portão G9
+# fiscaliza sha256, teto de divergência e restauração das palavras que a camada mascarou.
+#derivado:
+#  arquivo: transcricao-pontuada.txt
+#  motor: ""                   # ferramenta que gerou o derivado
+#  mesma_escuta_que_o_bruto: sim|nao|desconhecido   # ver rc_perfil_stt.py, eixo de proveniência
+#  bytes: 0
+#  linhas: 0
+#  sha256: ""
+#  palavras: 0
+#  segmentos: 0
+#  divergencia_lexical: 0.0    # medido por rc_perfil_stt.py contra o bruto
+#  divergencia_maxima: 0.05    # teto do portão G9
+#  palavras_mascaradas: []     # cada item: {mascara, ocorrencias, restaurar_para, presente_no_bruto}
 
 midia:
   audio: nao-arquivado        # política do Plano §7: só link externo

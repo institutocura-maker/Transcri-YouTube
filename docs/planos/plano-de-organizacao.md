@@ -36,7 +36,7 @@ Dez princípios. Toda decisão concreta deste plano deriva deles — e é por el
 | # | Princípio | Tradução prática |
 |---|---|---|
 | **P1** | **Uma transcrição = um diretório autossuficiente** | Tudo o que diz respeito a um vídeo vive dentro da pasta dele. Arquivar, reativar ou auditar um vídeo é operar uma pasta, não caçar arquivos em quatro árvores |
-| **P2** | **O bruto é sagrado e isolado** | `00-fonte/transcricao-bruta.txt` nunca é editado. Sua integridade é verificada por hash no CI |
+| **P2** | **O bruto é sagrado e isolado** | `00-fonte/transcricao-bruta.txt` nunca é editado; sua integridade é verificada por hash no CI (G1). Um **derivado** de outra ferramenta pode morar ao lado (`transcricao-pontuada.txt`), versionado, com hash próprio e medido pelo portão **G9** — nunca no lugar do bruto (Guia §2.6) |
 | **P3** | **Estágio no nome, ordem no número** | `00 → 10 → 20 → 30 → 40 → 90`. O vão de 10 permite inserir etapas sem renumerar nada |
 | **P4** | **O slug vive na pasta; os arquivos têm nome fixo** | Dentro de `transcricoes/<slug>/` o produto é sempre `transcricao-revisada.docx`. Caminhos previsíveis = automação sem parâmetro |
 | **P5** | **ASCII em caminho de máquina, legibilidade em documento de gente** | Pastas e arquivos operacionais sem acento nem espaço. Títulos com acento só *dentro* dos documentos |
@@ -134,8 +134,10 @@ Transcri-YouTube/
 transcricoes/2026-09-14-revelacoes-cosmicas-urgente/
 │
 ├── 00-fonte/                       ENTRADA — imutável
-│   ├── transcricao-bruta.txt           o STT como saiu, sem nenhum retoque
-│   ├── metadados.yaml                  URL, canal, data, duração, falantes, licença, hash
+│   ├── transcricao-bruta.txt           o STT como saiu, sem nenhum retoque — A FONTE
+│   ├── transcricao-pontuada.txt        (opcional) DERIVADO de outra ferramenta: texto de trabalho
+│   ├── metadados.yaml                  URL, canal, data, duração, falantes, licença, hash do bruto
+│   │                                   e bloco `derivado:` (hash, teto de divergência, máscaras)
 │   └── midia/README.md                 link externo do áudio/vídeo + por que não está aqui
 │
 ├── 10-diagnostico/                 SAÍDA DO MOTOR — regenerável
@@ -201,6 +203,7 @@ Nomes **fixos e minúsculos**, sem o slug (P4). O slug já está no caminho; rep
 |---|---|
 | bruto | `00-fonte/transcricao-bruta.txt` |
 | metadados | `00-fonte/metadados.yaml` |
+| derivado (opcional) | `00-fonte/transcricao-pontuada.txt` |
 | blocos | `20-blocos/bloco-NN.md` |
 | produto | `30-produto/transcricao-revisada.docx` |
 | devolução | `40-devolucao/devolucao-a-kb.md` |

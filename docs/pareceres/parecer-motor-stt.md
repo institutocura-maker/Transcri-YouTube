@@ -9,6 +9,11 @@
 áudio. Saída bruta do instrumento: `docs/pareceres/parecer-motor-stt-medicao.md` (gerada, não
 redigida) e `docs/pareceres/perfil-stt.json`.
 
+**Atualização de 16/09/2026: arquitetura de §6 APROVADA e IMPLANTADA** — arquivo movido para
+`00-fonte/`, portão **G9** em operação, critério único de corpo em `rc_leitura.py` e Guia atualizado.
+Estado item a item, campos como construídos e uma medição nova que **corrige a percepção sobre as
+lacunas `[INAUDÍVEL]`** (3 de 16 resolvidas): **§12**.
+
 ---
 
 ## 0. Sumário executivo
@@ -399,8 +404,75 @@ Comando que reproduz tudo o que está neste parecer:
 ```bash
 python ferramentas/rc_perfil_stt.py \
     transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-bruta.txt \
-    Opcao-B.txt \
+    transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-pontuada.txt \
     --com-diagnostico \
     --md docs/pareceres/parecer-motor-stt-medicao.md \
     --json docs/pareceres/perfil-stt.json
 ```
+
+---
+
+## 12. Implantação — o que foi feito depois da aprovação (16/09/2026)
+
+O Comandante aprovou a arquitetura de §6 e ordenou a implantação local: mover o arquivo da raiz para
+a pasta correta e criar a regra do G9. Feito, com o item 1 de §8 junto — ele é pré-requisito do G9,
+porque sem critério de corpo a divergência seria medida entre um texto inteiro e um parágrafo.
+
+| item de §8 | estado | onde |
+|---|---|---|
+| 1 — critério de corpo em cascata + guarda de cobertura | **implantado** | `ferramentas/rc_leitura.py` (novo), consumido por `rc_novo.py` e `rc_indice.py` |
+| 2 — heurística de capitalizadas ciente de inicial de frase | **pendente** (segue na geladeira com os demais) | `rc_diagnostico.py:372` |
+| 3 — campos de proveniência do derivado | **implantado** | `_modelo/00-fonte/metadados.yaml` + `metadados.yaml` da transcrição |
+| 4 — portão G9 | **implantado** | `rc_qa.py`, registrado em `PORTOES`; testes na seção 14 de `testes/test_pipeline.py` |
+| 5 — Guia §8, §9 e seção nova | **implantado** | `guia-revisao-v2.md` §2.6 (camadas), §8 (conferência), §9 (rótulo inline), §13.1, §14, §16, §17 + `.docx` |
+| §9 — destino do `Opcao-B.txt` | **executado** | `git mv` → `transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-pontuada.txt`, sha256 preservado |
+
+**Campos como construídos** (diferem da lista de §6, que era proposta): `derivado.arquivo`,
+`derivado.ferramenta`, `derivado.data`, `derivado.sha256`, `derivado.divergencia_maxima`,
+`derivado.divergencia_medida`, `derivado.palavras_mascaradas[]` (`mascara` → `restaurar_para` →
+`ocorrencias`) e `derivado.observacao`. O bloco é comentado no `_modelo`, para não sugerir que toda
+transcrição tem derivado.
+
+**`rc_leitura.py` — a cascata, e a prova de que ela era necessária.** (i) marcador
+`Transcrição Automática` → corpo depois dele; (ii) linha mais longa, se cobrir ≥ 80% dos caracteres;
+(iii) arquivo inteiro, **com aviso** em `metadados.yaml`. Retrocompatibilidade verificada no bruto de
+referência: números idênticos ao que já estava registrado (106.243 bytes, sha256 `34f9bcf4…`, corpo
+na linha 13, 101.468 caracteres, 18.806 palavras), e `transcricoes/_indice.csv` byte a byte igual.
+No derivado, o critério antigo devolveria **771 palavras** de um corpo de 18.815 — exatamente o
+defeito previsto em §8, agora impedido e avisado.
+
+**G9 como ficou, e o que ele responde hoje:**
+
+```
+[G9] derivado e divergência ok    derivado íntegro (sha256 5aa247f34877…); divergência 3.00% ≤
+teto 5%; 5 tokens mascarados no derivado, registrados e restaurados nos blocos
+('m****'→merda; 'b******'→bandido; 'm****'→merda; 'm****'→merda)
+```
+
+O portão localiza cada máscara **pelo contexto no bruto**, tratando trecho contíguo como unidade —
+`merda merda merda` virou `m****, m****, m****`, e a vizinhança imediata de uma máscara é outra
+máscara, que não carrega contexto. Quatro defesas, cada uma paga com um erro real desta medição:
+contexto em vez de comprimento+inicial (`m****` casava também com `medio`); busca graduada 3→2→1
+palavras, dois lados antes de um só (a camada edita a vizinhança: "advogado **de** acusação" →
+"**e** acusação"); exigência de que a palavra localizada tenha **sumido** do derivado (sem isso,
+contexto de um lado só casava `m****` com o artigo "a"); ambiguidade devolve `None` e avisa, não
+chuta. Falha nos cinco modos de estragar: sha256 trocado, divergência acima do teto, palavra não
+restaurada, asterisco na saída, máscara sem registro — cada um com teste próprio
+(`testes/test_pipeline.py`, seção 14: 154 verificações, 0 falhas).
+
+**Medição nova, que corrige uma percepção do despacho:** o curador relatou que a dedução contextual
+do NotebookLM diminui drasticamente as lacunas `[INAUDÍVEL]`. Medido sobre as **16 lacunas** dos
+blocos 01–08, o derivado resolve **3** (≈19%): *trácia* (bloco-01), *faço* (bloco-01), *simples*
+(bloco-05). Deixa **5 idênticas** ao bruto ("produzência", "sear em cada uma dessas inteligências",
+"hr1 os genes que nos fazem diferentes"…), oferece palpite **diferente** em 4 (bio clein, crios,
+bodo, e *full megante* suprimido) e **corrompe uma palavra boa**: "cabeça de elefante" → "cadecia de
+elefante" (bloco-03). É o mesmo mecanismo nos dois sentidos — a camada que acerta *trácia* inventa
+*cadecia*. Consequência prática, já refletida no Guia: **lacuna `[INAUDÍVEL]` é decisão editorial do
+revisor (§12), não herança do derivado**; o G9 fiscaliza máscaras de censura, não lacunas. A economia
+real de B continua onde o parecer já a mediu — pontuação e fronteira de turno (§8), não resolução de
+lacunas.
+
+**Pendências desta implantação:** o item 2 de §8 (`rc_diagnostico.py:372`) e a reconciliação das
+duas réguas de contagem de palavras (`split()` 18.781 × `PALAVRA_RE` 18.806, documentadas no Guia
+§2.6 item 6) ficam para o próximo lote de código. Commits mantidos **locais** por ordem do
+Comandante, até o reestabelecimento do token de push.

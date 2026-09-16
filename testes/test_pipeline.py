@@ -26,14 +26,20 @@ Cobre o que já quebrou de verdade neste projeto, para não quebrar de novo:
     arquivo paragraphado dispara as quebras de suposição da esteira em vez de passar por
     compatível em silêncio;
 13. proveniência e ruído: o instrumento sabe dizer se dois arquivos vêm do mesmo
-    reconhecimento de fala, e separa inicial de frase de candidata real a termo novo.
+    reconhecimento de fala, e separa inicial de frase de candidata real a termo novo;
+14. arquitetura de três camadas: o corpo do bruto tem critério único e avisado (rc_leitura),
+    e o portão G9 falha em cada um dos cinco modos de o derivado estragar o trabalho —
+    sha256 trocado, divergência acima do teto, censura não restaurada, asterisco no texto
+    revisado e máscara sem registro.
 """
 from __future__ import annotations
 
+import hashlib
 import re
 import shutil
 import sys
 import tempfile
+from collections import Counter
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -455,6 +461,109 @@ verificar("censura por asterisco é detectada (a camada de reescrita mascara pal
           and PS.eixo_proveniencia(_perfis_fix[0], _perfis_fix[1])["mascarados_a"] == 0)
 verificar("'bruto' e 'solto' são a mesma leitura (não dispara falso alarme de estágio)",
           PS.classe_de_leitura("bruto") == PS.classe_de_leitura("solto") != PS.classe_de_leitura("curado"))
+
+# 14. arquitetura de três camadas: o corpo tem critério único (rc_leitura) e o portão G9 fiscaliza o
+#     derivado. Medido sobre o caso real: a camada de reescrita mascarou "merda" ×3 e "bandido" ×2, e
+#     o G1 continuaria verde porque confere sha256, não conteúdo. Um portão que não falha quando deve
+#     é decoração, então cada modo de estragar tem seu teste.
+import rc_leitura as RL  # noqa: E402
+import rc_qa as QA14  # noqa: E402
+
+REF = REFERENCIA / "00-fonte"
+_mono = RL.localizar_corpo(RL.ler_texto(REF / "transcricao-bruta.txt"))
+verificar("bruto do YouTube: corpo pelo marcador", _mono["criterio_corpo"] == "marcador")
+verificar("e o número de palavras é o que já estava em metadados.yaml (18806)",
+          _mono["corpo_palavras"] == 18806)
+_pont = RL.localizar_corpo(RL.ler_texto(REF / "transcricao-pontuada.txt"))
+verificar("derivado pontuado: corpo pelo marcador, não pela linha mais longa",
+          _pont["criterio_corpo"] == "marcador" and _pont["corpo_segmentos"] > 280)
+verificar("o critério antigo teria medido 771 palavras num corpo de 18 mil",
+          _pont["corpo_palavras"] > 18000 and _pont["corpo_palavras"] > 20 * 771)
+_sem_marca = RL.localizar_corpo("\n".join(["linha %d" % i for i in range(40)]))
+verificar("arquivo paragraphado sem marcador cai no terceiro critério E avisa",
+          _sem_marca["criterio_corpo"] == "arquivo-inteiro" and bool(_sem_marca["aviso_corpo"]))
+_linha_unica = "palavra " * 500
+verificar("linha única sem marcador usa o segundo critério, sem aviso",
+          RL.localizar_corpo(_linha_unica)["criterio_corpo"] == "linha-mais-longa"
+          and RL.localizar_corpo(_linha_unica)["aviso_corpo"] is None)
+
+# pasta sintética mínima para exercitar o G9 nos dois sentidos
+def _montar(tmp: Path, *, restaurada: bool = True, mascara_no_bloco: bool = False,
+            sha: str = "", teto: str = "0.05", registrar: bool = True,
+            derivado_extra: str = "") -> Path:
+    # recheio: o teto de divergência é proporcional, e num texto de 30 palavras quatro máscaras
+    # seriam 25% — o caso real tem 19 mil palavras, então o fixture também precisa ser longo
+    recheio = " ".join(f"discurso{i}" for i in range(300))
+    bruto = ("Título\nCanal\n\nTranscrição Automática\n"
+             + recheio + " então o europeu via jesus como um bandido e o outro falou "
+             "merda merda merda e depois seguiu o discurso normalmente até o fim da "
+             "transmissão ao vivo\n")
+    deriv = ("Título\nCanal\n\nTranscrição Automática\n"
+             + recheio + ". Então, o europeu via Jesus como um b******. E o outro falou "
+             "m****, m****, m****. E depois seguiu o discurso normalmente até o fim da "
+             "transmissão ao vivo." + derivado_extra + "\n")
+    (tmp / "00-fonte").mkdir(parents=True, exist_ok=True)
+    (tmp / "20-blocos").mkdir(parents=True, exist_ok=True)
+    (tmp / "00-fonte" / "transcricao-bruta.txt").write_text(bruto, encoding="utf-8")
+    (tmp / "00-fonte" / "transcricao-pontuada.txt").write_text(deriv, encoding="utf-8")
+    real = hashlib.sha256((tmp / "00-fonte" / "transcricao-pontuada.txt").read_bytes()).hexdigest()
+    lista = ('    - mascara: "b******"\n      restaurar_para: bandido\n'
+             '    - mascara: "m****"\n      restaurar_para: merda\n') if registrar else ""
+    (tmp / "00-fonte" / "metadados.yaml").write_text(
+        "slug: teste\nderivado:\n  arquivo: transcricao-pontuada.txt\n"
+        f"  sha256: {sha or real}\n  divergencia_maxima: {teto}\n"
+        f"  palavras_mascaradas:\n{lista}", encoding="utf-8")
+    corpo = ("# Bloco 01\n\n**[GURU]** Então, o europeu via Jesus como um "
+             + ("b******" if mascara_no_bloco else "bandido")
+             + ". E o outro falou " + ("m****" if not restaurada and mascara_no_bloco else
+                                      ("nada" if not restaurada else "merda, merda, merda"))
+             + ".\n")
+    (tmp / "20-blocos" / "bloco-01.md").write_text(corpo, encoding="utf-8")
+    return tmp
+
+with tempfile.TemporaryDirectory(prefix="rc-g9-") as _t:
+    _p = _montar(Path(_t))
+    _m = QA14.ler_metadados(_p)
+    _st, _dt = QA14.g9_derivado_divergencia(_p, _m)
+    verificar("G9 ok no caso bem formado", _st == QA14.OK)
+    verificar("G9 nomeia as palavras que a camada mascarou",
+              "bandido" in _dt and "merda" in _dt)
+    _st2, _dt2 = QA14.g9_derivado_divergencia(_p, {**_m, "derivado": {**_m["derivado"],
+                                                                      "sha256": "0" * 64}})
+    verificar("G9 falha se o derivado foi trocado (sha256)", _st2 == QA14.FALHA
+              and "ALTERADO" in _dt2)
+    _st3, _dt3 = QA14.g9_derivado_divergencia(_p, {**_m, "derivado": {**_m["derivado"],
+                                                                      "divergencia_maxima": "0.001"}})
+    verificar("G9 falha se a divergência estoura o teto", _st3 == QA14.FALHA
+              and "diverge" in _dt3)
+with tempfile.TemporaryDirectory(prefix="rc-g9-") as _t:
+    _p = _montar(Path(_t), restaurada=False)
+    _st, _dt = QA14.g9_derivado_divergencia(_p, QA14.ler_metadados(_p))
+    verificar("G9 falha se a palavra censurada não foi restaurada", _st == QA14.FALHA
+              and "não foi restaurada" in _dt)
+with tempfile.TemporaryDirectory(prefix="rc-g9-") as _t:
+    _p = _montar(Path(_t), mascara_no_bloco=True)
+    _st, _dt = QA14.g9_derivado_divergencia(_p, QA14.ler_metadados(_p))
+    verificar("G9 falha se o asterisco chegou ao texto revisado", _st == QA14.FALHA
+              and "copiada para o texto revisado" in _dt)
+with tempfile.TemporaryDirectory(prefix="rc-g9-") as _t:
+    _p = _montar(Path(_t), registrar=False)
+    _st, _dt = QA14.g9_derivado_divergencia(_p, QA14.ler_metadados(_p))
+    verificar("G9 falha se a máscara não está registrada em metadados.yaml", _st == QA14.FALHA
+              and "não registrada" in _dt)
+with tempfile.TemporaryDirectory(prefix="rc-g9-") as _t:
+    _p = _montar(Path(_t), derivado_extra=" " + " ".join(f"enchimento{i}" for i in range(4000)))
+    _st, _dt = QA14.g9_derivado_divergencia(_p, QA14.ler_metadados(_p))
+    verificar("G9 falha se o derivado não é o mesmo texto (acréscimo massivo)", _st == QA14.FALHA)
+verificar("G9 é N/A quando não há camada derivada",
+          QA14.g9_derivado_divergencia(Path("/tmp"), {})[0] == QA14.NA)
+_dv = QA14.divergencia_lexical("a b c d", "a b c d")
+verificar("textos idênticos têm divergência zero", _dv["divergencia"] == 0.0)
+_loc = QA14.localizar_mascaras("fala merda agora", "fala m**** agora", Counter({"merda": 1}))
+verificar("a máscara é lida no bruto pelo contexto", _loc[0]["palavra_no_bruto"] == "merda")
+_loc2 = QA14.localizar_mascaras("a b c d e f", "x y z m**** w q r", Counter())
+verificar("sem alinhamento de contexto o portão não chuta palavra",
+          _loc2[0]["palavra_no_bruto"] is None)
 
 # o tempdir da seção 10 era criado e nunca removido — ficava um /tmp/rc-curadoria-* por execução
 shutil.rmtree(_tmp, ignore_errors=True)

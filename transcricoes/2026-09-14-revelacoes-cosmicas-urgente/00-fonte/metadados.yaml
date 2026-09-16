@@ -48,6 +48,49 @@ bruto:
   corpo_palavras: 18806       # tokenizador: sequência de letras/dígitos/apóstrofo
   pontuacao_original: nenhuma # STT puro: 0 vírgulas, 0 pontos, 0 interrogações
 
+# CAMADA DERIVADA — instituída pelo despacho de 16/09/2026 (arquitetura de três camadas).
+# O derivado é TEXTO DE TRABALHO: legibilidade para revisar. A autoridade sobre o que foi dito
+# continua sendo `bruto` acima. Nenhum produto final pode ser montado só a partir do derivado.
+derivado:
+  arquivo: transcricao-pontuada.txt
+  motor: notebooklm           # camada de reescrita (pontuação/segmentação) SOBRE O MESMO ASR
+  mesma_escuta_que_o_bruto: sim   # divergência lexical 3,00%; 9 de 16 marcadores orais idênticos
+  bytes: 109452
+  linhas: 300
+  sha256: 5aa247f3487752423e1eb4056c0fd54c4af5394a563411d3e5e5b95110e714d7
+  palavras: 18975             # o bruto tem 18966: +9 (+0,05%) — mesma cobertura de áudio
+  segmentos: 288              # um turno de fala por linha; o bruto tem o corpo numa linha só
+  sinais_por_100_palavras: 15.93   # o bruto: 0,22
+  cabecalho: copiado-do-bruto # linhas 0-11 idênticas + separador "===="; não é saída do motor
+  entrega: "commit 6eddae0 (upload web do GitHub, raiz); movido para 00-fonte em 2026-09-16"
+  data_recebimento: 2026-09-16
+  divergencia_lexical: 0.0300 # multiconjunto de palavras: 280 do bruto ausentes aqui, 289 inverso
+  divergencia_maxima: 0.05    # teto fiscalizado pelo portão G9
+  jaccard_vocabulario: 0.929
+  hapax_em_comum: 0.930
+  marcadores_orais_identicos: 9   # de 16: então 132, uhum 31, cara 26, tipo 25, ó 21, tô 20, sabe 17, quer dizer 5, sei lá 2
+  # CENSURA DA CAMADA DE REESCRITA — o G9 confere esta lista e exige restauração no produto.
+  # Asterisco não é palavra da língua: nenhuma destas formas pode chegar ao .docx final.
+  palavras_mascaradas:
+    - mascara: "m****"
+      ocorrencias: 3
+      restaurar_para: merda        # localizado no bruto pelo cruzamento comprimento+inicial+perdas
+      presente_no_bruto: 3
+    - mascara: "b******"
+      ocorrencias: 2
+      restaurar_para: bandido      # "os europeus viam Jesus como um bandido" / "não mais um bandido judeu"
+      presente_no_bruto: 2
+  microedicoes_registradas:        # conferidas uma a uma nos dois textos (parecer §0)
+    - "planeta de expiação E provas -> 'em provas' (quebrou o casamento com RC-954)"
+    - "as calmeias começaram a colapsar -> 'colmeias' em 1 de 2 ocorrências (correção parcial)"
+    - "num circuito -> 'num num circuito' (acréscimo de palavra)"
+    - "cabeça de elefante -> 'cadecia de elefante' (corrompeu palavra boa)"
+    - "full megante de problemas -> 'full de problemas' (suprimiu palavra)"
+  lacunas_resolvidas: 3            # das 16 [INAUDÍVEL] da revisão: tracia, faco, simples
+  lacunas_nao_resolvidas: 13       # 5 idênticas ao bruto, 4 com outro palpite, 4 inconclusivas
+  parecer: docs/pareceres/parecer-motor-stt.md
+  medicao: docs/pareceres/parecer-motor-stt-medicao.md
+
 midia:
   audio: nao-arquivado        # política do Plano §7: só link externo
   video: nao-arquivado
@@ -71,7 +114,8 @@ resultado:
   paragrafos: 143
   notas: 32
   a_confirmar: 24
-  inaudivel: 14
+  inaudivel: 16             # corrigido em 16/09/2026: eram 14 registrados, 16 contados no produto
+                            # (3 delas o derivado pontuado resolve: Trácia, faço, simples — ver `derivado`)
   adjudicacao: 98 linhas decididas (24 aceitas, 7 parciais, 20 recusadas, 30 informativas, 16 proteção, 1 superada)
   novos_termos_propostos: 10
   novos_termos_criados: 10 (RC-947 a RC-956, lote 02 de curadoria em 16/09/2026)

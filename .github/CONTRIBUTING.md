@@ -31,29 +31,47 @@ python ferramentas/rc_novo.py --slug 2026-10-02-lemuria-terry-fabris \
 # 2. conferir os metadados que o script não tem como saber (duração, chamada, falantes)
 #    transcricoes/<slug>/00-fonte/metadados.yaml
 
-# 3. diagnóstico contra a fonte de verdade (a saída é descoberta sozinha)
+# 3. (opcional) derivado de outra ferramenta — texto pontuado, ex.: NotebookLM
+#    ele mora em 00-fonte/, NUNCA na raiz, e nunca substitui o bruto (Guia §2.6)
+git mv ~/Downloads/pontuada.txt transcricoes/<slug>/00-fonte/transcricao-pontuada.txt
+sha256sum transcricoes/<slug>/00-fonte/transcricao-pontuada.txt  # -> derivado.sha256 no metadados.yaml
+python ferramentas/rc_qa.py transcricoes/<slug> --portao G9      # conferir ANTES de revisar
+
+# 4. diagnóstico contra a fonte de verdade (a saída é descoberta sozinha)
 python ferramentas/rc_diagnostico.py transcricoes/<slug>/00-fonte/transcricao-bruta.txt --kb KB-RC
 
-# 4. revisar em blocos — um arquivo por bloco, nome zero-padded
+# 5. revisar em blocos — um arquivo por bloco, nome zero-padded
 #    transcricoes/<slug>/20-blocos/bloco-01.md …
 
-# 5. adjudicar linha a linha o livro-razão (nenhuma linha pode ficar sem decisão)
+# 6. adjudicar linha a linha o livro-razão (nenhuma linha pode ficar sem decisão)
 python ferramentas/rc_ledger.py transcricoes/<slug> --pendencias
 python ferramentas/rc_ledger.py transcricoes/<slug> --marcar "Brama=recusada" \
     --motivo "flexão legítima; o canônico Brahma já está aplicado"
 python ferramentas/rc_ledger.py transcricoes/<slug> --recalcular --resumo
 
-# 6. montar o produto e escrever a devolução
+# 7. montar o produto e escrever a devolução
 python ferramentas/rc_docx.py transcricoes/<slug>/20-blocos/bloco-*.md \
     --lexico transcricoes/<slug>/10-diagnostico/dossie-bloco.txt \
     --saida transcricoes/<slug>/30-produto/transcricao-revisada.docx \
     --titulo "Título da palestra" \
     --validar transcricoes/<slug>/10-diagnostico/variantes-propostas.csv
 
-# 7. portões e catálogo
+# 8. portões e catálogo
 python ferramentas/rc_qa.py transcricoes/<slug>
 python ferramentas/rc_indice.py
 ```
+
+### As três camadas de texto (Guia §2.6)
+
+`00-fonte/transcricao-bruta.txt` é a **fonte**: imutável, sha256, portão G1 — é a autoridade sobre o
+que foi dito. `00-fonte/transcricao-pontuada.txt`, quando existe, é **derivado**: texto de trabalho
+de outra ferramenta, com `sha256`, `divergencia_maxima` e `palavras_mascaradas` registrados em
+`metadados.yaml`, sob o portão **G9**. `20-blocos/` e `30-produto/` são a **saída** assinada.
+
+Duas regras que não têm exceção: derivado **nunca** vira fonte (se ele se perde, o bruto sobrevive);
+e palavra mascarada por camada de segurança de terceiro (`merda` → `m****`) **se restaura do bruto** —
+asterisco não chega à saída. O G9 localiza as máscaras pelo contexto no bruto e devolve a lista
+pronta para o `metadados.yaml`.
 
 ## Curadoria — aplicar a fila na fonte de verdade
 
@@ -109,6 +127,7 @@ Todo lote aplicado ganha um relatório em `KB-RC/_relatorio-curadoria-lote-NN.md
 | o `.docx` é reproduzível a partir dos `.md` | G6 |
 | o catálogo bate com o disco | G7 |
 | nada acima de 5 MB, sem `~$*`, sem espaço nem acento em caminho operacional | G8 |
+| derivado íntegro (sha256), dentro do teto de divergência e sem palavra mascarada pendente | G9 |
 
 Detalhes e justificativas: `docs/planos/plano-de-organizacao.md` §8.2.
 

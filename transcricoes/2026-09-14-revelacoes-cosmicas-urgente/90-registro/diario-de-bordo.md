@@ -132,6 +132,12 @@ ou a outro agente, noutra sessão — retomar sem refazer descobertas.
 | Regex única para negrito/itálico/código no conversor | o itálico casava através de `código` com asterisco e emendava trechos distantes |
 | Corrigir cifra divergente no corpo | quebra a rastreabilidade; o certo é `[NOTA]` + devolução ao produtor |
 | Fuzzy sem vocabulário-guarda | `Nick` → Nyx, `a vista` → Avesta, `Cristo` → Krishna |
+| Localizar palavra mascarada por **comprimento + inicial** | `m****` casa com `merda` (a censurada) e com `medio` (perdida por outra razão). Serve só como desempate depois do contexto |
+| Alinhar máscara com **janela fixa** de contexto | a camada edita a vizinhança ("advogado **de** acusação" → "**e** acusação"); exige busca graduada 3 → 2 → 1 palavras |
+| Contexto de **um lado só** sem exigir que a palavra tenha sumido | `m****` casou com o artigo "a" ("fiz ? advogado defesa nao") |
+| Tratar máscara isolada quando elas vêm **em sequência** | `merda merda merda` → `m****, m****, m****`: a vizinhança imediata de uma máscara é outra máscara, que não carrega contexto. O trecho contíguo é que é a unidade |
+| Medir o corpo pela **linha mais longa** em arquivo paragraphado | devolve um parágrafo: 771 palavras de um corpo de 18.815, com o QA verde |
+| Testar `rc_novo.py` com `ferramentas/` em **symlink** dentro de um tempdir | `RAIZ` sai de `__file__` resolvido (que atravessa o symlink): a pasta de teste foi criada no **repositório real**. Ou se copia a árvore inteira, ou não se testa assim |
 
 ## 16/09/2026 — a fonte deixou de ser órfã: URL registrada, padrão Y, lote 02
 
@@ -298,3 +304,63 @@ audiovisuais. O que isso fechou, nesta pasta:
 - **Pendência de decisão do Comandante:** (1) a arquitetura de três camadas do parecer §6; (2) o
   destino do `Opcao-B.txt`, que está na raiz — lugar que o Plano de Organização não prevê. Não movi o
   arquivo por conta própria: é entrega dele e o destino depende da arquitetura aprovada.
+
+## 16/09/2026 — arquitetura de três camadas implantada: o derivado entrou em `00-fonte` e o G9 começou a fiscalizar
+
+- **Despacho do Comandante:** arquitetura de §6 do parecer **aprovada — implantar**. Ordem explícita:
+  "mova o arquivo da raiz para a pasta correta e crie a regra do G9". Commits **locais**, push só
+  quando ele reestabelecer o token.
+- **O arquivo mudou de casa.** `git mv Opcao-B.txt →
+  transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-pontuada.txt` (rename
+  staged, sha256 `5aa247f3487752…` preservado, histórico intacto). A raiz do repositório deixou de
+  abrigar arquivo de uma transcrição específica — o lugar que o Plano de Organização não prevê.
+- **`metadados.yaml` ganhou o bloco `derivado:`** completo: `arquivo`, `ferramenta` (NotebookLM),
+  `data`, `sha256`, `divergencia_maxima: 0.05`, `divergencia_medida: 0.03`, as cinco
+  `palavras_mascaradas` (`m****` → merda ×3, `b******` → bandido ×2, com ocorrências e contexto) e
+  `observacao` apontando para o parecer. O `_modelo/00-fonte/metadados.yaml` ganhou os mesmos
+  placeholders **comentados** — nem toda transcrição tem derivado, e um bloco vazio sugeriria o
+  contrário. No caminho, correção de registro: `resultado.inaudivel` dizia 14 e os blocos têm **16**
+  marcadores `[INAUDÍVEL`; nenhum portão fiscaliza esse campo, então a inconsistência era invisível.
+- **`rc_leitura.py` (novo) — uma resposta só para "onde começa o corpo".** Cascata: marcador
+  `Transcrição Automática` → linha mais longa se cobrir ≥ 80% → arquivo inteiro **com aviso**.
+  `rc_novo.py` e `rc_indice.py` passaram a delegar a ele, em vez de cada um ter sua régua.
+  Retrocompatibilidade conferida: bruto de referência com números idênticos ao registrado (106.243
+  bytes, sha256 `34f9bcf4…`, corpo na linha 13, 101.468 caracteres, **18.806 palavras**) e
+  `_indice.csv` byte a byte igual. No derivado, a régua antiga devolveria **771 palavras** — o
+  defeito previsto no parecer §8, que era latente e virou avisado.
+- **Portão G9 em operação.** `rc_qa.py` agora tem **nove** portões. O G9 confere sha256 do derivado,
+  mede divergência lexical contra o teto e **localiza cada máscara no bruto pelo contexto**, tratando
+  trecho contíguo como unidade. Falha em cinco modos, todos com teste: sha trocado, divergência acima
+  do teto, palavra censurada não restaurada, asterisco copiado para a saída, máscara sem registro.
+  Saída real: `derivado íntegro (sha256 5aa247f34877…); divergência 3.00% ≤ teto 5%; 5 tokens
+  mascarados no derivado, registrados e restaurados nos blocos ('m****'→merda; 'b******'→bandido)`.
+  É o Find&Replace manual que o Comandante previu que o portão pouparia — com a diferença de que a
+  conferência passa a acontecer mesmo quando ninguém lembra de fazê-la.
+- **Guia atualizado (norma, não relatório).** §2.6 novo (*camadas de texto*, sete regras, inclusive a
+  admissão de que **duas réguas de contagem coexistem**: `split()` 18.781 × `PALAVRA_RE` 18.806);
+  §8 deixa de ser criação e passa a **conferência**, com a regra de que nenhuma intervenção de
+  pontuação pode alterar palavra; §9 incorpora o **rótulo em negrito inline** — o desvio praticado nos
+  blocos 01–08 vira norma e o encargo de registrá-lo está fechado; §13.1 ganha o passo de registro do
+  derivado; §14 ganha quatro linhas de aceite medidas pelo G9; §16 lista o `rc_leitura.py`; §17 diz de
+  qual régua vem cada número. `.docx` regerado (contrato: os dois formatos sempre).
+- **Parecer ganhou §12 (Implantação)** com o estado item a item, os campos como construídos e a
+  medição abaixo. Corrigido no caminho: o comando de reprodução do §11 apontava para `Opcao-B.txt` na
+  raiz — depois do `git mv` o parecer teria ficado irreproduzível sem que ninguém notasse.
+- **Medição nova, que corrige uma percepção do despacho.** O curador relatou que a dedução contextual
+  do NotebookLM diminui drasticamente as lacunas `[INAUDÍVEL]`. Medido sobre as **16 lacunas** dos
+  blocos 01–08: o derivado resolve **3** (≈19%) — *trácia*, *faço* (bloco-01), *simples* (bloco-05);
+  deixa **5 idênticas** ao bruto ("produzência", "sear em cada uma dessas inteligências", "hr1 os
+  genes…"); dá palpite diferente em 4 (bio clein, crios, bodo, *full megante* suprimido) e **corrompe
+  uma palavra boa**: "cabeça de elefante" → "**cadecia** de elefante" (bloco-03). É o mesmo mecanismo
+  nos dois sentidos — a camada que acerta *trácia* inventa *cadecia*. Consequência normativa:
+  **lacuna `[INAUDÍVEL]` é decisão editorial do revisor (§12 do Guia), não herança do derivado**; o G9
+  fiscaliza máscaras de censura, não lacunas. A economia real do derivado continua onde o parecer já a
+  medira: pontuação e fronteira de turno.
+- **Testes: 136 → 154 verificações, 0 falhas** (seção 14 nova: `rc_leitura` nos três critérios +
+  regressão dos números de referência; G9 nos cinco modos de falhar + dois casos-limite de
+  localização). `rc_qa.py --tudo`: **9 portões verdes** em toda a pasta.
+- **Push continua bloqueado** (token do GitHub App inválido). Trabalho commitado na branch
+  `arena/01a0a743-transcri-youtube`, nada perdido, à espera da autorização do Comandante.
+- **Encargos que ficam:** item 2 do parecer §8 (`rc_diagnostico.py:372`, heurística de capitalizadas
+  ciente de inicial de frase) e a reconciliação das duas réguas de contagem; a **segunda transcrição**
+  já entra no padrão novo, com derivado registrado e G9 rodando na preparação.
