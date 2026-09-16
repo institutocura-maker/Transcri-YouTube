@@ -1,0 +1,75 @@
+# Metadados da transcrição — preenchidos na captura, conferidos pelo rc_qa.py (G1/G7).
+# Este arquivo é a identidade do vídeo: sem ele, o bruto é um .txt órfão.
+
+slug: 2026-09-14-revelacoes-cosmicas-urgente
+titulo: "Revelações Cósmicas Urgente"
+titulo_completo: "Revelações Cósmicas Urgente – Jan Val Ellam"
+chamada: "ASSISTA ANTES QUE SAIA DO AR"
+canal: Paranormal Experience
+url: null                    # A PREENCHER pelo capturador — não foi registrada na captura
+data_gravacao: 2026-09-14    # transmissão ao vivo
+data_publicacao: 2026-09-14
+data_captura: 2026-09-15
+duracao_min: 125
+idioma: pt-BR
+ferramenta_stt: youtube-autosub      # legenda automática do YouTube, sem pontuação
+licenca: uso interno do Projeto
+
+falantes:
+  - rotulo: "[GURU DE MALÁ]"
+    papel: apresentador
+    turnos: 42
+    observacao: "nome civil provável: Rogério (ver 40-devolucao/adjudicacao.md)"
+  - rotulo: "[ALEXANDRE SHERMINATOR]"
+    papel: coapresentador
+    turnos: 36
+    observacao: "tratado no áudio como 'Alê'; variantes STT: Sherminetro, Sherminate"
+  - rotulo: "[JAN VAL ELLAM]"
+    papel: entrevistado
+    turnos: 64
+    observacao: "autor da Revelação Cósmica; variantes STT: Jan Vaillan, Jean Valan"
+  - rotulo: "[FALANTE?]"
+    papel: nao-identificado
+    turnos: 1
+    observacao: "turno curto sem atribuição segura"
+
+bruto:
+  arquivo: transcricao-bruta.txt
+  bytes: 106243
+  linhas: 15
+  sha256: 34f9bcf418bf6acc7a42b40c71a915a4ac72132eb4b894036711a93823a095fc
+  linhas_cabecalho: 12        # linhas 1-12: título, canal, chamada, guia de fontes
+  corpo_linha: 13             # o corpo inteiro é UMA linha (índice 12, base 0)
+  corpo_caracteres: 101468
+  corpo_palavras: 18806       # tokenizador: sequência de letras/dígitos/apóstrofo
+  pontuacao_original: nenhuma # STT puro: 0 vírgulas, 0 pontos, 0 interrogações
+
+midia:
+  audio: nao-arquivado        # política do Plano §7: só link externo
+  video: nao-arquivado
+  link: null                  # depende de `url` acima
+
+revisao:
+  guia: docs/normas/guia-revisao-v2.md
+  anexo: docs/normas/resolucao-de-conflitos.md
+  disfluencia: leve           # remove repetição imediata e "né/eh/uhum"; preserva sintaxe
+  diarizacao: opcao-b-rotulos-inferidos-explicitos
+  anuncios: preservados-no-corpo
+  guia_de_fontes: removido-do-produto-final
+  politica_de_numeros: nenhum número alterado; divergência vira [NOTA]
+  despachos:
+    - 90-registro/despachos/2026-09-15-contrato-editorial.md
+    - 90-registro/despachos/2026-09-16-apresentadores-e-sidarta.md
+
+resultado:
+  blocos: 8
+  palavras_revisadas: 18966   # texto corrido, sem os marcadores editoriais
+  paragrafos: 143
+  notas: 32
+  a_confirmar: 24
+  inaudivel: 14
+  adjudicacao: 98 linhas decididas (24 aceitas, 7 parciais, 20 recusadas, 30 informativas, 16 proteção, 1 superada)
+  novos_termos_propostos: 10
+  divergencias_factuais: 7
+  revisor: Agente 86
+  concluido_em: 2026-09-16

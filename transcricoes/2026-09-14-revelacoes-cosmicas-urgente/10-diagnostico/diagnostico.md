@@ -1,6 +1,6 @@
 # Diagnóstico de transcrição — Revelações Cósmicas Urgente – Jan Val Ellam.txt
 
-- **Fonte:** `/home/user/Transcri-YouTube/Revelações Cósmicas Urgente – Jan Val Ellam.txt`
+- **Fonte:** `transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-bruta.txt` (na época do diagnóstico: `Revelações Cósmicas Urgente – Jan Val Ellam.txt`, na raiz)
 - **Base:** `base-terminologica.xlsx` — 946 termos, 104 obras; **90** termos relevantes para este texto
 - **Sementes de variantes carregadas:** 375 (10 marcadas como conflito)
 

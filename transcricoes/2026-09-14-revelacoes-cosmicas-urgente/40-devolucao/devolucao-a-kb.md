@@ -1,8 +1,8 @@
 # Devolução à KB-RC — Revelações Cósmicas Urgente (Jan Val Ellam)
 
-**Origem:** revisão dos 8 blocos da transcrição *Revelações Cósmicas Urgente – Jan Val Ellam* (canal Paranormal Experience, live de 14/09/2026, publicada com a chamada "ASSISTA ANTES QUE SAIA DO AR").
+**Origem:** revisão dos 8 blocos (`20-blocos/`) da transcrição *Revelações Cósmicas Urgente – Jan Val Ellam* (canal Paranormal Experience, live de 14/09/2026, publicada com a chamada "ASSISTA ANTES QUE SAIA DO AR").
 **Data da devolução:** 16 de setembro de 2026 · **Elaboração:** Agente 86
-**Regra aplicada:** Guia v2 §15 — o revisor **propõe**; quem aplica é o curador. Toda proposta cita evidência.
+**Regra aplicada:** `docs/normas/guia-revisao-v2.md` §15 — o revisor **propõe**; quem aplica é o curador. Toda proposta cita evidência.
 
 ---
 
@@ -23,7 +23,9 @@
 | **Imantação de espíritos em IAs** *(já existe — reforçar)* | — | "se houver imantação, surge a sensação de autonomia"; "o efeito do espírito imantado nela"; "encontre guarida nesse tipo de ser silicato, ou seja, ser feito de sílica" | **RC-699 já cobre** (Imantação de Espíritos em Inteligências Artificiais / Corpos de Sílica, verificado, média). Sugestão: acrescentar as variantes STT observadas ("espírito mantado") e registrar **"ser silicato"** como *referencia_oral* — é o termo que o autor usa e glossa em seguida, não um erro de transcrição |
 | **Belial** *(já existe — reforçar)* | — | pergunta do apresentador: "o colapso de Jah Baal"; e o autor, adiante: "Belial, que você está chamando aí de Baal" | **RC-479 já cobre**. Sugestão: acrescentar "Jah Baal" e "Belal" como variantes STT — a forma é tão instável no áudio que o próprio autor a corrige em tempo real |
 
-### 1.1 Conceitos externos sugeridos para a camada 3 (`ferramentas/externos.csv`), não para a KB-RC
+### 1.1 Conceitos externos sugeridos para a camada 3, não para a KB-RC
+
+Linhas prontas para incorporação em `ferramentas/dados/externos.csv`, no formato do arquivo, em **`externos-novos.csv`** (38 propostas, sendo 2 como `a confirmar`).
 *Great Reset* (grande reinicialização) · *Dark Enlightenment* (iluminismo sombrio) · Metaverso · Big techs · Voucher · Universidade da Singularidade · BlackRock · Vanguard · Skynet · Blade Runner · Theta Healing · Thomas Hobbes · Goethe · Barão de Itararé · Miguel Nicolelis · Nick Bostrom · Ray Kurzweil · Siddhartha Gautama · Quetzalcóatl (já na base via RC-463) · /Kaggen (ver acima: merece verbete interno também).
 
 ### 1.2 Alerta de falso amigo
@@ -95,7 +97,7 @@ A base tem **Singularidade de Quatro Cabeças (RC-649)**. A "singularidade" de K
 
 ## 3. Correções e pendências na KB-RC
 
-Novas, somadas às 10 ações residuais do Anexo I (`analise/RESOLUCAO-DE-CONFLITOS.md` §6), já assumidas pelo Comandante:
+Novas, somadas às 10 ações residuais do Anexo I (`docs/normas/resolucao-de-conflitos.md` §6), já assumidas pelo Comandante:
 
 | # | Achado | Evidência | Proposta |
 |---|---|---|---|

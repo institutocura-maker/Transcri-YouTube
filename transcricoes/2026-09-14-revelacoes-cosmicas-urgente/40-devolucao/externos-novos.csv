@@ -1,0 +1,38 @@
+variante,canonico,codigo_base,tipo,origem,observacao,status_aprovacao
+Thomas Robs,Thomas Hobbes,EXTERNO,externa-autor,conhecimento geral do revisor (2026-09-16),"filósofo inglês, Leviatã (1651); citado no bloco 2 sobre o contrato social",proposta
+Hobbes,Thomas Hobbes,EXTERNO,externa-autor,conhecimento geral do revisor (2026-09-16),"semente de proteção: o sobrenome sozinho não pode virar variante de termo da base",proposta
+Mary Chiley,Mary Shelley,EXTERNO,externa-autor,corroborado pela KB-RC ("o Frankenstein de Shelley"),"autora de Frankenstein (1818); citada no bloco 2",proposta
+Dr frankstein,Frankenstein,EXTERNO,externa-obra,KB-RC + conhecimento geral do revisor (2026-09-16),"romance de Mary Shelley; o STT grafa 'frankstein' sem maiúscula",proposta
+barão de Tararé,Barão de Itararé,EXTERNO,externa-pessoa,conhecimento geral do revisor (2026-09-16),"pseudônimo de Aparício Torelly; bloco 6, no contexto de Fausto e da obediência",proposta
+Miguel Nicoles,Miguel Nicolelis,EXTERNO,externa-autor,conhecimento geral do revisor (2026-09-16),"neurocientista brasileiro; bloco 6",proposta
+Nicoleles,Miguel Nicolelis,EXTERNO,externa-autor,conhecimento geral do revisor (2026-09-16),variante STT do sobrenome,proposta
+Nvid,Nvidia,EXTERNO,externa-empresa,conhecimento geral do revisor (2026-09-16),"truncamento; o canônico Nvidia já está em externos.csv",proposta
+chato GP,ChatGPT,EXTERNO,externa-produto,conhecimento geral do revisor (2026-09-16),"blocos 5 e 6",proposta
+chat PT,ChatGPT,EXTERNO,externa-produto,conhecimento geral do revisor (2026-09-16),variante STT,proposta
+Chat GPT,ChatGPT,EXTERNO,externa-produto,conhecimento geral do revisor (2026-09-16),"semente de proteção: grafia separada não pode virar outro termo",proposta
+Antropic,Anthropic,EXTERNO,externa-empresa,conhecimento geral do revisor (2026-09-16),variante STT,proposta
+Black Rock,BlackRock,EXTERNO,externa-empresa,conhecimento geral do revisor (2026-09-16),"gestora de ativos; grafia correta é sem espaço",proposta
+Vanguard,Vanguard,EXTERNO,externa-empresa,conhecimento geral do revisor (2026-09-16),"semente de proteção: citada ao lado de BlackRock",proposta
+teta healing,Theta Healing,EXTERNO,externa-pratica,conhecimento geral do revisor (2026-09-16),"prática citada no bloco 6",proposta
+O Exterminador do Futuro,O Exterminador do Futuro (The Terminator),EXTERNO,externa-obra,conhecimento geral do revisor (2026-09-16),"título pt-BR da franquia; o STT entrega 'Terminator' e 'exterminador'",proposta
+Terminator,O Exterminador do Futuro (The Terminator),EXTERNO,externa-obra,conhecimento geral do revisor (2026-09-16),"NUNCA confundir com 'Alexandre Sherminator': o apelido do apresentador não tem relação com a franquia",proposta
+Blade Runner,Blade Runner,EXTERNO,externa-obra,conhecimento geral do revisor (2026-09-16),semente de proteção,proposta
+Skynet,Skynet,EXTERNO,externa-obra,conhecimento geral do revisor (2026-09-16),"semente de proteção: IA fictícia da franquia Terminator",proposta
+Great Reset,Great Reset,EXTERNO,externa-conceito,conhecimento geral do revisor (2026-09-16),"semente de proteção; o autor diz também 'grande reinicialização'",proposta
+grande reinicialização,Great Reset,EXTERNO,externa-conceito,conhecimento geral do revisor (2026-09-16),"tradução oral usada pelo autor no bloco 6",proposta
+Universidade da Singularidade,Singularity University,EXTERNO,externa-instituicao,conhecimento geral do revisor (2026-09-16),"fundada em 2008; no áudio aparecem 2010 e 2011 (ver divergências factuais)",proposta
+Metaverso,metaverso,EXTERNO,externa-conceito,conhecimento geral do revisor (2026-09-16),semente de proteção,proposta
+big tech,big techs,EXTERNO,externa-conceito,conhecimento geral do revisor (2026-09-16),"semente de proteção; não é termo da Revelação Cósmica",proposta
+voucher,voucher,EXTERNO,externa-conceito,conhecimento geral do revisor (2026-09-16),"semente de proteção: palavra comum que o fuzzy casou com termo da base",proposta
+Parmêns,Parmênides,EXTERNO,externa-autor,conhecimento geral do revisor (2026-09-16),"filósofo pré-socrático; bloco 2",proposta
+Naxágoras,Anaxágoras,EXTERNO,externa-autor,conhecimento geral do revisor (2026-09-16),"filósofo pré-socrático; bloco 2",proposta
+Thales,Tales de Mileto,EXTERNO,externa-autor,KB-RC (já documenta variantes STT "Zildo, Tal de Mileto"),"registrar também na camada Externos para proteger o nome de casamentos falsos",proposta
+bosquimanos,bosquímanos,EXTERNO,externa-povo,fairytalez.com; capeinterfaith.org.za (consulta 2026-09-16),"povo San do Kalahari; o STT entrega sem acento",proposta
+Kalahari,Kalahari,EXTERNO,externa-toponimo,fairytalez.com (consulta 2026-09-16),"semente de proteção; no áudio aparece 'Calahari'",proposta
+Namíbia,Namíbia,EXTERNO,externa-toponimo,conhecimento geral do revisor (2026-09-16),"no áudio aparece 'Nam Namíbia'",proposta
+Teatro Santo Augosto,Teatro Santo Agostinho,EXTERNO,externa-local,confirmado no próprio áudio (bloco 8),"local do evento com Terry Fabris; NUNCA casar com 'Agostinho de Hipona'",proposta
+Insider,Insider,EXTERNO,externa-marca,anúncio veiculado na própria live (bloco 1),"marca do anunciante; cupom PARANORMAL",proposta
+Rui Barbosa,Rui Barbosa,EXTERNO,externa-pessoa,conhecimento geral do revisor (2026-09-16),"semente de proteção",proposta
+Tatiane Berre,Tatiane Berre,EXTERNO,externa-pessoa,sem fonte confirmada (2026-09-16),"criadora da personagem Tati Quântica; GRAFIA NÃO CONFIRMADA — só aprovar com o produtor",a confirmar
+Grzi,Grzi,EXTERNO,externa-pessoa,sem fonte confirmada (2026-09-16),"nome curto ouvido uma única vez; sem contexto suficiente",a confirmar
+/Kaggen,/Kaggen,KB-RC,externa-divindade,fairytalez.com; crazyalchemist.com/bestiary/kaggen (consulta 2026-09-16),"divindade criadora e trapaceira dos San; nome de Javé nessa tradição. PROPOSTO TAMBÉM COMO TERNO DA KB (ver devolucao-a-kb.md §1) e como variação de RC-001",proposta

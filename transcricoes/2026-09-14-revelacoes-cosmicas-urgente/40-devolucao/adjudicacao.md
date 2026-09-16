@@ -1,15 +1,15 @@
 # Adjudicação — Revelações Cósmicas Urgente (Jan Val Ellam)
 
-**Transcrição revisada:** `Revelações Cósmicas Urgente – Jan Val Ellam.txt` · corpo na linha 12 · 18.781 palavras · 101.468 caracteres · sem pontuação (STT puro).
-**Produtos:** `blocos/bloco-1.md` … `blocos/bloco-8.md` (143 parágrafos, 18.966 palavras de texto corrido, 32 `[NOTA]`, 24 `[A CONFIRMAR]`, 14 `[INAUDÍVEL]`).
+**Transcrição revisada:** `00-fonte/transcricao-bruta.txt` · corpo na linha 13 (índice 12) · 18.806 palavras · 101.468 caracteres · sem pontuação (STT puro).
+**Produtos:** `20-blocos/bloco-01.md` … `20-blocos/bloco-08.md` (143 parágrafos, 18.966 palavras de texto corrido, 32 `[NOTA]`, 24 `[A CONFIRMAR]`, 14 `[INAUDÍVEL]`).
 **Data:** 16 de setembro de 2026 · **Elaboração:** Agente 86.
-**Regra de ouro aplicada em todo o log:** *nenhuma palavra da base pode ser substituída por outra, salvo adjudicação explícita e justificada* (Guia v2 §10 e §13).
+**Regra de ouro aplicada em todo o log:** *nenhuma palavra da base pode ser substituída por outra, salvo adjudicação explícita e justificada* (`docs/normas/guia-revisao-v2.md` §10 e §13).
 
 ---
 
 ## 1. Fila automática (motor `rc_diagnostico.py` + `rc_lexicon.py`)
 
-O motor produziu **98 linhas** em `variantes-propostas.csv` a partir das sementes de `sementes-variantes-stt.csv` e de `externos.csv` (37 entidades). Na etapa de semeadura, **32 sementes foram atingidas** e **11 ficaram suspensas** por homografia, vocabulário comum ou colisão com a camada Externos: *Nick* (→ Nyx), *Terra Atlântis*, *Alamaior*, *Tempérium*, *a vista* (→ Avesta), *Cristo* (→ Krishna), *Virgem* (→ RC-104 Vishnu), *Get*, *J* isolado, *as reais* (ambiguidade com "reais" monetários), *era dos humanos*.
+O motor produziu **98 linhas** em `10-diagnostico/variantes-propostas.csv` a partir das sementes de `ferramentas/dados/sementes-variantes-stt.csv` e de `ferramentas/dados/externos.csv` (37 entidades). Na etapa de semeadura, **32 sementes foram atingidas** e **11 ficaram suspensas** por homografia, vocabulário comum ou colisão com a camada Externos: *Nick* (→ Nyx), *Terra Atlântis*, *Alamaior*, *Tempérium*, *a vista* (→ Avesta), *Cristo* (→ Krishna), *Virgem* (→ RC-104 Vishnu), *Get*, *J* isolado, *as reais* (ambiguidade com "reais" monetários), *era dos humanos*.
 
 Cada uma das 98 linhas recebeu decisão humana explícita, gravada nas colunas **`adjudicacao`** e **`motivo_adjudicacao`** do próprio CSV — é o livro-razão desta revisão:
 
@@ -130,6 +130,8 @@ Formas proibidas no texto corrido após a revisão: **0**. As ocorrências resid
 
 ## 5. Decisões de forma (desvios documentados do Guia v2)
 
+Detalhadas em `20-blocos/notas-de-revisao.md`.
+
 | Item | Guia v2 | Adotado nos blocos | Justificativa |
 |---|---|---|---|
 | **Diarização (§9)** | rótulo do falante em linha própria | **rótulo em negrito inline**, no início do parágrafo do turno — `**[GURU DE MALÁ]** texto…` | opção B do despacho (rótulos inferidos explícitos); o inline preserva o fluxo de leitura no `.docx` e evita 143 linhas-órfãs |
@@ -153,7 +155,7 @@ Dois defeitos do pipeline apareceram só quando o texto real passou por ele, e f
 
 Mesmo tokenizador nas duas colunas (palavras = sequência de letras/dígitos/apóstrofo).
 
-| Métrica | Bruto (linha 12 do `.txt`) | Revisado (8 blocos) |
+| Métrica | Bruto (linha 13 do `.txt`) | Revisado (8 blocos) |
 |---|---|---|
 | Palavras, texto corrido | 18.806 | **18.966** (100,9%) |
 | Palavras, com marcadores editoriais | — | 19.890 |
@@ -176,6 +178,6 @@ Mesmo tokenizador nas duas colunas (palavras = sequência de letras/dígitos/ap�
 
 ## 7. Encaminhamento
 
-1. `DEVOLUCAO-A-KB.md` — 4 seções obrigatórias (novos termos, novas variantes STT, correções na KB, novos registros bibliográficos) + divergências factuais.
-2. Itens 11 a 18 da Devolução somam-se às 10 ações residuais do Anexo I — **a cargo do curador**, não desta esteira.
+1. `devolucao-a-kb.md` — 4 seções obrigatórias (novos termos, novas variantes STT, correções na KB, novos registros bibliográficos) + divergências factuais.
+2. Itens 11 a 18 da Devolução somam-se às 10 ações residuais do Anexo I (`docs/normas/resolucao-de-conflitos.md`) — **a cargo do curador**, não desta esteira.
 3. Ficha de Jeane Miranda, B095 e demais pendências da KB — **assumidas pelo Comandante**; não bloqueiam a entrega.
