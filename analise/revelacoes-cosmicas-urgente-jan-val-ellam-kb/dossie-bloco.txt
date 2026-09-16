@@ -1,0 +1,89 @@
+RC-001|Javé|Seres & Entidades|verificado
+RC-004|Elohim|Seres & Entidades|em análise
+RC-009|Sophia|Seres & Entidades|verificado
+RC-019|Anjos clones|Seres & Entidades|em análise
+RC-031|Aya e Aye|Seres & Entidades|em análise
+RC-035|Bilatérios|Seres & Entidades|em análise
+RC-037|Brahma|Seres & Entidades|verificado
+RC-041|Criador|Seres & Entidades|verificado
+RC-048|Demiurgo|Termos Específicos|verificado
+RC-052|Deus / Deus Incognoscível|Seres & Entidades|verificado
+RC-053|Deuses|Seres & Entidades|provisório
+RC-054|Divindades|Seres & Entidades|provisório
+RC-056|Especiação|Processos & Fenômenos|em análise
+RC-062|Experiência Gron|Eventos & Eras|verificado
+RC-064|Fenvans|Seres & Entidades|verificado
+RC-072|Jesus|Seres & Entidades|verificado
+RC-073|Keshava|Termos Específicos|verificado
+RC-076|Logos / Logos Criadores|Seres & Entidades|provisório
+RC-078|Lúcifer|Seres & Entidades|verificado
+RC-101|Shamb-Aha|Lokas & Geografias|em análise
+RC-102|Shiva|Seres & Entidades|verificado
+RC-104|Trimurti|Genealogias & Linhagens|verificado
+RC-110|Val Am|Seres & Entidades|provisório
+RC-127|Val-Ha|Lokas & Geografias|provisório
+RC-132|Val Tam|Seres & Entidades|verificado
+RC-145|Zeus|Seres & Entidades|verificado
+RC-164|Criaturas-ferramenta|Conceitos Cosmológicos|verificado
+RC-166|Mentalma|Termos Específicos|verificado
+RC-175|Abelha-Rainha|Seres & Entidades|verificado
+RC-190|Revelação Espiritual|Conceitos Cosmológicos|verificado
+RC-193|Rebanho humano|Termos Específicos|em análise
+RC-204|Realidade Maior / Paraíso Original|Conceitos Cosmológicos|em análise
+RC-265|Os 270 Mundos|Lokas & Geografias|verificado
+RC-272|Laço Temporal de Kether/Javé|Conceitos Cosmológicos|provisório
+RC-297|Era dos Humanos|Eventos & Eras|verificado
+RC-303|Pirra|Seres & Entidades|verificado
+RC-346|Jeová|Seres & Entidades|verificado
+RC-397|Tirthankaras|Seres & Entidades|provisório
+RC-413|Hara|Seres & Entidades|verificado
+RC-414|Krishna|Seres & Entidades|verificado
+RC-423|Advogado de Acusação|Seres & Entidades|provisório
+RC-474|Arcontes|Seres & Entidades|em análise
+RC-477|Ensá|Seres & Entidades|verificado
+RC-479|Belial|Seres & Entidades|verificado
+RC-486|Enki|Seres & Entidades|verificado
+RC-494|Dinastia das Sophias|Genealogias & Linhagens|em análise
+RC-496|Ereon|Lokas & Geografias|verificado
+RC-513|Espiritualidade Errática|Conceitos Cosmológicos|verificado
+RC-527|Antimundo / antimatéria|Conceitos Cosmológicos|candidato
+RC-553|Eu Profundo|Seres & Entidades|verificado
+RC-574|Alcíone|Lokas & Geografias|verificado
+RC-579|Noreia|Seres & Entidades|verificado
+RC-584|Rama|Seres & Entidades|verificado
+RC-585|Vyasa|Seres & Entidades|verificado
+RC-590|Yima|Seres & Entidades|verificado
+RC-595|Avesta|Tecnologias & Artefatos|verificado
+RC-596|Archeons de Ereon|Conceitos Cosmológicos|verificado
+RC-603|Círculo / Circuito da Perfeição|Conceitos Cosmológicos|verificado
+RC-604|Fatiamento de Consciência|Processos & Fenômenos|em análise
+RC-612|Nova Espiritualidade / Novo Paraíso|Conceitos Cosmológicos|verificado
+RC-618|Moksha|Termos Específicos|verificado
+RC-621|Nyx|Seres & Entidades|verificado
+RC-622|Kama|Seres & Entidades|verificado
+RC-623|Corpo Átmico|Conceitos Cosmológicos|verificado
+RC-642|Narasimha|Seres & Entidades|verificado
+RC-657|Verdade Posta × Verdade a Construir|Conceitos Cosmológicos|verificado
+RC-683|Torá / Pentateuco|Tecnologias & Artefatos|verificado
+RC-688|Yajna|Termos Específicos|verificado
+RC-691|Ishvara|Termos Específicos|verificado
+RC-705|Ato de Verdade / Satyagraha|Conceitos Cosmológicos|verificado
+RC-717|Buraco Negro Mental / Consciencial|Processos & Fenômenos|verificado
+RC-756|Ganesha|Seres & Entidades|verificado
+RC-759|Jainismo|Conceitos Cosmológicos|verificado
+RC-772|Morlens|Seres & Entidades|verificado
+RC-780|Pandora como Heroína Controversa|Conceitos Cosmológicos|verificado
+RC-782|Javé como Caos Personificado|Conceitos Cosmológicos|verificado
+RC-787|Egrégora de Lilith / Noreia|Processos & Fenômenos|verificado
+RC-810|Shiva como Primeiro Demo|Seres & Entidades|verificado
+RC-821|Soca/Reis/Rit como Receptor Universal|Seres & Entidades|verificado
+RC-834|Família Aya|Seres & Entidades|verificado
+RC-835|Família Aye|Seres & Entidades|verificado
+RC-847|Sociedade Vril|Conceitos Cosmológicos|verificado
+RC-856|Saulo de Tarso / Paulo|Seres & Entidades|verificado
+RC-867|Choque de Realidade|Conceitos Cosmológicos|candidato
+RC-898|Choque de Realidade|Processos & Fenômenos|verificado
+RC-930|IEEA|Lokas & Geografias|candidato
+RC-935|Cognição|Processos & Fenômenos|provisório
+RC-936|Choque de realidade|Processos & Fenômenos|provisório
+RC-946|Pôncio Pilatos / Caifás / Sinédrio|Seres & Entidades|verificado

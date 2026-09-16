@@ -170,11 +170,30 @@ def carregar_guarda(caminho: Path) -> set[str]:
             if l.strip() and not l.lstrip().startswith("#")}
 
 
+def proteger_externos(externos: list[dict]) -> set[str]:
+    """Conjunto de proteção da camada Externos.
+
+    Um candidato que contenha qualquer token protegido nunca é convertido em variante de
+    termo interno. Caso real desta transcrição: "Nick Bostron" (Nick Bostrom) colidia com a
+    variante STT "Nick" -> Nyx (RC-621) documentada na KB-RC.
+    """
+    prot = set()
+    for e in externos:
+        for campo in ("variante", "canonico"):
+            v = (e.get(campo) or "").strip()
+            if not v or v.startswith("["):
+                continue
+            prot.add(L.norm(v))
+            prot.update(L.norm(t) for t in v.split() if len(t) > 2)
+    return prot
+
+
 def varrer(termos: dict, obras: list, corpo: str, sementes: list,
            corte: float = 0.80, corte_duplo: float = 0.75,
-           guarda: set[str] | None = None) -> dict:
+           guarda: set[str] | None = None, protegidos: set[str] | None = None) -> dict:
     nb = L.norm(corpo)
     guarda = guarda or set()
+    protegidos = protegidos or set()
     tokens, suspeitos, grams = janelas(corpo)
     indice = L.superficies(termos, incluir_glossas=True, incluir_sementes=sementes)
 
@@ -191,10 +210,54 @@ def varrer(termos: dict, obras: list, corpo: str, sementes: list,
                                       generico=superficie in L.GENERICOS,
                                       confianca=max((a[2] for a in alvos), default="baixa"))
 
+    canonicas_norm = {sup for sup, alvos in indice.items()
+                      if any(papel == "canonico" for _, papel, _ in alvos)}
+    dono_canonica: dict[str, set] = {}
+    for sup, alvos in indice.items():
+        for cod, papel, _ in alvos:
+            if papel == "canonico":
+                dono_canonica.setdefault(sup, set()).add(cod)
+
+    def remissivo(cod: str) -> bool:
+        """Termo cujo único papel é registrar grafia errada e remeter ao canônico."""
+        t = termos.get(cod) or {}
+        nome = (t.get("termo") or "").lower()
+        return ("erro histórico de stt" in nome or "ver " in nome
+                or str(t.get("status", "")).lower() in {"remissão", "remissiva", "deprecado"})
+
+    def homografia_ilegitima(variante_norm: str, codigo_semente: str) -> bool:
+        """True se a forma é canônica de OUTRO termo que não é remissivo."""
+        donos = dono_canonica.get(variante_norm)
+        if not donos:
+            return False
+        cod_base = codigo_semente or ""
+        return not any(remissivo(c) or (c and c in cod_base) for c in donos)
+
     # 2) sementes do Guia realmente presentes (alta precisão)
-    sementes_atingidas = []
+    sementes_atingidas, suspensas = [], []
     for s in sementes:
         v = L.norm(s["variante"])
+        # semente cuja forma É canônica de outro termo da base = homografia: decidir pelo
+        # contexto, nunca por substituição (caso real: "Cristo" -> Krishna RC-414 destruiria
+        # RC-009 Sophia (Cristo Cósmico)).
+        if (s.get("codigo_base") or "") != "EXTERNO" and v in guarda:
+            suspensas.append(dict(variante=s["variante"], canonico=s["canonico"],
+                                  codigo_base=s.get("codigo_base", ""),
+                                  motivo="forma do vocabulário comum pt-BR — só corrige com confirmação contextual"))
+            continue
+        if (s.get("codigo_base") or "") != "EXTERNO" and homografia_ilegitima(v, s.get("codigo_base", "")):
+            suspensas.append(dict(variante=s["variante"], canonico=s["canonico"],
+                                  codigo_base=s.get("codigo_base", ""),
+                                  motivo="a forma é canônica de outro termo (homografia) — decide o contexto"))
+            continue
+        # semente interna cuja forma é protegida pela camada Externos é suspensa
+        # (caso real: "Nick" -> Nyx RC-621 colide com Nick Bostrom)
+        if protegidos and (s.get("codigo_base") or "") != "EXTERNO" \
+                and any(t in protegidos for t in ([v] + v.split())):
+            suspensas.append(dict(variante=s["variante"], canonico=s["canonico"],
+                                  codigo_base=s.get("codigo_base", ""),
+                                  motivo="colide com entidade da camada Externos"))
+            continue
         cont = len(re.findall(r"\b" + re.escape(v) + r"\b", nb))
         if cont:
             sementes_atingidas.append(dict(variante=s["variante"], canonico=s["canonico"],
@@ -202,6 +265,15 @@ def varrer(termos: dict, obras: list, corpo: str, sementes: list,
                                            cont=cont, origem=s.get("origem", ""),
                                            aprovacao=s.get("status_aprovacao", ""),
                                            observacao=s.get("observacao", "")))
+    # dedupe: mesma variante+canônico pode vir do Guia e da KB-RC
+    vistas, unicas = set(), []
+    for s_ in sementes_atingidas:
+        k = (L.norm(s_["variante"]), L.norm(s_["canonico"]))
+        if k in vistas:
+            continue
+        vistas.add(k)
+        unicas.append(s_)
+    sementes_atingidas = unicas
     sementes_atingidas.sort(key=lambda x: -x["cont"])
 
     # 3) candidatos fuzzy (geração ampla, decisão posterior)
@@ -256,6 +328,14 @@ def varrer(termos: dict, obras: list, corpo: str, sementes: list,
     for c in candidatos:
         if c.get("_guarda"):
             continue
+        # (1) a forma achada JÁ é uma superfície canônica da base: não há o que corrigir.
+        #     Sem isto o motor propunha "Javé" (27x) -> "jabe", invertendo a direção.
+        if L.norm(c["achado"]) in canonicas_norm:
+            continue
+        if protegidos:
+            toks = [L.norm(t) for t in c["achado"].split() if t]
+            if any(t in protegidos for t in toks):
+                continue  # forma da camada Externos: não é variante de termo interno
         for t in c["alvos"]:
             if t["confianca"] == "baixa" or min(t["fonetica"], t["textual"]) < corte_duplo:
                 continue
@@ -270,12 +350,25 @@ def varrer(termos: dict, obras: list, corpo: str, sementes: list,
             item["classe"] = classe
             adjudicaveis.append(item)
             break
+    for item in adjudicaveis:
+        cod = item["alvo"]["codigo"]
+        t = termos.get(cod)
+        item["alvo"]["superficie_casada"] = item["alvo"]["base"]
+        item["alvo"]["canonico_display"] = (t["nucleo"] if t else item["alvo"]["base"])
+
     adjudicaveis.sort(key=lambda c: (-c["cont"], -c["alvo"]["nota"]))
 
     # 4) entidades do texto AUSENTES da base (candidatas a [NOTA] ou a novo registro)
     base_txt = L.norm(" ".join(t["termo"] + " " + " ".join(t["aliases"] if "aliases" in t else t["glossas"])
                                for t in termos.values()))
-    bib_txt = L.norm(" ".join(f"{o.get('Título','')} {o.get('Subtítulo') or ''}" for o in obras))
+    def _campo_obra(o: dict, *nomes) -> str:
+        for n in nomes:
+            if o.get(n):
+                return str(o[n])
+        return ""
+    bib_txt = L.norm(" ".join(
+        f"{_campo_obra(o, 'Título', 'titulo')} {_campo_obra(o, 'Subtítulo', 'subtitulo')} "
+        f"{_campo_obra(o, 'Observações', 'nota')}" for o in obras))
     ausentes = {}
     for m in re.finditer(r"[A-ZÀ-Ü][\wÀ-ÿ]*(?:\s+[A-ZÀ-Ü][\wÀ-ÿ]*){0,3}", corpo):
         seq = m.group(0).strip()
@@ -299,6 +392,7 @@ def varrer(termos: dict, obras: list, corpo: str, sementes: list,
 
     return dict(tokens=len(tokens), suspeitos=len(suspeitos), janelas=len(grams),
                 exatas=exatas, sementes_atingidas=sementes_atingidas,
+                sementes_suspensas=suspensas,
                 candidatos=candidatos, adjudicaveis=adjudicaveis,
                 ausentes=ausentes_lista, relevantes=sorted(relevantes))
 
@@ -366,6 +460,19 @@ def relatorio_md(caminho_txt: Path, cabecalho: str, met: dict, var: dict,
         a("|---|---|---|---|---|")
         for s in var["sementes_atingidas"]:
             a(f"| {s['cont']} | {s['variante']} | {s['canonico']} | {s['codigo_base']} | {s['aprovacao']} |")
+        a("")
+        susp = var.get("sementes_suspensas") or []
+        if susp:
+            a("### 3.1 Sementes suspensas (colisão com Externos ou homografia interna)")
+            a("")
+            a("Formas que a base propunha substituir automaticamente, mas que ou pertencem a "
+              "entidades do mundo real (camada 3) ou são canônicas de outro termo da própria base. "
+              "Nenhuma pode ser trocada às cegas: decidem-se pelo contexto.")
+            a("")
+            a("| variante | canônico que a base propunha | código | motivo da suspensão |")
+            a("|---|---|---|---|")
+            for s_ in susp:
+                a(f"| {s_['variante']} | {s_['canonico']} | {s_['codigo_base']} | {s_['motivo']} |")
     else:
         a("_Nenhuma variante semeada pelo Guia ocorreu neste texto._")
     a("")
@@ -380,13 +487,14 @@ def relatorio_md(caminho_txt: Path, cabecalho: str, met: dict, var: dict,
     flexoes = [c for c in var["adjudicaveis"] if c["classe"] in ("flexao", "artigo")]
     a(f"### 4.1 Variantes e truncamentos reais ({len(variantes)} itens) — fila de correção")
     a("")
-    a("| occ. | forma no texto | classe | canônico na base | código | status | fon. | txt. | contexto |")
-    a("|---|---|---|---|---|---|---|---|---|")
+    a("| occ. | forma no texto | classe | canônico proposto | código | forma casada na base | status | fon. | txt. | contexto |")
+    a("|---|---|---|---|---|---|---|---|---|---|")
     for c in variantes[:70]:
         t = c["alvo"]
         status = termos.get(t["codigo"], {}).get("status", "")
         ctx = re.sub(r"\s+", " ", c["contexto"])[:80]
-        a(f"| {c['cont']} | {c['achado'][:30]} | {c['classe']} | {t['base'][:30]} | {t['codigo']} | {status} | "
+        a(f"| {c['cont']} | {c['achado'][:30]} | {c['classe']} | {t.get('canonico_display', t['base'])[:30]} | "
+          f"{t['codigo']} | {t.get('superficie_casada', t['base'])[:22]} | {status} | "
           f"{t['fonetica']:.2f} | {t['textual']:.2f} | …{ctx}… |")
     a("")
     a(f"### 4.2 Flexões e artigos ({len(flexoes)} itens) — NÃO são erro")
@@ -395,7 +503,8 @@ def relatorio_md(caminho_txt: Path, cabecalho: str, met: dict, var: dict,
     a("|---|---|---|---|---|")
     for c in flexoes[:25]:
         t = c["alvo"]
-        a(f"| {c['cont']} | {c['achado'][:34]} | {c['classe']} | {t['base'][:34]} | {t['codigo']} |")
+        a(f"| {c['cont']} | {c['achado'][:34]} | {c['classe']} | "
+          f"{t.get('canonico_display', t['base'])[:34]} | {t['codigo']} |")
     a("")
     a("## 5. Entidades do texto ausentes da base")
     a("")
@@ -442,8 +551,16 @@ def slug(nome: str) -> str:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Diagnóstico de transcrição STT contra a base terminológica.")
     ap.add_argument("transcricao", type=Path)
-    ap.add_argument("--base", type=Path, default=Path("base-terminologica.xlsx"))
+    ap.add_argument("--base", type=Path, default=Path("base-terminologica.xlsx"),
+                    help="planilha (fonte legada); ignorada quando --kb é informado")
+    ap.add_argument("--kb", type=Path, default=None,
+                    help="pasta KB-RC (fonte de verdade: canonico.json + termos/*.md)")
+    ap.add_argument("--variantes-kb", type=Path,
+                    default=Path("ferramentas/variantes-kb-extraidas.csv"),
+                    help="regras variante->canônico extraídas da prosa das fichas (rc_variantes.py)")
     ap.add_argument("--sementes", type=Path, default=Path("ferramentas/sementes-variantes-stt.csv"))
+    ap.add_argument("--externos", type=Path, default=Path("ferramentas/externos.csv"),
+                    help="camada 3 (entidades do mundo real): sementes + proteção contra fuzzy interno")
     ap.add_argument("--saida", type=Path, default=None)
     ap.add_argument("--corte", type=float, default=0.80,
                     help="corte frouxo de similaridade (geração de candidatos brutos)")
@@ -456,27 +573,74 @@ def main(argv: list[str] | None = None) -> int:
     raiz = Path(__file__).resolve().parent.parent
     base_path = args.base if args.base.is_absolute() else raiz / args.base
     sem_path = args.sementes if args.sementes.is_absolute() else raiz / args.sementes
+    ext_path = args.externos if args.externos.is_absolute() else raiz / args.externos
     txt_path = args.transcricao if args.transcricao.is_absolute() else raiz / args.transcricao
     saida = args.saida or raiz / "analise" / slug(txt_path.stem)
     saida.mkdir(parents=True, exist_ok=True)
 
-    termos, obras, relacoes, ocup = L.carregar_base(base_path)
-    sementes = L.carregar_sementes(sem_path)
+    regras_kb: list[dict] = []
+    vk = args.variantes_kb if args.variantes_kb.is_absolute() else raiz / args.variantes_kb
+    if vk.exists():
+        import csv as _csv
+        with vk.open(encoding="utf-8-sig", newline="") as fh:
+            for linha in _csv.DictReader(fh):
+                if linha.get("confianca_mapeamento") in ("alta", "media") \
+                        and linha.get("risco_palavra_comum") == "nao":
+                    regras_kb.append(dict(variante=linha["variante"], canonico=linha["canonico"],
+                                          codigo_base=linha["codigo"], tipo="kb",
+                                          origem=f"kb-rc:{linha['arquivo']}:{linha['classe']}",
+                                          observacao=linha["evidencia"][:120],
+                                          status_aprovacao="aprovada"))
+
+    if args.kb:
+        import rc_kb as KB
+        kb_path = args.kb if args.kb.is_absolute() else raiz / args.kb
+        meta, termos_json, relacoes_lista, obras = KB.carregar_kb(kb_path)
+        fichas = KB.carregar_fichas(kb_path)
+        termos = KB.como_termos(termos_json, fichas, regras_kb)
+        relacoes = {}
+        for r in relacoes_lista:
+            relacoes.setdefault(r["tipo"], []).append(
+                (r["a"], termos.get(r["a"], {}).get("termo", ""), r["b"],
+                 termos.get(r["b"], {}).get("termo", ""), r.get("fonte", "")))
+        ocup = dict(total_registros=len(fichas),
+                    colunas_ricas=["Definição Sintética", "Contexto / Origem",
+                                   "Etimologia e Grafias", "Citações-chave", "Observações"],
+                    celulas_placeholder=0,
+                    celulas_preenchidas=sum(len(f.secoes) for f in fichas.values()))
+        ocup["fichas_com_etimologia_grafias"] = sum(1 for f in fichas.values()
+                                                    if "Etimologia e Grafias" in f.secoes)
+        ocup["com_grafia_preferida"] = sum(1 for f in fichas.values() if f.grafia_preferida)
+        ocup["termos_sem_ficha"] = len(termos_json) - len(fichas)
+        ocup["fonte"] = f"KB-RC ({meta.get('formato','?')})"
+        print(f"[kb] fonte de verdade: {kb_path} — {len(termos_json)} termos, {len(fichas)} fichas, "
+              f"{len(regras_kb)} regras de substituição extraídas da prosa")
+    else:
+        termos, obras, relacoes, ocup = L.carregar_base(base_path)
+    sementes = L.carregar_sementes(sem_path) + regras_kb
     cabecalho, corpo = carregar_transcricao(txt_path)
     met = metricas(corpo)
     guarda_path = args.guarda if args.guarda.is_absolute() else raiz / args.guarda
     guarda = carregar_guarda(guarda_path)
+    externos = L.carregar_sementes(ext_path)
+    if externos:
+        print(f"[externos] camada 3: {len(externos)} entidades do mundo real carregadas e protegidas")
+    protegidos = proteger_externos(externos)
+    sementes = sementes + externos
+
     var = varrer(termos, obras, corpo, sementes, corte=args.corte,
-                 corte_duplo=args.corte_duplo, guarda=guarda)
+                 corte_duplo=args.corte_duplo, guarda=guarda, protegidos=protegidos)
 
     payload = dict(arquivo=str(txt_path), cabecalho=cabecalho, metricas=met,
                    base=dict(termos=len(termos), obras=len(obras),
                              relacoes={k: len(v) for k, v in relacoes.items()},
                              fichas=ocup),
-                   sementes=dict(total=len(sementes), atingidas=var["sementes_atingidas"]),
+                   sementes=dict(total=len(sementes), atingidas=var["sementes_atingidas"],
+                                 suspensas=var.get("sementes_suspensas", [])),
                    cobertura=dict(superficies_presentes=len(var["exatas"]),
                                   termos_relevantes=var["relevantes"]),
-                   guarda_carregada=len(guarda),
+                   guarda_carregada=len(guarda), externos=len(externos),
+                   protegidos=len(protegidos),
                    exatas=var["exatas"], candidatos_brutos=var["candidatos"],
                    candidatos_adjudicaveis=var["adjudicaveis"], ausentes=var["ausentes"])
     (saida / "diagnostico.json").write_text(
@@ -488,7 +652,9 @@ def main(argv: list[str] | None = None) -> int:
     propostas = []
     for c in var["adjudicaveis"]:
         for t in [c["alvo"]]:
-            propostas.append(dict(variante=c["achado"], canonico_proposto=t["base"],
+            propostas.append(dict(variante=c["achado"],
+                                  canonico_proposto=t.get("canonico_display", t["base"]),
+                                  superficie_casada=t.get("superficie_casada", t["base"]),
                                   codigo_base=t["codigo"], classe=c["classe"],
                                   ocorrencias=c["cont"],
                                   fonetica=t["fonetica"], textual=t["textual"],
@@ -497,12 +663,14 @@ def main(argv: list[str] | None = None) -> int:
                                   status_aprovacao="proposta" if c["classe"] in ("variante", "truncamento") else "informativa"))
     for s in var["sementes_atingidas"]:
         propostas.append(dict(variante=s["variante"], canonico_proposto=s["canonico"],
+                              superficie_casada=s["variante"],
                               codigo_base=s["codigo_base"], classe="semente-guia", ocorrencias=s["cont"],
                               fonetica=1.0, textual=1.0, confianca="alta",
                               origem=s["origem"], contexto="", status_aprovacao=s["aprovacao"]))
     escrever_csv(saida / "variantes-propostas.csv", propostas,
-                 ["variante", "canonico_proposto", "codigo_base", "classe", "ocorrencias", "fonetica",
-                  "textual", "confianca", "origem", "contexto", "status_aprovacao"])
+                 ["variante", "canonico_proposto", "superficie_casada", "codigo_base", "classe",
+                  "ocorrencias", "fonetica", "textual", "confianca", "origem", "contexto",
+                  "status_aprovacao"])
     escrever_csv(saida / "ausentes-da-base.csv",
                  [dict(forma=i["forma"], ocorrencias=i["cont"],
                        contexto=re.sub(r"\s+", " ", i["contexto"])[:200]) for i in var["ausentes"]],

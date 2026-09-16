@@ -1,0 +1,39 @@
+# CAMADA 3 — ENTIDADES EXTERNAS (autorizado pelo Comandante em 2026-09-15).
+# Busca externa PERMITIDA apenas para esta camada. Toda linha registra fonte e data.
+# Estas formas são PROTEGIDAS: nunca viram variante de um termo da base (ex.: "Nick" ≠ Nyx).
+# Formato CSV (vírgula, campos entre aspas quando necessário): variante,canonico,codigo_base,tipo,origem,observacao,status_aprovacao
+variante,canonico,codigo_base,tipo,origem,observacao,status_aprovacao
+Raymond Kzwell,Ray Kurzweil,EXTERNO,externa-autor,Wikipedia: The Singularity Is Near (consulta 2026-09-16),futurista americano; livro de 2005,aprovada
+Raymond Kurzweil,Ray Kurzweil,EXTERNO,externa-autor,Wikipedia: The Singularity Is Near (consulta 2026-09-16),idem,aprovada
+a Singularidade está próxima,The Singularity Is Near (2005),EXTERNO,externa-obra,Wikipedia / Penguin Random House (consulta 2026-09-16),"subtítulo When Humans Transcend Biology; Viking, set/2005",aprovada
+livro a Singularidade em 2007,The Singularity Is Near (2005),EXTERNO,externa-obra,Wikipedia (consulta 2026-09-16),"ANO DIVERGENTE: a obra é de 2005, não 2007 — reportar ao produtor, não alterar o dito",aprovada
+Manual Kant,Immanuel Kant,EXTERNO,externa-autor,conhecimento geral do revisor,filósofo alemão (1724-1804),a confirmar
+Emanuel Kant,Immanuel Kant,EXTERNO,externa-autor,conhecimento geral do revisor,idem,a confirmar
+Goethe,Johann Wolfgang von Goethe,EXTERNO,externa-autor,conhecimento geral do revisor,autor de Fausto,aprovada
+Faust,Fausto,EXTERNO,externa-obra,conhecimento geral do revisor,"no original alemão, Faust; em português, Fausto",aprovada
+Mephistopheles,Mefistófeles,EXTERNO,externa-personagem,conhecimento geral do revisor,grafia portuguesa consagrada,aprovada
+Nick Bostron,Nick Bostrom,EXTERNO,externa-autor,Wikipedia: Nick Bostrom (consulta 2026-09-16),filósofo sueco; autor de Deep Utopia (2024),aprovada
+Dark Utopia,Deep Utopia: Life and Meaning in a Solved World (2024),EXTERNO,externa-obra,Bertrand.pt / Wikipedia (consulta 2026-09-16),"Ideapress Publishing, maio/2024; ISBN 9781646871643",aprovada
+Utopia Profunda,Deep Utopia (2024),EXTERNO,externa-obra,Bertrand.pt (consulta 2026-09-16),tradução literal dita na live; sem edição brasileira localizada — manter como dito e anotar o título original,aprovada
+Terry Fabris,Terry Fabris,EXTERNO,externa-entrevistado,"YouTube: LEMÚRIA ESTÁ em busca URGENTE DE CONTATO - Terry Fabris (upload 2026-08-24, consulta 2026-09-16)","GRAFIA CONFIRMADA; mesmo vídeo anuncia o evento presencial com Robson Pinheiro, 3 de outubro, ingresso R$ 180 ou 12x de R$ 18,60",aprovada
+Robson Pinheiro,Robson Pinheiro,EXTERNO,externa-entrevistado,"YouTube (vídeo acima, consulta 2026-09-16)",médium e autor espírita,aprovada
+Agostinho,Agostinho de Hipona,EXTERNO,externa-autor,conhecimento geral do revisor,Santo Agostinho (354-430); frase citada corresponde a credo ut intelligam,aprovada
+Gordon Moore,Gordon Moore,EXTERNO,externa-autor,conhecimento geral do revisor,"cofundador da Intel (a live diz ""dono da Intel"" — divergência a reportar)",aprovada
+Lei de Gordon Moore,Lei de Moore,EXTERNO,externa-conceito,conhecimento geral do revisor,nome consagrado do conceito,aprovada
+Nvidia,Nvidia,EXTERNO,externa-empresa,conhecimento geral do revisor,a live atribui à Nvidia o posto de maior produtora de chips (antes atribuído à Intel),aprovada
+Intel,Intel,EXTERNO,externa-empresa,conhecimento geral do revisor,idem,aprovada
+Sherminetro,[A CONFIRMAR] Sherminetro,EXTERNO,externa-pessoa,transcrição + YouTube (consulta 2026-09-16),"NÃO é Terminator: o contexto é ""vamos aproveitar aqui meu querido Sherminetro para falar das mandalas arcturianas"" — apelido/pseudônimo com que Jan se dirige ao apresentador. Confirmar grafia com o produtor antes de qualquer alteração.",a confirmar
+Tati Quântica,Tati Quântica,EXTERNO,externa-entrevistado,a confirmar com o produtor,grafia a confirmar,a confirmar
+dark enlightenment,Dark Enlightenment,EXTERNO,externa-conceito,conhecimento geral do revisor,"movimento neorreacionário; manter em inglês, em itálico",aprovada
+QR code,QR code,EXTERNO,externa-conceito,conhecimento geral do revisor,grafia canônica,aprovada
+Matrix,Matrix,EXTERNO,externa-obra,conhecimento geral do revisor,filme (1999),aprovada
+Siddhartha,Siddhartha,EXTERNO,externa-obra,a confirmar com o produtor,romance de Hermann Hesse ou referência a Sidarta Gautama — o contexto não decide,a confirmar
+Paranormal Experience,Paranormal Experience,EXTERNO,externa-canal,"YouTube (vídeo acima, consulta 2026-09-16)",canal do apresentador; grafia a confirmar na página do canal,a confirmar
+Google,Google,EXTERNO,externa-empresa,conhecimento geral do revisor,grafia canônica,aprovada
+YouTube,YouTube,EXTERNO,externa-empresa,conhecimento geral do revisor,grafia canônica (maiúsculas em Y e T),aprovada
+Instagram,Instagram,EXTERNO,externa-empresa,conhecimento geral do revisor,grafia canônica,aprovada
+mit,MIT,EXTERNO,externa-instituicao,conhecimento geral do revisor,Massachusetts Institute of Technology,aprovada
+Harvard,Harvard,EXTERNO,externa-instituicao,conhecimento geral do revisor,grafia canônica,aprovada
+Trump,Donald Trump,EXTERNO,externa-pessoa,conhecimento geral do revisor,grafia canônica,aprovada
+Elon Musk,Elon Musk,EXTERNO,externa-pessoa,conhecimento geral do revisor,grafia canônica,aprovada
+Texas,Texas,EXTERNO,externa-lugar,conhecimento geral do revisor,grafia canônica,aprovada

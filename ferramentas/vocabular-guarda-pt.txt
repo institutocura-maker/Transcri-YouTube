@@ -1854,3 +1854,86 @@ xama
 xamanismo
 zero
 zona
+# --- acréscimos do diagnóstico de 2026-09-15 (colisões observadas) ---
+chip
+chips
+fila
+morre
+morrendo
+morreu
+anda
+vista
+destina
+drama
+piora
+esperou
+espera
+genes
+babel
+trata
+conscuencias
+consciências
+espiritualidade
+paraiso
+reais
+nomes
+nossas
+melhor
+entra
+cupom
+noção
+abelha
+circuito
+monte
+tudo
+tem
+reis
+deve
+nick
+virar
+vira
+teatro
+ganhar
+senhor
+médio
+sente
+mente
+sinal
+chamar
+querem
+Brasil
+Texas
+deixei
+desejo
+nesses
+temas
+demais
+donos
+batem
+seis
+família
+mente
+saiba
+logo
+lhe
+amam
+# --- colisões confirmadas em 2026-09-15 (KB documenta variantes STT que são frases comuns) ---
+a vista
+pagar a vista
+caos
+ser personificado
+corpo físico
+é profundo
+paraa nossa
+# --- nomes/palavras de uso comum que a KB documenta como variante STT de algum termo ---
+cristo
+crista
+senhor
+deus
+jesus
+alma
+luz
+amor
+verdade
+mente
+energia

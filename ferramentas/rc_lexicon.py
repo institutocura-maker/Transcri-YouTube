@@ -244,7 +244,9 @@ def carregar_sementes(caminho: str | Path = "ferramentas/sementes-variantes-stt.
     if not caminho.exists():
         return []
     with caminho.open(encoding="utf-8-sig", newline="") as fh:
-        linhas = [l for l in csv.DictReader(fh) if l.get("variante")]
+        corpo = [l for l in fh if not l.lstrip().startswith("#")]  # comentários permitidos
+        linhas = [l for l in csv.DictReader(corpo)
+                  if l.get("variante") and not l["variante"].startswith("#")]
     for l in linhas:
         l["aprovada"] = l.get("status_aprovacao", "aprovada").strip().lower() in {"aprovada", "sim", "1", "true"}
     return linhas
