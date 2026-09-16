@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-rc_lexicon — camada única de acesso à base terminológica (base-terminologica.xlsx).
+rc_lexicon — camada única de acesso à base terminológica.
+
+Duas fontes, uma vigente e uma legada:
+    KB-RC/                                  fonte de verdade (despacho de 2026-09-15)
+    docs/legado/2026-09-base-terminologica.xlsx   retrato anterior, só para conferência
 
 A planilha guarda apenas TERMOS CANÔNICOS. O conhecimento de "variante -> canônico"
 está disperso (algumas linhas na aba Relações com tipo 'erro-stt-de' e as tabelas do
@@ -8,13 +12,13 @@ Guia em DOCX). Esta módulo concentra tudo isso em estruturas de dados:
 
   * carregar_base()      -> dicionário de termos, obras e relações
   * superficies()        -> índice invertido superfície_canônica -> [(código, papel, confiança)]
-  * carregar_sementes()  -> pares variante/canônico curados (ferramentas/sementes-variantes-stt.csv)
+  * carregar_sementes()  -> pares variante/canônico curados (ferramentas/dados/sementes-variantes-stt.csv)
   * norm() / chave()     -> normalização e dobra fonética pt-BR para detecção de variantes STT
 
 Decisão de projeto importante: glossas entre parênteses (ex.: "Antares (Sistema)",
 "Jan Val Ellam (Rogério de Almeida Freitas)") NÃO são tratadas como alias confiáveis
 por padrão. Elas misturam alias reais com texto explicativo, e o aproveitamento
-automático gera falsos positivos (ver analise/PARECER-DE-VIABILIDADE.md, item 4.4).
+automático gera falsos positivos (ver docs/pareceres/parecer-de-viabilidade.md, item 4.4).
 Use incluir_glossas=True apenas para varredura exploratória.
 """
 from __future__ import annotations
@@ -117,7 +121,7 @@ def _partes_glossa(glossa: str) -> Iterable[str]:
             yield item
 
 
-def carregar_base(caminho: str | Path = "base-terminologica.xlsx"):
+def carregar_base(caminho: str | Path = "docs/legado/2026-09-base-terminologica.xlsx"):
     """Lê Índice Mestre, Fichas, Bibliografia e Relações.
 
     Retorna (termos, obras, relacoes) onde `termos` é {código: dict} com:
@@ -238,7 +242,7 @@ def superficies(termos: Dict[str, dict], incluir_glossas: bool = False,
     return dict(indice)
 
 
-def carregar_sementes(caminho: str | Path = "ferramentas/sementes-variantes-stt.csv") -> List[dict]:
+def carregar_sementes(caminho: str | Path = "ferramentas/dados/sementes-variantes-stt.csv") -> List[dict]:
     """Pares variante -> canônico curados manualmente (origem: Guia, seções 5.1/5.2/5.4)."""
     caminho = Path(caminho)
     if not caminho.exists():

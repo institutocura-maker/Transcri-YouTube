@@ -3,8 +3,8 @@
 rc_diagnostico — varredura de uma transcrição STT contra a base terminológica.
 
 Uso:
-    python ferramentas/rc_diagnostico.py "Revelações Cósmicas Urgente – Jan Val Ellam.txt" \
-        --base base-terminologica.xlsx --saida analise/<pasta>
+    python ferramentas/rc_diagnostico.py transcricoes/<slug>/00-fonte/transcricao-bruta.txt \
+        --kb KB-RC   # a saída é descoberta sozinha: transcricoes/<slug>/10-diagnostico/
 
 Gera, na pasta de saída:
     diagnostico.json          métricas e achados completos (para máquinas)
@@ -407,10 +407,17 @@ def relatorio_md(caminho_txt: Path, cabecalho: str, met: dict, var: dict,
     exatas_uteis = {k: v for k, v in var["exatas"].items() if not v["generico"] and v["confianca"] != "baixa"}
     linhas = []
     a = linhas.append
-    a(f"# Diagnóstico de transcrição — {caminho_txt.name}")
+    # dentro de transcricoes/<slug>/ o arquivo chama-se sempre "transcricao-bruta.txt"
+    # e não identifica nada; o título do relatório usa o slug do vídeo
+    nome_exibicao = caminho_txt.name
+    for pai in caminho_txt.resolve().parents:
+        if pai.parent.name == "transcricoes":
+            nome_exibicao = pai.name
+            break
+    a(f"# Diagnóstico de transcrição — {nome_exibicao}")
     a("")
     a(f"- **Fonte:** `{caminho_txt}`")
-    a(f"- **Base:** `base-terminologica.xlsx` — {len(termos)} termos, {len(obras)} obras; "
+    a(f"- **Base:** `{ocup.get('fonte', 'base legada')}` — {len(termos)} termos, {len(obras)} obras; "
       f"**{len(var['relevantes'])}** termos relevantes para este texto")
     a(f"- **Sementes de variantes carregadas:** {len(sementes)} "
       f"({sum(1 for s in sementes if s.get('status_aprovacao') == 'conflito')} marcadas como conflito)")
@@ -548,25 +555,40 @@ def slug(nome: str) -> str:
     return re.sub(r"-+", "-", s)[:60]
 
 
+def pasta_diagnostico(txt_path: Path, raiz: Path) -> Path:
+    """Descobre onde gravar o diagnóstico a partir do caminho do bruto.
+
+    Na estrutura do Plano de Organização o bruto vive em
+    `transcricoes/<slug>/00-fonte/transcricao-bruta.txt` — o nome do arquivo é
+    sempre o mesmo e não diz nada, então o slug vem do diretório-avô. Fora dessa
+    estrutura mantém-se o comportamento antigo (slug derivado do nome), para não
+    quebrar quem ainda aponta para um `.txt` solto na raiz.
+    """
+    for pai in txt_path.resolve().parents:
+        if pai.parent.name == "transcricoes":
+            return pai / "10-diagnostico"
+    return raiz / "transcricoes" / slug(txt_path.stem) / "10-diagnostico"
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Diagnóstico de transcrição STT contra a base terminológica.")
     ap.add_argument("transcricao", type=Path)
-    ap.add_argument("--base", type=Path, default=Path("base-terminologica.xlsx"),
+    ap.add_argument("--base", type=Path, default=Path("docs/legado/2026-09-base-terminologica.xlsx"),
                     help="planilha (fonte legada); ignorada quando --kb é informado")
     ap.add_argument("--kb", type=Path, default=None,
                     help="pasta KB-RC (fonte de verdade: canonico.json + termos/*.md)")
     ap.add_argument("--variantes-kb", type=Path,
-                    default=Path("ferramentas/variantes-kb-extraidas.csv"),
+                    default=Path("ferramentas/dados/variantes-kb-extraidas.csv"),
                     help="regras variante->canônico extraídas da prosa das fichas (rc_variantes.py)")
-    ap.add_argument("--sementes", type=Path, default=Path("ferramentas/sementes-variantes-stt.csv"))
-    ap.add_argument("--externos", type=Path, default=Path("ferramentas/externos.csv"),
+    ap.add_argument("--sementes", type=Path, default=Path("ferramentas/dados/sementes-variantes-stt.csv"))
+    ap.add_argument("--externos", type=Path, default=Path("ferramentas/dados/externos.csv"),
                     help="camada 3 (entidades do mundo real): sementes + proteção contra fuzzy interno")
     ap.add_argument("--saida", type=Path, default=None)
     ap.add_argument("--corte", type=float, default=0.80,
                     help="corte frouxo de similaridade (geração de candidatos brutos)")
     ap.add_argument("--corte-duplo", type=float, default=0.75,
                     help="corte mínimo das DUAS métricas para um candidato virar adjudicável")
-    ap.add_argument("--guarda", type=Path, default=Path("ferramentas/vocabular-guarda-pt.txt"),
+    ap.add_argument("--guarda", type=Path, default=Path("ferramentas/dados/vocabular-guarda-pt.txt"),
                     help="vocabulário comum pt-BR a ignorar")
     args = ap.parse_args(argv)
 
@@ -575,7 +597,7 @@ def main(argv: list[str] | None = None) -> int:
     sem_path = args.sementes if args.sementes.is_absolute() else raiz / args.sementes
     ext_path = args.externos if args.externos.is_absolute() else raiz / args.externos
     txt_path = args.transcricao if args.transcricao.is_absolute() else raiz / args.transcricao
-    saida = args.saida or raiz / "analise" / slug(txt_path.stem)
+    saida = args.saida or pasta_diagnostico(txt_path, raiz)
     saida.mkdir(parents=True, exist_ok=True)
 
     regras_kb: list[dict] = []

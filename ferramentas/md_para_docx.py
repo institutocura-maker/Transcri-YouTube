@@ -11,8 +11,8 @@ Suporta: títulos #/##/###/####, parágrafos, **negrito**, *itálico*, `código`
 tabelas | a | b |, listas - e 1., citações >, linhas ---, e blocos ``` código ```.
 
 Uso:
-    python ferramentas/md_para_docx.py analise/RESOLUCAO-DE-CONFLITOS.md \
-        --saida analise/RESOLUCAO-DE-CONFLITOS.docx \
+    python ferramentas/md_para_docx.py docs/normas/resolucao-de-conflitos.md \
+        --saida docs/normas/resolucao-de-conflitos.docx \
         --titulo "Resolução de Conflitos da Base Terminológica" \
         --subtitulo "Guia de Revisão v2 — Anexo I"
 """

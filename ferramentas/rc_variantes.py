@@ -13,7 +13,7 @@ do fluxo de revisão (variante -> canônico), sem inventar nenhuma grafia: cada 
 carrega o trecho-fonte e o arquivo de origem como evidência.
 
 Uso:
-    python ferramentas/rc_variantes.py --kb KB-RC --saida ferramentas/variantes-kb-extraidas.csv
+    python ferramentas/rc_variantes.py --kb KB-RC --saida ferramentas/dados/variantes-kb-extraidas.csv
     python ferramentas/rc_variantes.py --kb KB-RC --transcricao "arquivo.txt"   # + cobertura
 """
 from __future__ import annotations
@@ -211,7 +211,7 @@ def cobertura(linhas: list[dict], transcricao: Path) -> list[dict]:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Extrai a camada variante->canônico das fichas KB-RC.")
     ap.add_argument("--kb", type=Path, default=Path("KB-RC"))
-    ap.add_argument("--saida", type=Path, default=Path("ferramentas/variantes-kb-extraidas.csv"))
+    ap.add_argument("--saida", type=Path, default=Path("ferramentas/dados/variantes-kb-extraidas.csv"))
     ap.add_argument("--transcricao", type=Path, default=None,
                     help="se informado, conta ocorrências de cada variante no texto")
     args = ap.parse_args(argv)

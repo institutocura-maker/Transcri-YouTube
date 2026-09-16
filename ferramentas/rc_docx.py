@@ -18,12 +18,12 @@ Com --lexico, o negrito da primeira menção de cada termo canônico é aplicado
 automaticamente (e o negrito manual passa a ser opcional).
 
 Uso:
-    python ferramentas/rc_docx.py analise/<pasta>/blocos/*.md \
-        --lexico analise/<pasta>/dossie-bloco.txt \
-        --saida "Revelações Cósmicas Urgente – Jan Val Ellam (revisado).docx" \
+    python ferramentas/rc_docx.py transcricoes/<slug>/20-blocos/bloco-*.md \
+        --lexico transcricoes/<slug>/10-diagnostico/dossie-bloco.txt \
+        --saida transcricoes/<slug>/30-produto/transcricao-revisada.docx \
         --titulo "Revelações Cósmicas Urgente — Jan Val Ellam" \
         --subtitulo "Transcrição revisada — Padronização terminológica conforme a Revelação Cósmica de Jan Val Ellam" \
-        --validar analise/<pasta>/variantes-propostas.csv
+        --validar transcricoes/<slug>/10-diagnostico/variantes-propostas.csv
 """
 from __future__ import annotations
 
