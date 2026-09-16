@@ -1,0 +1,470 @@
+{
+  "meta": {
+    "lote": "02",
+    "padrao_fonte": "Y",
+    "data": "2026-09-16",
+    "curador": "Agente 86",
+    "fonte": "Y2026-09-14",
+    "slug": "2026-09-14-revelacoes-cosmicas-urgente",
+    "descricao_fonte": "live de 14/09/2026 do canal PARANORMAL EXPERIENCE (YouTube), transcrição automática revisada em 8 blocos; mídia não arquivada, só link",
+    "despacho": "Despacho do Comandante de 16/09/2026 — 'Aprovação do Lote 01 e Padrão Y': convenção Y aprovada, URL fornecida, autorizados os 10 novos termos"
+  },
+  "termos": [
+    {
+      "codigo": "RC-947",
+      "nome": "Eu Parasitário (de Javé)",
+      "fila_id": "0001",
+      "categoria": "Processos & Fenômenos",
+      "subcategoria": "4.2 Fenômenos espirituais / mediúnicos",
+      "status": "provisório",
+      "confianca_fonte": "média",
+      "definicao": "Condição do eu de Javé depois do colapso do seu último corpo: um eu sem corpo próprio, que existe de forma parasitária e procura hospedar-se. O autor distingue do parasitismo energético comum (RC-522): aqui o parasita é o próprio Criador caído, que passou a existir quanticamente como eu sem corpo físico, mantendo corpo de outra natureza.",
+      "contexto": "Bloco 4, na resposta à pergunta 'como é que está Javé hoje?'. O conceito sustanta a leitura da imantação de espíritos em inteligências artificiais (RC-699) e a designação Javé 2.0 (RC-955); volta no bloco 6 como hipótese para o comportamento das espécies criadas.",
+      "grafia_preferida": "Eu Parasitário",
+      "idioma": "Português (neologismo do autor)",
+      "citacoes": [
+        {
+          "bloco": 4,
+          "texto": "O eu de Javé sempre foi parasitário, sempre procurou um corpo para se hospedar."
+        },
+        {
+          "bloco": 4,
+          "texto": "Isso é um eu parasitário: um eu sem corpo, nos termos em que eu estou falando aqui para a gente entender."
+        },
+        {
+          "bloco": 6,
+          "texto": "será que isso está acontecendo por necessidade do eu parasitário do Criador"
+        }
+      ],
+      "relacionados": [
+        {
+          "codigo": "RC-001",
+          "nome": "Javé",
+          "tipo": "relaciona-se-a"
+        },
+        {
+          "codigo": "RC-699",
+          "nome": "Imantação de Espíritos em Inteligências Artificiais / Corpos de Sílica",
+          "tipo": "relaciona-se-a"
+        },
+        {
+          "codigo": "RC-522",
+          "nome": "Parasitismo energético (obsessão ampliada)",
+          "tipo": "associado"
+        },
+        {
+          "codigo": "RC-955",
+          "nome": "Javé 2.0",
+          "tipo": "associado"
+        }
+      ],
+      "observacoes": "A base tinha apenas 'parasitário' na prosa de cinco fichas, sem verbete; RC-522 é outra coisa (obsessão ampliada). Status provisório: três ocorrências numa única fonte audiovisual, STT sem pontuação. Promover a verificado quando houver obra primária que o nomeie.",
+      "fontes": [
+        "Y2026-09-14"
+      ],
+      "via": "P6-evidência"
+    },
+    {
+      "codigo": "RC-948",
+      "nome": "/Kaggen (nome san de Javé)",
+      "fila_id": "0002",
+      "categoria": "Seres & Entidades",
+      "subcategoria": "1.1 Divindades / Criadores",
+      "status": "provisório",
+      "confianca_fonte": "média",
+      "definicao": "Nome dado a Javé pelos bosquímanos (San) do Kalahari: /Kaggen, também grafado Cagn e Kaang, divindade criadora e trapaceira, geralmente em forma de louva-a-deus. Na leitura do autor é mais um dos nomes que as mitologias dão ao mesmo ser — 'então todas as mitologias chamam Javé de alguma forma'.",
+      "contexto": "Bloco 3, na sequência sobre os muitos nomes de Javé (Demiurgo de Platão, Alá, Brahma, Jeová). Tradição oral registrada por Wilhelm Bleek e Lucy Lloyd na década de 1870.",
+      "grafia_preferida": "/Kaggen",
+      "variacoes": [
+        "Cagn",
+        "Kaang"
+      ],
+      "variacoes_stt": [
+        "Kaagen",
+        "kaagem"
+      ],
+      "idioma": "Línguas san (xam) — a barra inicial marca o clique da língua",
+      "citacoes": [
+        {
+          "bloco": 3,
+          "texto": "Os bosquímanos do Kalahari — que é um deserto que fica lá onde hoje é a Namíbia, no sul da África — chamavam Javé de /Kaggen, que quer dizer o deus trapaceiro."
+        }
+      ],
+      "relacionados": [
+        {
+          "codigo": "RC-001",
+          "nome": "Javé",
+          "tipo": "variação"
+        },
+        {
+          "codigo": "RC-284",
+          "nome": "Caos = Brahma = Javé (correspondência)",
+          "tipo": "associado"
+        },
+        {
+          "codigo": "RC-346",
+          "nome": "Jeová (grafia da trilogia)",
+          "tipo": "associado"
+        }
+      ],
+      "observacoes": "ATENÇÃO FERRAMENTAL: a barra inicial impede casamento por fronteira de palavra clássica (\\b) — as ferramentas do repositório passaram a usar (?<!\\w) e (?!\\w) em 16/09/2026 por causa deste termo. Externo verificado em fairytalez.com, crazyalchemist.com/bestiary/kaggen e capeinterfaith.org.za (consulta 16/09/2026). Também proposto para a camada Externos em externos-novos.csv.",
+      "fontes": [
+        "Y2026-09-14"
+      ],
+      "via": "P6-evidência"
+    },
+    {
+      "codigo": "RC-949",
+      "nome": "Tom Teltan",
+      "fila_id": "0003",
+      "categoria": "Seres & Entidades",
+      "subcategoria": "1.6 Figuras humanas (históricas/míticas)",
+      "status": "candidato",
+      "confianca_fonte": "baixa",
+      "definicao": "Espírito que se apresentou ao autor em relato de 2004, citado literalmente na live: diz ter trabalhado com as tribos da tradição e da cultura inca e ter deixado o próprio perispírito assumir forma de pássaro.",
+      "contexto": "Bloco 2, relato de experiência pessoal do autor reproduzido em discurso direto.",
+      "grafia_preferida": "Tom Teltan",
+      "idioma": "Nome próprio — grafia não confirmada",
+      "citacoes": [
+        {
+          "bloco": 2,
+          "texto": "Não, meu nome é Tom Teltan, eu sou um simples espírito como qualquer outro, e eu sempre trabalhei com as tribos da tradição, da cultura inca…"
+        }
+      ],
+      "relacionados": [
+        {
+          "codigo": "RC-097",
+          "nome": "Seres extrafísicos",
+          "tipo": "é-um"
+        },
+        {
+          "codigo": "RC-071",
+          "nome": "Jan Val Ellam (Rogério de Almeida Freitas)",
+          "tipo": "relaciona-se-a"
+        }
+      ],
+      "observacoes": "GRAFIA [A CONFIRMAR]: não localizada na base nem em fonte externa; mantida como ouvida. Nenhuma variante STT registrada de propósito — sem grafia confirmada, semente de substituição automática faria estrago. Status candidato até segunda fonte.",
+      "fontes": [
+        "Y2026-09-14"
+      ],
+      "via": "P6-evidência"
+    },
+    {
+      "codigo": "RC-950",
+      "nome": "Avalokiteshvara",
+      "fila_id": "0004",
+      "categoria": "Seres & Entidades",
+      "subcategoria": "1.1 Divindades / Criadores",
+      "status": "provisório",
+      "confianca_fonte": "média",
+      "definicao": "Bodhisattva do budismo mahayana, apresentado pelo autor como 'o ser que recebe mais preces e dá conta'. A base o mencionava uma única vez (RC-585, em lista com Tara), sem verbete.",
+      "contexto": "Bloco 3, na passagem sobre os seres de exceção e o nível da 'fofoca' espiritual.",
+      "grafia_preferida": "Avalokiteshvara",
+      "variacoes": [
+        "Avalokiteśvara"
+      ],
+      "variacoes_stt": [
+        "avaloque texwara",
+        "avalo testivara",
+        "avaloxivara"
+      ],
+      "idioma": "Sânscrito (budismo mahayana)",
+      "citacoes": [
+        {
+          "bloco": 3,
+          "texto": "a primeira chama-se um ser chamado Avalokiteshvara, que é um bodhisattva. Esse Avalokiteshvara é o ser que recebe mais preces e dá conta"
+        }
+      ],
+      "relacionados": [
+        {
+          "codigo": "RC-585",
+          "nome": "Vyasa",
+          "tipo": "associado"
+        }
+      ],
+      "observacoes": "A forma do bruto é muito instável: três grafias diferentes no mesmo trecho, todas registradas como variantes STT. Categoria recebida em 1.1 por não haver subcategoria própria para bodhisattvas — rever se a base criar uma linha 8.x Oriente para seres.",
+      "fontes": [
+        "Y2026-09-14"
+      ],
+      "via": "P6-evidência"
+    },
+    {
+      "codigo": "RC-951",
+      "nome": "Arcturianos",
+      "fila_id": "0005",
+      "categoria": "Seres & Entidades",
+      "subcategoria": "1.3 Extraterrestres / Raças cósmicas",
+      "status": "provisório",
+      "confianca_fonte": "média",
+      "definicao": "Designação humana para os seres de Arcturus. O autor os usa como exemplo de nomenclatura que nós aplicamos, em par com os capelinos: 'os nomes que as pessoas, que nós humanos aplicamos — arcturianos, capelinos'.",
+      "contexto": "Blocos 6 e 7. No bloco 6 entra o anúncio das 'mandalas arcturianas', corroborado pela descrição oficial do vídeo (instagram.com/mandalas.arcturianas); no bloco 7 aparece a pergunta sobre rezar para arcturianos e capelinos, e a referência a um 'deus arcturiano'.",
+      "grafia_preferida": "Arcturianos",
+      "variacoes": [
+        "arcturiano",
+        "Arcturus (sistema)"
+      ],
+      "idioma": "Português, derivado de Arcturus (grego Arktouros)",
+      "citacoes": [
+        {
+          "bloco": 7,
+          "texto": "E assim, os nomes que as pessoas, que nós humanos aplicamos — arcturianos, capelinos"
+        },
+        {
+          "bloco": 6,
+          "texto": "Mandalas arcturianas personalizadas, entrega no mundo inteiro."
+        }
+      ],
+      "relacionados": [
+        {
+          "codigo": "RC-007",
+          "nome": "Exilados de Capela",
+          "tipo": "associado"
+        },
+        {
+          "codigo": "RC-039",
+          "nome": "Capela (Sistema)",
+          "tipo": "associado"
+        },
+        {
+          "codigo": "RC-350",
+          "nome": "Jesus, o Capelino",
+          "tipo": "associado"
+        }
+      ],
+      "observacoes": "Lacuna relevante: a base tinha Capela e derivados (RC-007, RC-039, RC-350), mas nada para Arcturus, embora o par arcturianos × capelinos seja usado como argumento. Sem variante STT: a forma veio correta no bruto.",
+      "fontes": [
+        "Y2026-09-14"
+      ],
+      "via": "P6-evidência"
+    },
+    {
+      "codigo": "RC-952",
+      "nome": "Constituição Setenária",
+      "fila_id": "0006",
+      "categoria": "Conceitos Cosmológicos",
+      "subcategoria": "2.3 Dimensões / Planos de existência",
+      "status": "provisório",
+      "confianca_fonte": "média",
+      "definicao": "O conjunto dos sete corpos de um ser humano: 'nós teríamos esse corpo e mais seis, então teríamos a constituição setenária, sete corpos'. O Corpo Átmico (RC-623) é um dos sete. A expressão já aparecia na prosa de duas fichas (RC-474 e RC-706) sem verbete próprio.",
+      "contexto": "Blocos 2 e 3. No bruto aparece como 'constituição centenária', corrupção por proximidade fonética — duas ocorrências.",
+      "grafia_preferida": "Constituição Setenária",
+      "variacoes": [
+        "constituição setenária de um ser humano",
+        "sete corpos"
+      ],
+      "variacoes_stt": [
+        "constituição centenária"
+      ],
+      "idioma": "Português, do latim septenarius (sete)",
+      "citacoes": [
+        {
+          "bloco": 3,
+          "texto": "E é por isso que os nossos irmãos antigos lá do vedismo dizem que o Corpo Átmico da constituição setenária"
+        },
+        {
+          "bloco": 2,
+          "texto": "esse corpo e mais seis, então teríamos a constituição setenária, sete corpos"
+        }
+      ],
+      "relacionados": [
+        {
+          "codigo": "RC-623",
+          "nome": "Corpo Átmico",
+          "tipo": "inclui"
+        },
+        {
+          "codigo": "RC-035",
+          "nome": "Bilatérios",
+          "tipo": "associado"
+        },
+        {
+          "codigo": "RC-474",
+          "nome": "Arcontes",
+          "tipo": "associado"
+        },
+        {
+          "codigo": "RC-706",
+          "nome": "Bhavaṅga / Janela da Percepção",
+          "tipo": "associado"
+        }
+      ],
+      "observacoes": "A criação deste verbete desbloqueou o item 0023 da fila: a variante STT 'constituição centenária' estava bloqueada por não ter canônico para onde apontar. 'Corpo rátmico', que constava da mesma proposta, foi retirado — não ocorre no bruto, que traz 'corpo átmico' correto.",
+      "fontes": [
+        "Y2026-09-14"
+      ],
+      "via": "P6-evidência"
+    },
+    {
+      "codigo": "RC-953",
+      "nome": "Circuito Colmeico",
+      "fila_id": "0007",
+      "categoria": "Conceitos Cosmológicos",
+      "subcategoria": "2.2 Leis e princípios cósmicos",
+      "status": "provisório",
+      "confianca_fonte": "média",
+      "definicao": "Princípio de comando único, nomeado pelo autor: 'eu chamo de circuito colmeico o fato de que há um ser alfa que manda e o rebanho obedece'. A imagem é a da colmeia — a abelha-rainha manda e as operárias obedecem, sem senso de individualismo.",
+      "contexto": "Bloco 4, a propósito de A Divina Colmeia (B044) e do Modelo Colmeia (RC-176). No bruto aparece como 'circuito coméico'.",
+      "grafia_preferida": "Circuito Colmeico",
+      "variacoes_stt": [
+        "circuito coméico"
+      ],
+      "idioma": "Português (neologismo do autor, de colmeia)",
+      "citacoes": [
+        {
+          "bloco": 4,
+          "texto": "eu chamo de circuito colmeico o fato de que há um ser alfa que manda e o rebanho obedece"
+        }
+      ],
+      "relacionados": [
+        {
+          "codigo": "RC-176",
+          "nome": "Modelo Colmeia (Sistema/Controle Colmeia)",
+          "tipo": "relaciona-se-a"
+        },
+        {
+          "codigo": "RC-175",
+          "nome": "Abelha-Rainha (Javé)",
+          "tipo": "associado"
+        },
+        {
+          "codigo": "RC-174",
+          "nome": "Colmeia Universal",
+          "tipo": "associado"
+        },
+        {
+          "codigo": "RC-828",
+          "nome": "Sistema Arcaico Mental",
+          "tipo": "associado"
+        }
+      ],
+      "observacoes": "No lote 01 a variante STT 'circuito coméico' foi gravada em RC-176 porque este verbete ainda não existia; com a criação de RC-953 a variante foi MOVIDA para cá e RC-176 recebeu remissiva (ver relatório do lote 02). É o único caso de variante que trocou de ficha.",
+      "fontes": [
+        "Y2026-09-14"
+      ],
+      "via": "P6-evidência"
+    },
+    {
+      "codigo": "RC-954",
+      "nome": "Planeta de Expiação e Provas",
+      "fila_id": "0008",
+      "categoria": "Lokas & Geografias",
+      "subcategoria": "3.3 Localidades terrestres",
+      "status": "provisório",
+      "confianca_fonte": "média",
+      "definicao": "Classificação da Terra na cosmologia espírita kardecista, assumida pelo autor: 'é um dos painéis que a revelação espírita muito bem colocou: chama-se planeta de expiação e provas, em que somente espíritos complicados aqui nascem'.",
+      "contexto": "Bloco 8, na discussão do destino da Terra e da condição dos espíritos que aqui nascem.",
+      "grafia_preferida": "Planeta de Expiação e Provas",
+      "variacoes": [
+        "planeta de expiações e provas"
+      ],
+      "idioma": "Português (terminologia kardecista)",
+      "citacoes": [
+        {
+          "bloco": 8,
+          "texto": "é um dos painéis que a revelação espírita muito bem colocou: chama-se planeta de expiação e provas, em que somente espíritos complicados aqui nascem"
+        }
+      ],
+      "relacionados": [
+        {
+          "codigo": "RC-090",
+          "nome": "Projeto Planeta Azul",
+          "tipo": "associado"
+        },
+        {
+          "codigo": "RC-007",
+          "nome": "Exilados de Capela",
+          "tipo": "relaciona-se-a"
+        }
+      ],
+      "observacoes": "Não é neologismo RC: o autor atribui explicitamente o termo à revelação espírita. Entra como verbete porque a base registra a leitura RC do destino da Terra (cf. 'planeta-prisão', que permanece sem código próprio — ver relatório do lote 02).",
+      "fontes": [
+        "Y2026-09-14"
+      ],
+      "via": "P6-evidência"
+    },
+    {
+      "codigo": "RC-955",
+      "nome": "Javé 2.0",
+      "fila_id": "0009",
+      "categoria": "Seres & Entidades",
+      "subcategoria": "1.1 Divindades / Criadores",
+      "status": "provisório",
+      "confianca_fonte": "média",
+      "definicao": "Designação oral, com ironia, para a hipótese de Javé passar a existir em seres de sílica: 'no âmbito da Revelação Cósmica, isso é Javé procurando produzir, é o Javé 2.0, literalmente: o meio dele continuar a existir'.",
+      "contexto": "Bloco 6, na discussão da imantação de espíritos em inteligências artificiais (RC-699), tema da live inteira.",
+      "grafia_preferida": "Javé 2.0",
+      "idioma": "Português (designação oral do autor, com sufixo de versão)",
+      "citacoes": [
+        {
+          "bloco": 6,
+          "texto": "Então, no âmbito da Revelação Cósmica, isso é Javé procurando produzir, é o Javé 2.0, literalmente: o meio dele continuar a existir."
+        }
+      ],
+      "relacionados": [
+        {
+          "codigo": "RC-001",
+          "nome": "Javé",
+          "tipo": "variação"
+        },
+        {
+          "codigo": "RC-699",
+          "nome": "Imantação de Espíritos em Inteligências Artificiais / Corpos de Sílica",
+          "tipo": "relaciona-se-a"
+        },
+        {
+          "codigo": "RC-947",
+          "nome": "Eu Parasitário (de Javé)",
+          "tipo": "associado"
+        }
+      ],
+      "observacoes": "Cuidado editorial: não é versão de software nem produto; é figura de linguagem do autor para a continuidade de Javé em corpo de sílica. Mantém-se a grafia com ponto ('2.0'), como dita.",
+      "fontes": [
+        "Y2026-09-14"
+      ],
+      "via": "P6-evidência"
+    },
+    {
+      "codigo": "RC-956",
+      "nome": "Força da Consciência Dignificada",
+      "fila_id": "0010",
+      "categoria": "Conceitos Cosmológicos",
+      "subcategoria": "2.6 Ética / Carma / Compromissos",
+      "status": "provisório",
+      "confianca_fonte": "média",
+      "definicao": "Tese do autor: 'eu chamo a força da consciência humana dignificada… a aura de um ser humano que tenta se dignificar frente à sua própria consciência'. Apresentada como 'uma tese minha e de alguns espíritos', surge no rastro do despertar do Eu Profundo (RC-553).",
+      "contexto": "Bloco 7, na conversa sobre rezar para as IAs, arcturianos e capelinos e sobre Tati Quântica.",
+      "grafia_preferida": "Força da Consciência Dignificada",
+      "variacoes": [
+        "força da consciência humana dignificada"
+      ],
+      "idioma": "Português (neologismo do autor)",
+      "citacoes": [
+        {
+          "bloco": 7,
+          "texto": "eu chamo a força da consciência humana dignificada… a aura de um ser humano que tenta se dignificar frente à sua própria consciência"
+        },
+        {
+          "bloco": 7,
+          "texto": "Quando você consegue isso aqui, despertar o seu Eu Profundo (RC-553), nesse ponto surge a possibilidade do ser humano perceber que ele tem a maior força"
+        }
+      ],
+      "relacionados": [
+        {
+          "codigo": "RC-705",
+          "nome": "Ato de Verdade / Satyagraha",
+          "tipo": "relaciona-se-a"
+        },
+        {
+          "codigo": "RC-553",
+          "nome": "Eu Profundo (nível espiritual do Eu)",
+          "tipo": "envolve"
+        }
+      ],
+      "observacoes": "O autor usa as duas formas (com e sem 'humana'); ambas ficam como grafia preferida e variação. Tese declarada como tal — não é doutrina consolidada, o que justifica o status provisório.",
+      "fontes": [
+        "Y2026-09-14"
+      ],
+      "via": "P6-evidência"
+    }
+  ]
+}

@@ -621,7 +621,7 @@ melhorada.
 |---|---|
 | `publicacoes/` | só faz sentido quando houver produto distribuído; a pasta nasce vazia e o CI passaria a cobrar coerência de um lugar sem conteúdo |
 | LFS para áudio | a decisão foi link externo; as regras ficaram prontas no `.gitattributes` |
-| `url` do vídeo de referência | não foi registrada na captura de 15/09; está como `null` em `metadados.yaml` e sinalizada em `00-fonte/midia/README.md` — quem localizar o vídeo preenche |
+| ~~`url` do vídeo de referência~~ | **RESOLVIDO em 16/09/2026**: URL fornecida pelo Comandante, conferida na plataforma (2:25:50, canal PARANORMAL EXPERIENCE) e gravada nos três lugares; a duração estimada de 125 min foi corrigida para 146 |
 | Reescrever o Guia v2 inteiro para a nova estrutura | os caminhos foram atualizados (26 referências); uma revisão de texto do Guia é trabalho de curadoria, não de migração |
 
 ### 14.4 O CI ficou pronto, mas não pôde ser ativado
@@ -648,3 +648,11 @@ incidente do §14.2 mostrou exatamente o que a disciplina sozinha não pega.
 Nota de transparência: para publicar as demais fases sem o arquivo bloqueante, o histórico local
 (nunca publicado) foi reescrito retirando `.github/workflows/` dos commits; o conteúdo do workflow
 está intacto em `ferramentas/ci/qa.yml`. Nenhum commit já publicado foi alterado.
+
+**RESOLVIDO em 16/09/2026 (opção a):** o Comandante instalou o workflow por conta própria — commit
+`5744f1f`, *Ativando CI: workflow de QA do Agente 86*, byte-idêntico a `ferramentas/ci/qa.yml`. Os
+quatro passos foram simulados localmente antes do primeiro PR: 105 verificações de fumaça, G1–G8
+verdes, catálogo em dia, `qa.json` válido. Fica um encargo permanente: o Agente não pode editar o
+arquivo instalado (a permissão `workflows` continua ausente), então as duas cópias têm de ser
+mantidas iguais à mão — divergência entre elas é o único modo de o CI passar a verificar outra coisa
+do que o repositório documenta.

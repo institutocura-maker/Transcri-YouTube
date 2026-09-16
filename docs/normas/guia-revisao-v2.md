@@ -57,9 +57,9 @@ Correção ortográfica e terminológica de transcrição automática, com padro
 
 | Arquivo | Conteúdo | Uso na revisão |
 |---|---|---|
-| `KB-RC/canonico.json` | 946 termos (formato canonico-1.1) + ≈1.887 relações tipadas | nome canônico, categoria, status, confiança, fontes, relacionados |
-| `KB-RC/biblio.json` | 104 obras: 97 códigos B (B001–B098, **falta B095**), 3 ART, 1 PER, 1 EXT, 2 P | grafia de títulos, datas, ISBN, tipo de obra |
-| `KB-RC/termos/*.md` | **820 fichas** (7,1 MB) com prosa curatorial | definição, contexto, etimologia e grafias, citações-chave, Quarentena |
+| `KB-RC/canonico.json` | 956 termos (formato canonico-1.1) + ≈1.900 relações tipadas | nome canônico, categoria, status, confiança, fontes, relacionados |
+| `KB-RC/biblio.json` | 105 obras: 97 códigos B (B001–B098, **falta B095**), 3 ART, 1 PER, 1 EXT, 2 P, **1 Y** (§2.5) | grafia de títulos, datas, ISBN, tipo de obra |
+| `KB-RC/termos/*.md` | **830 fichas** com prosa curatorial | definição, contexto, etimologia e grafias, citações-chave, Quarentena |
 | `docs/legado/2026-09-base-terminologica.xlsx` | retrato legado (abas Como usar, Índice Mestre, Fichas, Categorias, Bibliografia, Relações, Status) | conferência histórica; **não decide** |
 
 **126 termos do `canonico.json` não têm ficha.** Para eles só se aplica o nome canônico; não há variantes documentadas.
@@ -130,6 +130,50 @@ Grafias canônicas confirmadas por RC-836/RC-837: **Awayen, Brahma, Javé, Vishn
 
 A Quarentena tem precedência sobre qualquer outra regra deste Guia.
 
+### 2.5 Fontes audiovisuais — padrão Y (aprovado em 16/09/2026)
+
+A base nasceu de livros (B###) e palestras (P####-MM-DD). Transcrição de YouTube não é nenhuma das
+duas coisas, e citar uma fonte que não existe envenena a base — por isso o **padrão Y**, aprovado
+pelo Comandante em despacho de 16/09/2026.
+
+**Código:** `Y` + data da transmissão ao vivo (ou da publicação, se não for live) — `Y2026-09-14`.
+O código é da **fonte**, não do vídeo: se o mesmo conteúdo reaparecer em outro canal, é outra fonte.
+
+**Campos obrigatórios no registro de `biblio.json`:**
+
+| Campo | Conteúdo |
+|---|---|
+| `codigo`, `titulo`, `subtitulo`, `editora`, `ano`, `status`, `nota` | os sete campos de sempre — `editora` recebe o canal, `status` usa o vocabulário existente (`trabalhada` quando a transcrição já foi revisada e devolvida) |
+| `tipo` | `audiovisual-youtube` |
+| `url` | o link. **Sem URL não há registro**: link é a única mídia que este repositório guarda (Plano §7) |
+| `canal`, `data_publicacao`, `data_upload` | o canal e as duas datas — publicação e upload costumam diferir |
+| `duracao`, `duracao_min` | conferidas na plataforma, não estimadas |
+| `forma_captura` | como o texto foi obtido (`youtube-autosub`, `whisper`, legenda oficial…) |
+| `confiabilidade` | em geral `média — STT`; sobe a `alta` com legenda oficial ou conferência contra o áudio |
+| `slug` | onde a transcrição vive no repositório |
+| `midia_arquivada` | `false` — e assim continua; vídeo jamais entra no Git comum |
+| `consultado_em` | data da última conferência do link |
+
+**Consequências para a revisão:**
+
+- termo novo nascido de fonte Y entra como **provisório** ou **candidato**, nunca como verificado:
+  uma única fonte audiovisual, sem pontuação e com nomes próprios instáveis não sustenta promoção.
+  A promoção vem com obra primária ou segunda fonte;
+- `confianca_fonte` de fonte Y é **média** (§2.3: substituir e citar o código na nota de trabalho);
+- a ficha registra em `## Fontes` o código Y e, em `## Observações`, o bloco da transcrição onde o
+  termo aparece — o ponteiro para a evidência é o slug + bloco, não a minutagem do vídeo;
+- o mesmo URL vai em três lugares, que precisam concordar: `biblio.json`, `00-fonte/metadados.yaml`
+  e `00-fonte/midia/README.md`;
+- **a conferência é automática desde 16/09/2026**: `rc_indice.py --checar` (passo do CI) recusa o
+  catálogo de transcrição que, a partir de `30-produto`, não tenha URL, ou cuja URL não esteja em
+  `biblio.json` como fonte Y — e confere no sentido inverso (o `slug` do registro Y tem de apontar
+  para a pasta). Antes de `30-produto` é aviso, não erro: pasta recém-criada não pode nascer
+  reprovada, pela mesma razão que os portões têm o estado `N/A`.
+
+**Primeira fonte Y:** `Y2026-09-14` — *ASSISTA ANTES QUE SAIA DO AR - Jan Val Ellam*, canal
+PARANORMAL EXPERIENCE, 2:25:50, slug `2026-09-14-revelacoes-cosmicas-urgente`. Originou o lote 02
+de curadoria: 10 termos novos (RC-947 a RC-956).
+
 ---
 
 ## 3. As cinco camadas de correção (ordem de aplicação)
@@ -140,7 +184,7 @@ Aplicar nesta ordem. Camada posterior não desfaz camada anterior.
 |---|---|---|---|
 | 1 | **Terminologia canônica KB-RC** (nomes, conceitos, obras) | `canonico.json` + fichas + Quarentena | regra + revisor |
 | 2 | **Variantes STT documentadas** (Brama→Brahma, Yahé→Javé) | `ferramentas/dados/variantes-kb-extraidas.csv` (1.590 pares; 299 regras de substituição) | revisor, com contexto |
-| 3 | **Externos** (autores, obras, empresas, pessoas do mundo real) | `ferramentas/dados/externos.csv` (34 entidades) — busca externa autorizada | revisor, com fonte e data |
+| 3 | **Externos** (autores, obras, empresas, pessoas do mundo real) | `ferramentas/dados/externos.csv` (41 entidades) — busca externa autorizada | revisor, com fonte e data |
 | 4 | **Números, datas e valores** | §7 — nunca alterar o dito | produtor |
 | 5 | **Ortografia, pontuação, segmentação e disfluência** | §6, §8, §10 | revisor |
 
@@ -453,6 +497,12 @@ Regras de governança:
 | `ferramentas/rc_diagnostico.py` | varredura completa: exatas, sementes, fuzzy adjudicável, ausentes | `transcricoes/<slug>/*` |
 | `ferramentas/rc_docx.py` | monta o .docx revisado (negrito de 1ª menção, validação) | `<Título> (revisado).docx` |
 | `ferramentas/md_para_docx.py` | converte documentos de governança (.md → .docx) | `.docx` |
+| `ferramentas/rc_qa.py` | os oito portões de qualidade, por transcrição ou `--tudo` | stdout, `--json` para o CI |
+| `ferramentas/rc_indice.py` | catálogo das transcrições + fiscalização do padrão Y (§2.5) | `transcricoes/_indice.csv` e `.md` |
+| `ferramentas/rc_novo.py` | cria a pasta de transcrição nova a partir de `transcricoes/_modelo/` | `transcricoes/<slug>/` |
+| `ferramentas/rc_ledger.py` | livro-razão da adjudicação: pendências, decisões, sobrevivências | `10-diagnostico/variantes-propostas.csv` |
+| `ferramentas/rc_curadoria.py` | aplica a fila: variante STT só entra se atestada no bruto | fichas + fila + `CHANGELOG.md` |
+| `ferramentas/rc_termo.py` | cria termo novo a partir de especificação validada (§2.5) | ficha + `canonico.json` + fila + `CHANGELOG.md` |
 
 Arquivos de controle: `ferramentas/dados/vocabular-guarda-pt.txt` (1.878 formas comuns), `ferramentas/dados/sementes-variantes-stt.csv`, `ferramentas/dados/externos.csv` (34 entidades), `ferramentas/dados/variantes-kb-extraidas.csv` (1.590 pares).
 

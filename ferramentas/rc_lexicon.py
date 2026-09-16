@@ -61,6 +61,25 @@ _DIGRAMAS: Tuple[Tuple[str, str], ...] = (
 )
 
 
+def fronteira(forma: str) -> str:
+    """Padrão de fronteira de palavra para casar `forma` isolada.
+
+    `\b` só existe entre caractere de palavra e não-palavra. Para uma forma que COMEÇA em
+    não-palavra — `/Kaggen`, criado como RC-948 em 16/09/2026 — o `\b` inicial nunca casa:
+    em "de /Kaggen" os dois lados da posição são não-palavra. O portão G3 deixaria passar
+    exatamente a forma que deveria pegar. Daí os lookarounds, que valem para qualquer borda.
+
+    O que não muda: "Demiurg" continua sem casar dentro de "Demiurgo", e "enoteísmo" dentro
+    de "henoteísmo" — as duas bordas continuam exigindo fim de palavra.
+    """
+    f = re.escape(forma.strip())
+    if not f:
+        return r"(?!x)x"  # padrão que não casa nada
+    pre = r"\b" if re.match(r"[\w]", forma.strip()[:1]) else r"(?<!\w)"
+    pos = r"\b" if re.match(r"[\w]", forma.strip()[-1:]) else r"(?!\w)"
+    return pre + f + pos
+
+
 def chave(texto: str) -> str:
     """Dobra fonética agressiva para GERAÇÃO DE CANDIDATOS (nunca para decisão final).
 

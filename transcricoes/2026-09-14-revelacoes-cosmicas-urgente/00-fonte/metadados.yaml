@@ -6,11 +6,15 @@ titulo: "Revelações Cósmicas Urgente"
 titulo_completo: "Revelações Cósmicas Urgente – Jan Val Ellam"
 chamada: "ASSISTA ANTES QUE SAIA DO AR"
 canal: Paranormal Experience
-url: null                    # A PREENCHER pelo capturador — não foi registrada na captura
+url: "https://www.youtube.com/watch?v=enBUKAWXQRw"   # fornecida pelo Comandante em 16/09/2026 e conferida na plataforma
 data_gravacao: 2026-09-14    # transmissão ao vivo
 data_publicacao: 2026-09-14
 data_captura: 2026-09-15
-duracao_min: 125
+duracao_min: 146            # 2:25:50 conferidos na plataforma em 16/09/2026 (antes: 125, estimativa da captura)
+duracao_real: "2:25:50"
+titulo_oficial: "ASSISTA ANTES QUE SAIA DO AR - Jan Val Ellam"   # título no YouTube
+data_upload: 2026-09-15     # publicação do vídeo; a live foi em 14/09
+fonte_biblio: Y2026-09-14   # registro em KB-RC/biblio.json (padrão Y, Guia §2.5)
 idioma: pt-BR
 ferramenta_stt: youtube-autosub      # legenda automática do YouTube, sem pontuação
 licenca: uso interno do Projeto
@@ -47,7 +51,7 @@ bruto:
 midia:
   audio: nao-arquivado        # política do Plano §7: só link externo
   video: nao-arquivado
-  link: null                  # depende de `url` acima
+  link: "https://www.youtube.com/watch?v=enBUKAWXQRw"   # mesmo URL de `url`; nada arquivado
 
 revisao:
   guia: docs/normas/guia-revisao-v2.md
@@ -70,6 +74,8 @@ resultado:
   inaudivel: 14
   adjudicacao: 98 linhas decididas (24 aceitas, 7 parciais, 20 recusadas, 30 informativas, 16 proteção, 1 superada)
   novos_termos_propostos: 10
+  novos_termos_criados: 10 (RC-947 a RC-956, lote 02 de curadoria em 16/09/2026)
+  variantes_stt_devolvidas: 22 (lote 01 de curadoria em 16/09/2026)
   divergencias_factuais: 7
   revisor: Agente 86
   concluido_em: 2026-09-16

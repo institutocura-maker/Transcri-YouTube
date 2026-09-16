@@ -20,7 +20,6 @@ O modelo colmeia **já vigia entre Javé e os seus anjos-clones no universo anti
 
 ## Etimologia e Grafias
 - **Grafia preferida:** Modelo Colmeia
-- **Variações STT capturadas:** circuito coméico
 - **Variações:** sistema colmeia; controle colmeia; "modelo colmeia" (aspas na obra)
 
 
@@ -84,6 +83,7 @@ O modelo colmeia **já vigia entre Javé e os seus anjos-clones no universo anti
 ### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0040)
 - **"circuito coméico"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
 - Evidência do item: blocos 4 e 6: 'circuito coméico' → 'circuito colmeico'; ligado à proposta de novo termo 'Circuito Colmeico' (item 0007), que tem RC-176 como ficha hospedeira
+- **Mudança de ficha (lote 02, 16/09/2026):** a variante STT "circuito coméico" foi MOVIDA para **RC-953 Circuito Colmeico**, criado em seguida — ela apontava para cá por falta de canônico próprio, não por pertencer ao Modelo Colmeia. Ver `KB-RC/_relatorio-curadoria-lote-02.md`.
 
 ## Reforço
 ### Sistema Operacional Colmeico-Clone / P2024-11-30

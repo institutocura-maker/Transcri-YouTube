@@ -22,13 +22,16 @@ KB-RC/           FONTE DE VERDADE
   canonico.json  946 termos + 1.887 relações · biblio.json 104 obras · termos/ 820 fichas
   CHANGELOG.md   histórico de curadoria: o que mudou, quando, a pedido de quem
   _fila-de-curadoria.csv   propostas, consolidadas de todas as transcrições
-  _relatorio-curadoria-lote-01.md   prestação de contas do que já foi aplicado
+  _relatorio-curadoria-lote-01.md   prestação de contas do lote 01 (22 variantes STT)
+  _relatorio-curadoria-lote-02.md   prestação de contas do lote 02 (10 termos novos, padrão Y)
+  _lote-02-termos.json              especificação que gerou RC-947 a RC-956
 
 ferramentas/     somente código
   rc_kb.py rc_lexicon.py rc_variantes.py rc_diagnostico.py rc_docx.py md_para_docx.py
   rc_novo.py     cria a pasta de uma transcrição a partir do modelo
   rc_ledger.py   mantém o livro-razão da adjudicação (decisões + contagem de sobrevivências)
   rc_curadoria.py aplica a fila na KB: variante só entra se estiver atestada no bruto
+  rc_termo.py    cria termo novo (ficha + canonico.json) a partir de especificação validada
   rc_indice.py   gera e confere o catálogo
   rc_qa.py       os oito portões de qualidade
   dados/         sementes de variantes, externos.csv, vocabulário-guarda
@@ -79,11 +82,14 @@ Fluxo completo, papéis e convenções: **`.github/CONTRIBUTING.md`**.
 
 ## Os oito portões
 
-O CI roda tudo isto em cada PR que toque `transcricoes/`, `KB-RC/`, `ferramentas/` ou `docs/`.
-O workflow está versionado em **`ferramentas/ci/qa.yml`**, ainda não instalado em
-`.github/workflows/`: o GitHub App por onde o Agente empurra este repositório não tem a permissão
-`workflows`. Enquanto não for ativado, rode os três comandos acima — de preferência num clone
-fresco, que é o único teste capaz de pegar divergência entre repositório e cópia de trabalho.
+**O CI está ativo** desde 16/09/2026: `.github/workflows/qa.yml` (instalado pelo Comandante no
+commit `5744f1f`) roda os portões, o catálogo e os testes em todo PR que toque `transcricoes/`,
+`KB-RC/`, `ferramentas/` ou `docs/`, e em todo push na `main`. A cópia versionada da mesma
+configuração vive em `ferramentas/ci/qa.yml` — o Agente não pode editar o arquivo instalado (o GitHub
+App não tem a permissão `workflows`), então **as duas cópias precisam ser mantidas iguais à mão**;
+quem mexer numa mexe na outra.
+
+Rode os três comandos acima antes de pedir merge, mesmo com CI ativo: o CI é a rede, não o hábito.
 
 | | Portão | Pega o quê |
 |---|---|---|
@@ -122,5 +128,5 @@ Três estados por portão: `OK`, `FALHA` e `N/A` — não se cobra `.docx` de qu
 |---|---|
 | Transcrições | 1 devolvida — [`transcricoes/_indice.md`](transcricoes/_indice.md) |
 | Referência | `2026-09-14-revelacoes-cosmicas-urgente` · 8 blocos · 18.966 palavras revisadas · 98 linhas adjudicadas |
-| Fila de curadoria | 40 itens: **15 aplicados** no lote 01 (22 variantes STT em 15 fichas), 24 pendentes, 1 bloqueado |
-| Base | 946 termos · 820 fichas · 104 obras · 299 regras de substituição · 37 entidades externas |
+| Fila de curadoria | 41 itens: **26 aplicados** (lote 01: 22 variantes STT; lote 02: 10 termos novos + 1 desbloqueio), 14 pendentes, 1 informativo |
+| Base | 956 termos · 830 fichas · 105 obras (1 fonte Y) · 84 variantes STT · 41 entidades externas |

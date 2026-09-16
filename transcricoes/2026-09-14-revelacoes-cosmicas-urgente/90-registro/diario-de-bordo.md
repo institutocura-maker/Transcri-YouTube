@@ -132,3 +132,33 @@ ou a outro agente, noutra sessão — retomar sem refazer descobertas.
 | Regex única para negrito/itálico/código no conversor | o itálico casava através de `código` com asterisco e emendava trechos distantes |
 | Corrigir cifra divergente no corpo | quebra a rastreabilidade; o certo é `[NOTA]` + devolução ao produtor |
 | Fuzzy sem vocabulário-guarda | `Nick` → Nyx, `a vista` → Avesta, `Cristo` → Krishna |
+
+## 16/09/2026 — a fonte deixou de ser órfã: URL registrada, padrão Y, lote 02
+
+O Comandante forneceu o URL que faltava desde a captura de 15/09 e aprovou o padrão Y para fontes
+audiovisuais. O que isso fechou, nesta pasta:
+
+- **URL gravada nos três lugares** que precisam concordar: `00-fonte/metadados.yaml`,
+  `00-fonte/midia/README.md` e `KB-RC/biblio.json` (registro `Y2026-09-14`). O CI confere os três
+  desde então (`rc_indice.py --checar`).
+- **Duração corrigida: 125 → 146 min.** O vídeo tem 2:25:50 conferidos na plataforma; os 125 eram
+  estimativa da captura. Registrado também em `duracao_real` e no registro Y.
+- **Título oficial confirmado:** *ASSISTA ANTES QUE SAIA DO AR - Jan Val Ellam*, canal PARANORMAL
+  EXPERIENCE (@PARANORMALBR), publicado em 14/09, upload em 15/09/2026 — bate com a `chamada` e com
+  o `titulo` que a captura registrou.
+- **A descrição oficial corroborou dois pontos da revisão:** o anúncio da Insider com cupom PARANORMAL
+  (bloco 1) e as Mandalas Arcturianas (bloco 6, que sustentou o termo novo RC-951).
+- **E acrescentou um alerta:** a descrição anuncia *outro* evento — Conexão com os Guardiões
+  Espirituais, Robson Pinheiro, R$ 160 ou 10× R$ 16 — que **não** é o evento de 03/10 no Teatro Santo
+  Agostinho citado no bloco 3 (Terry Fabris + Robson Pinheiro, R$ 180 ou 12× R$ 18,60). As duas
+  `[NOTA]` de preço do bloco 3 continuam corretas: o áudio diz "10 parcelas de R$ 18", que fecha com
+  R$ 180. O risco de conflate ficou registrado no item 0041 da fila, para não virar erro numa
+  revisão futura. **Nenhuma linha do produto foi alterada** — a revisão continua aprovada como está.
+- **Os 10 termos propostos por esta transcrição foram criados** (RC-947 a RC-956) no lote 02 de
+  curadoria, citando `Y2026-09-14`. Nenhum nasceu `verificado`: fonte audiovisual única, STT sem
+  pontuação, entram `provisório` (9) ou `candidato` (1 — Tom Teltan, grafia `[A CONFIRMAR]`).
+- **Uma variante mudou de ficha por causa disso:** "circuito coméico" estava em RC-176 (Modelo
+  Colmeia) porque não havia canônico próprio; com RC-953 (Circuito Colmeico) criado, a variante foi
+  movida e RC-176 recebeu remissiva. É o único caso de variante que trocou de ficha.
+- **Item 0023 desbloqueado:** "constituição centenária" esperava o termo *Constituição Setenária*
+  (RC-952) existir; já nasceu na ficha dele.

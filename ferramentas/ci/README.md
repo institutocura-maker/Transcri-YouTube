@@ -1,60 +1,52 @@
-# `ferramentas/ci/` — configuração pronta do GitHub Actions
+# `ferramentas/ci/` — configuração do GitHub Actions
 
-## Por que não está em `.github/workflows/`
+## Estado: CI ATIVO desde 16/09/2026
 
-O Agente 86 empurra este repositório através de um **GitHub App** cuja permissão não inclui
-`workflows`. Sem essa permissão, qualquer push que crie ou altere `.github/workflows/*` é recusado:
+O Comandante instalou o workflow em `.github/workflows/qa.yml` (commit `5744f1f`, *Ativando CI:
+workflow de QA do Agente 86*), byte-idêntico ao `qa.yml` desta pasta. Ele roda em todo PR que toque
+`transcricoes/**`, `KB-RC/**`, `ferramentas/**`, `docs/**` ou o próprio workflow, e em todo push na
+`main`.
+
+| Passo | Comando |
+|---|---|
+| 1 | `pip install -r ferramentas/requirements.txt` |
+| 2 | `python testes/test_pipeline.py` — fumaça das ferramentas |
+| 3 | `python ferramentas/rc_qa.py --tudo` — os oito portões em cada transcrição |
+| 4 | `python ferramentas/rc_indice.py --checar` — catálogo em dia + padrão Y |
+| 5 | `python ferramentas/rc_qa.py --tudo --json > qa.json` — artefato legível (não bloqueia) |
+
+## O encargo que fica: duas cópias, um conteúdo
+
+O Agente 86 empurra este repositório por um GitHub App **sem a permissão `workflows`** — qualquer
+push que crie ou altere `.github/workflows/*` é recusado:
 
 ```
 ! [remote rejected] (refusing to allow a GitHub App to create or update workflow
   `.github/workflows/qa.yml` without `workflows` permission)
 ```
 
-Para não deixar o repositório sem CI nem forçar uma concessão de permissão que talvez não seja
-desejada, o workflow vive aqui, versionado e pronto para instalar.
+Por isso o workflow existe em dois lugares e **precisa continuar igual nos dois**:
 
-## Como ativar (uma das três opções)
+- `.github/workflows/qa.yml` — o que o GitHub executa. Só quem tem acesso direto ao repositório edita;
+- `ferramentas/ci/qa.yml` — a cópia versionada que o Agente mantém. É daqui que sai qualquer mudança.
 
-**Opção 1 — quem tem acesso direto ao repositório faz o push:**
+Mudou uma, mudou a outra. Se divergirem, o CI passa a verificar outra coisa do que o repositório
+documenta — e ninguém percebe, porque o selo continua verde. Para conferir:
 
 ```bash
-mkdir -p .github/workflows
-cp ferramentas/ci/qa.yml .github/workflows/qa.yml
-git add .github/workflows/qa.yml
-git commit -m "Ativa o CI: oito portões + catálogo em toda abertura de PR"
-git push
+diff .github/workflows/qa.yml ferramentas/ci/qa.yml && echo "cópias idênticas"
 ```
 
-**Opção 2 — conceder a permissão ao App.** Em *Settings → Integrations → GitHub Apps*, dar
-**Read and write** em *Workflows* ao app usado pela Arena; depois pedir ao Agente para repetir o
-push. A partir daí o próprio Agente mantém o workflow.
+Alternativa definitiva: conceder *Read and write* em **Workflows** ao app (Settings → Integrations →
+GitHub Apps). Aí o Agente mesmo instala e mantém, e a duplicação deixa de ser necessária.
 
-**Opção 3 — sem CI, por enquanto.** Os portões rodam localmente com um comando:
+## Sem CI, o equivalente manual
 
 ```bash
 python ferramentas/rc_qa.py --tudo && python ferramentas/rc_indice.py --checar
+python testes/test_pipeline.py
 ```
 
-A diferença é só *quem* roda e *quando*: o CI roda em **clone fresco**, que é o único teste capaz
-de pegar divergência entre o repositório e a cópia de trabalho — exatamente o que aconteceu no
-incidente de normalização de fim de linha de 16/09/2026 (relatado em
-`docs/planos/plano-de-organizacao.md` §14.2). Sem CI, rode os portões também num clone fresco:
-
-```bash
-git clone <repo> /tmp/fresco && cd /tmp/fresco
-python ferramentas/rc_qa.py --tudo && python ferramentas/rc_indice.py --checar
-```
-
-## O que o workflow faz
-
-`qa.yml` — gatilho em push para `main` e em toda abertura de PR:
-
-| Passo | Comando |
-|---|---|
-| 1 | `pip install python-docx openpyxl rapidfuzz numpy` |
-| 2 | `python ferramentas/rc_qa.py --tudo` — os oito portões em cada transcrição |
-| 3 | `python ferramentas/rc_indice.py --checar` — catálogo em dia |
-| 4 | `python testes/test_pipeline.py` — fumaça das ferramentas |
-
-Falhou qualquer um dos três: o PR não deveria ser mesclado. O corpo do PR tem o modelo
-`.github/PULL_REQUEST_TEMPLATE.md` com os três comandos para colar o resultado.
+De preferência num **clone fresco** (`git clone <repo> /tmp/fresco`), que é o único teste capaz de
+pegar divergência entre o repositório e a cópia de trabalho — exatamente o que aconteceu no incidente
+de normalização de fim de linha de 16/09/2026 (`docs/planos/plano-de-organizacao.md` §14.2).

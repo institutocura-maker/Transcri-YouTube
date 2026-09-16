@@ -17,7 +17,10 @@ Cobre o que já quebrou de verdade neste projeto, para não quebrar de novo:
  8. o catálogo mede a transcrição de referência como ela é;
  9. o modelo de pasta continua íntegro (é dele que toda transcrição nova nasce);
 10. a curadoria da KB é cirúrgica: atesta antes de gravar, não duplica, não estraga o
-    markdown da ficha e respeita o status da fila (aplicada não se reaplica).
+    markdown da ficha e respeita o status da fila (aplicada não se reaplica);
+11. o padrão Y fecha o ciclo da fonte audiovisual: termo novo nasce citando fonte
+    registrada, fronteira de palavra serve a "/Kaggen", e os três lugares que guardam o
+    URL (biblio.json, metadados.yaml, midia/README.md) concordam entre si.
 """
 from __future__ import annotations
 
@@ -256,10 +259,90 @@ _fila, _ = CU.carregar_fila(CU.FILA_PADRAO)
 _aplicadas = [l for l in _fila if l["status"] == "aplicada"]
 verificar("fila tem itens aplicados com data e curador",
           bool(_aplicadas) and all(l["data_aplicada"] and l["curador"] for l in _aplicadas))
-verificar("item bloqueado continua bloqueado (não foi aplicado à força)",
-          any(l["status"] == "bloqueada" for l in _fila))
+_i23 = next((l for l in _fila if l["id"] == "0023"), None)
+verificar("item desbloqueado registra o motivo na própria evidencia",
+          _i23 is not None and _i23["status"] == "aplicada"
+          and "DESBLOQUEADA" in _i23["evidencia"] and _i23["codigo_afetado"] == "RC-952")
 verificar("nenhum item aplicado sem variante legível",
           all(CU.variantes_do_item(l) for l in _aplicadas))
+
+# --------------------------------------------------------------------------------------
+print("\n11. padrão Y (fonte audiovisual) e criação de termos")
+import json as J11  # noqa: E402
+import rc_lexicon as LX  # noqa: E402
+import rc_termo as RT  # noqa: E402
+import rc_indice as RI  # noqa: E402
+
+# fronteira de palavra precisa servir a forma que começa em barra — "/Kaggen" é RC-948
+verificar("fronteira casa '/Kaggen' isolado",
+          len(re.findall(LX.fronteira("/Kaggen"), "chamavam Javé de /Kaggen, que quer dizer")) == 1)
+verificar("fronteira não casa dentro de derivada",
+          len(re.findall(LX.fronteira("/Kaggen"), "kaggeniano não existe")) == 0)
+verificar("fronteira mantém a disciplina Demiurg/henoteísmo",
+          len(re.findall(LX.fronteira("Demiurg"), "o Demiurgo e Demiurg")) == 1
+          and len(re.findall(LX.fronteira("enoteísmo"), "henoteísmo")) == 0)
+
+# a ferramenta de criar termo valida antes de gravar
+_spec = {"meta": {}, "termos": [{"nome": "Termo Falso", "categoria": "Conceitos Cosmológicos",
+                                 "subcategoria": "2.1 Cosmogonia / Criação", "status": "provisório",
+                                 "confianca_fonte": "média", "fontes": ["Y1999-01-01"],
+                                 "definicao": "x", "relacionados": [{"codigo": "RC-999"}]}]}
+_canon = {"termos": [{"codigo": "RC-001", "nome": "Javé", "categoria": "Conceitos Cosmológicos",
+                      "subcategoria": "2.1 Cosmogonia / Criação"}]}
+_, _probs = RT.validar(_spec, _canon, [], {"RC-001": 1})
+verificar("validar recusa fonte fora de biblio.json", any("biblio.json" in p for p in _probs))
+verificar("validar recusa relacionado inexistente", any("RC-999" in p for p in _probs))
+_, _probs2 = RT.validar({"meta": {}, "termos": [dict(_spec["termos"][0], fontes=["Y2026-09-14"],
+                                                     relacionados=[])]},
+                        _canon, [{"codigo": "Y2026-09-14"}], {"RC-001": 1})
+verificar("validar aprova especificação correta", _probs2 == [])
+verificar("validar recusa categoria fora da taxonomia",
+          any("taxonomia" in p for p in RT.validar(
+              {"meta": {}, "termos": [dict(_spec["termos"][0], categoria="Invenções",
+                                           fontes=["Y2026-09-14"], relacionados=[])]},
+              _canon, [{"codigo": "Y2026-09-14"}], {"RC-001": 1})[1]))
+verificar("próximo código livre", RT.proximo_codigo(_canon["termos"]) == "RC-002")
+verificar("nome de arquivo ASCII-safe",
+          RT.slug_arquivo("RC-948", "/Kaggen (nome san de Javé)") == "RC-948-kaggen-nome-san-de-jave.md"
+          and RT.slug_arquivo("RC-955", "Javé 2.0") == "RC-955-jave-2-0.md")
+
+# os dez termos do lote 02 existem e são coerentes
+_canon_real = J11.loads((RAIZ / "KB-RC" / "canonico.json").read_text(encoding="utf-8"))
+_novos = [t for t in _canon_real["termos"] if t["codigo"] >= "RC-947"]
+verificar("lote 02 criou RC-947 a RC-956", len(_novos) == 10)
+verificar("todos citam a fonte Y", all(t["fontes"] == ["Y2026-09-14"] for t in _novos))
+verificar("nenhum nasceu 'verificado' (fonte STT única)",
+          all(t["status"] in {"provisório", "candidato"} for t in _novos))
+verificar("todos têm ficha no disco",
+          all((RAIZ / "KB-RC" / "termos" / f"RC-{947 + i}").exists() or
+              list((RAIZ / "KB-RC" / "termos").glob(f"RC-{947 + i}-*.md")) for i in range(10)))
+_obras = J11.loads((RAIZ / "KB-RC" / "biblio.json").read_text(encoding="utf-8"))["obras"]
+_y = next((o for o in _obras if o["codigo"] == "Y2026-09-14"), None)
+verificar("Y2026-09-14 registrada em biblio.json", _y is not None)
+if _y:
+    _meta_txt = (REFERENCIA / "00-fonte" / "metadados.yaml").read_text(encoding="utf-8")
+    _midia_txt = (REFERENCIA / "00-fonte" / "midia" / "README.md").read_text(encoding="utf-8")
+    verificar("os três lugares concordam no URL (biblio, metadados, midia)",
+              _y["url"] in _meta_txt and _y["url"] in _midia_txt)
+    verificar("registro Y tem duração conferida, não estimada",
+              _y.get("duracao_min") == 146 and _y.get("duracao") == "2:25:50")
+    verificar("mídia não arquivada", _y.get("midia_arquivada") is False)
+
+# a variante que trocou de ficha no lote 02
+_f953 = KB10.carregar_ficha(next((RAIZ / "KB-RC" / "termos").glob("RC-953-*.md")))
+_f176 = KB10.carregar_ficha(next((RAIZ / "KB-RC" / "termos").glob("RC-176-*.md")))
+verificar("'circuito coméico' está em RC-953", "circuito coméico" in _f953.variacoes_stt)
+verificar("'circuito coméico' saiu de RC-176", "circuito coméico" not in _f176.variacoes_stt)
+verificar("RC-176 guarda remissiva da mudança", "RC-953" in _f176.secoes.get("Atualização", ""))
+
+# o catálogo fiscaliza o padrão Y: problema quando maduro, aviso quando em captura
+_p1, _a1 = RI.checar_fonte_y({"slug": "s", "estatus": "40-devolvida", "url": ""}, REFERENCIA)
+verificar("sem URL em estágio maduro é problema", bool(_p1) and not _a1)
+_p2, _a2 = RI.checar_fonte_y({"slug": "s", "estatus": "00-fonte", "url": ""}, REFERENCIA)
+verificar("sem URL em captura é aviso (não reprova pasta nova)", not _p2 and bool(_a2))
+_p3, _a3 = RI.checar_fonte_y({"slug": "2026-09-14-revelacoes-cosmicas-urgente",
+                              "estatus": "40-devolvida", "url": _y["url"]}, REFERENCIA)
+verificar("URL registrada e apontando de volta passa limpa", not _p3 and not _a3)
 
 # --------------------------------------------------------------------------------------
 print(f"\n{'=' * 66}\n{_ok} verificações ok, {len(_falhas)} falhas")

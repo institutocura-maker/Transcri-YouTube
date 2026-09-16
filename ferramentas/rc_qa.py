@@ -209,7 +209,9 @@ def g3_formas_proibidas(pasta: Path, meta: dict, kb: Path) -> tuple[str, str]:
     for forma, motivo in proibidas.items():
         # fronteira de palavra é essencial: sem ela, "Demiurg" casa dentro de "Demiurgo"
         # e "enoteísmo" dentro de "henoteísmo", e o QA passa a acusar o texto correto.
-        n = len(re.findall(r"\b" + re.escape(forma) + r"\b", texto, re.I))
+        # L.fronteira (e não \b puro) porque forma que começa em não-palavra — "/Kaggen",
+        # RC-948 — não tem \b inicial e passaria invisível pelo portão.
+        n = len(re.findall(L.fronteira(forma), texto, re.I))
         if n:
             achados.append(f"{n}x '{forma}' ({motivo})")
     if achados:

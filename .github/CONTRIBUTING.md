@@ -112,6 +112,25 @@ Todo lote aplicado ganha um relatório em `KB-RC/_relatorio-curadoria-lote-NN.md
 
 Detalhes e justificativas: `docs/planos/plano-de-organizacao.md` §8.2.
 
+Além dos portões, `rc_indice.py --checar` cobra o **padrão Y** (Guia §2.5): a partir de `30-produto`,
+a transcrição precisa ter URL nos metadados e essa URL precisa estar registrada em `KB-RC/biblio.json`
+como fonte `Y`+data — que, por sua vez, tem de apontar de volta para a pasta.
+
+### O CI está ativo
+
+`.github/workflows/qa.yml` roda testes, portões e catálogo em todo PR que toque `transcricoes/`,
+`KB-RC/`, `ferramentas/` ou `docs/`, e em todo push na `main`. Instalado pelo Comandante em
+16/09/2026 (commit `5744f1f`).
+
+Duas obrigações que vêm com isso:
+
+- **rode localmente antes de pedir merge.** O CI é a rede, não o hábito; e rode num clone fresco
+  (`git clone … /tmp/fresco`) quando o assunto for integridade de arquivo — foi um clone fresco que
+  pegou o incidente de normalização de fim de linha de 16/09/2026 (§14.2 do plano);
+- **o Agente não pode editar o workflow instalado** (falta a permissão `workflows` no GitHub App).
+  A cópia versionada em `ferramentas/ci/qa.yml` tem de ser mantida **idêntica** à instalada: mudou
+  uma, mudou a outra — quem tem acesso direto empurra a instalada.
+
 ## Ambiente
 
 ```bash

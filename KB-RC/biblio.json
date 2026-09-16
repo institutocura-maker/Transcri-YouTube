@@ -2,7 +2,7 @@
  "meta": {
   "formato": "biblio-1",
   "gerado_de": "ferramentas/build_xlsx.py::BIBLIO",
-  "nota": "Bibliografia canônica (Onda 1.3). Códigos B### + especiais ART-/PER-/EXT-."
+  "nota": "Bibliografia canônica (Onda 1.3). Códigos B### + especiais ART-/PER-/EXT- + Y###-MM-DD para fontes audiovisuais (padrão Y, Guia v2 §2.5)."
  },
  "obras": [
   {
@@ -940,6 +940,27 @@
    "ano": "2024",
    "status": "trabalhada",
    "nota": "PALESTRA — entrada criada na U84 para repor o título que o piloto U41 trazia no seu dicionário interno; sem ela, a tabela «Fontes» das fichas passaria a mostrar a sigla no lugar do título."
+  },
+  {
+   "codigo": "Y2026-09-14",
+   "titulo": "ASSISTA ANTES QUE SAIA DO AR - Jan Val Ellam",
+   "subtitulo": "Revelações Cósmicas Urgente — live de 14/09/2026 (Guru de Malá, Alexandre Sherminator e Jan Val Ellam)",
+   "editora": "PARANORMAL EXPERIENCE — canal do YouTube (@PARANORMALBR)",
+   "ano": "2026",
+   "status": "trabalhada",
+   "nota": "FONTE AUDIOVISUAL — padrão Y (Guia v2 §2.5). Primeira fonte não-livro/não-palestra registrada na base. Transcrição automática do YouTube (youtube-autosub, sem pontuação) capturada em 15/09/2026, revisada em 8 blocos e devolvida em 16/09/2026 (18.966 palavras revisadas, 98 linhas de livro-razão, 10 termos novos no lote 02). Mídia NÃO arquivada: política do Plano §7, somente link. URL conferida na plataforma em 16/09/2026: 162.368 visualizações, 9.935 likes, categoria Education. A descrição oficial do vídeo corrobora dois pontos da revisão: o anúncio da Insider com cupom PARANORMAL (bloco 1) e as Mandalas Arcturianas (bloco 6). ATENÇÃO: a descrição anuncia OUTRO evento (Conexão com os Guardiões Espirituais, Robson Pinheiro, R$ 160 ou 10× R$ 16) — não confundir com o evento de 03/10 no Teatro Santo Agostinho (Terry Fabris + Robson Pinheiro, R$ 180), que é o citado no bloco 3.",
+   "tipo": "audiovisual-youtube",
+   "url": "https://www.youtube.com/watch?v=enBUKAWXQRw",
+   "canal": "PARANORMAL EXPERIENCE",
+   "data_publicacao": "2026-09-14",
+   "data_upload": "2026-09-15",
+   "duracao": "2:25:50",
+   "duracao_min": 146,
+   "forma_captura": "legenda automática do YouTube (youtube-autosub), sem pontuação; corpo em uma única linha",
+   "confiabilidade": "média — STT: nomes próprios instáveis, zero pontuação",
+   "slug": "transcricoes/2026-09-14-revelacoes-cosmicas-urgente",
+   "midia_arquivada": false,
+   "consultado_em": "2026-09-16"
   }
  ]
 }

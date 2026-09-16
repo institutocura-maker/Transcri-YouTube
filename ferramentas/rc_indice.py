@@ -163,6 +163,46 @@ def escrever(linhas: list[dict]) -> None:
     (TRANSCRICOES / "_indice.md").write_text("\n".join(md), encoding="utf-8")
 
 
+def checar_fonte_y(linha: dict, pasta: Path) -> tuple[list[str], list[str]]:
+    """Padrão Y (Guia v2 §2.5): a fonte audiovisual precisa existir em `biblio.json`.
+
+    Devolve (problemas, avisos). A diferença entre os dois é o estágio: antes de
+    `30-produto` a falta de URL é **aviso** — pasta recém-criada por `rc_novo.py` não pode
+    nascer reprovada, pela mesma razão que os portões têm o estado N/A. Daí em diante é
+    problema, e o CI não passa: foi assim que a transcrição de referência chegou à devolução
+    com `url: null` e sem registro bibliográfico, e só foi fechada três dias depois.
+
+    Confere nos dois sentidos: o URL do catálogo tem de estar em `biblio.json`, e o registro
+    Y tem de apontar de volta para esta pasta (`slug`).
+    """
+    problemas, avisos = [], []
+    url = (linha.get("url") or "").strip()
+    maduro = str(linha.get("estatus", ""))[:2] >= "30"
+    destino = problemas if maduro else avisos
+    if not url or url.lower() in {"null", "none", "a preencher"}:
+        destino.append(f"{linha['slug']}: sem URL da fonte (padrão Y, Guia §2.5)"
+                       + ("" if maduro else " — ainda em captura, é aviso"))
+        return problemas, avisos
+
+    obras = []
+    biblio = RAIZ / "KB-RC" / "biblio.json"
+    if biblio.exists():
+        obras = json.loads(biblio.read_text(encoding="utf-8")).get("obras", [])
+    achada = next((o for o in obras if (o.get("url") or "").strip() == url), None)
+    if achada is None:
+        destino.append(f"{linha['slug']}: URL {url} não está registrada em KB-RC/biblio.json "
+                       "como fonte Y (Guia §2.5)")
+        return problemas, avisos
+    if not str(achada.get("codigo", "")).startswith("Y"):
+        avisos.append(f"{linha['slug']}: fonte registrada com código '{achada['codigo']}' — "
+                      "o padrão para audiovisual é Y+data (Guia §2.5)")
+    slug_y = (achada.get("slug") or "").strip().rstrip("/")
+    if slug_y and slug_y.split("/")[-1] != linha["slug"]:
+        problemas.append(f"{linha['slug']}: o registro {achada['codigo']} aponta para "
+                         f"'{slug_y}', não para esta pasta")
+    return problemas, avisos
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Catálogo das transcrições.")
     ap.add_argument("--checar", action="store_true", help="não escreve: reclama se o catálogo estiver velho")
@@ -171,12 +211,16 @@ def main(argv: list[str] | None = None) -> int:
 
     linhas = [medir(p) for p in pastas()]
     problemas = []
+    avisos = []
     for l, pasta in zip(linhas, pastas()):
         faltam = artefatos_faltando(pasta, l["estatus"])
         if faltam:
             problemas.append(f"{l['slug']}: " + "; ".join(faltam[:3]))
         if not (pasta / "00-fonte" / "metadados.yaml").exists():
             problemas.append(f"{l['slug']}: sem metadados.yaml")
+        p_y, a_y = checar_fonte_y(l, pasta)
+        problemas += p_y
+        avisos += a_y
 
     if args.checar:
         csv_path = TRANSCRICOES / "_indice.csv"
@@ -198,13 +242,17 @@ def main(argv: list[str] | None = None) -> int:
             problemas.append("o catálogo está desatualizado (rode `rc_indice.py` sem --checar): "
                              + "; ".join(diffs[:4]))
         if args.json:
-            print(json.dumps(dict(ok=not problemas, problemas=problemas, indice=linhas),
-                             ensure_ascii=False, indent=1))
+            print(json.dumps(dict(ok=not problemas, problemas=problemas, avisos=avisos,
+                                  indice=linhas), ensure_ascii=False, indent=1))
         else:
             for p in problemas:
                 print("[checar]", p)
+            for a in avisos:
+                print("[aviso]", a)
             if not problemas:
-                print(f"[ok] catálogo em dia: {len(linhas)} transcrição(ões)")
+                print(f"[ok] catálogo em dia: {len(linhas)} transcrição(ões)"
+                      + (f" · {len(avisos)} aviso(s)" if avisos else "")
+                      + " · fonte Y conferida")
         return 1 if problemas else 0
 
     escrever(linhas)
@@ -216,6 +264,8 @@ def main(argv: list[str] | None = None) -> int:
             print(f"     {l['slug']:<48} {l['estatus']:<18} blocos={l['blocos']} palavras={l['palavras_revisadas']}")
         for p in problemas:
             print("[aviso]", p)
+        for a in avisos:
+            print("[aviso]", a)
     return 1 if problemas else 0
 
 

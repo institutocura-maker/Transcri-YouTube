@@ -89,7 +89,7 @@ def atestar(texto_norm: str, variante: str) -> int:
     v = L.norm(variante)
     if not v:
         return 0
-    return len(re.findall(r"\b" + re.escape(v) + r"\b", texto_norm))
+    return len(re.findall(L.fronteira(v), texto_norm))
 
 
 # ------------------------------------------------------------------ cirurgia na ficha

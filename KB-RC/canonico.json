@@ -22725,6 +22725,184 @@
    "ficha": true,
    "via": "P6-evidência",
    "confianca_fonte": "média"
+  },
+  {
+   "codigo": "RC-947",
+   "nome": "Eu Parasitário (de Javé)",
+   "categoria": "Processos & Fenômenos",
+   "subcategoria": "4.2 Fenômenos espirituais / mediúnicos",
+   "status": "provisório",
+   "fontes": [
+    "Y2026-09-14"
+   ],
+   "relacionados": [
+    "RC-001",
+    "RC-522",
+    "RC-699",
+    "RC-955"
+   ],
+   "ficha": true,
+   "via": "P6-evidência",
+   "confianca_fonte": "média"
+  },
+  {
+   "codigo": "RC-948",
+   "nome": "/Kaggen (nome san de Javé)",
+   "categoria": "Seres & Entidades",
+   "subcategoria": "1.1 Divindades / Criadores",
+   "status": "provisório",
+   "fontes": [
+    "Y2026-09-14"
+   ],
+   "relacionados": [
+    "RC-001",
+    "RC-284",
+    "RC-346"
+   ],
+   "ficha": true,
+   "via": "P6-evidência",
+   "confianca_fonte": "média"
+  },
+  {
+   "codigo": "RC-949",
+   "nome": "Tom Teltan",
+   "categoria": "Seres & Entidades",
+   "subcategoria": "1.6 Figuras humanas (históricas/míticas)",
+   "status": "candidato",
+   "fontes": [
+    "Y2026-09-14"
+   ],
+   "relacionados": [
+    "RC-071",
+    "RC-097"
+   ],
+   "ficha": true,
+   "via": "P6-evidência",
+   "confianca_fonte": "baixa"
+  },
+  {
+   "codigo": "RC-950",
+   "nome": "Avalokiteshvara",
+   "categoria": "Seres & Entidades",
+   "subcategoria": "1.1 Divindades / Criadores",
+   "status": "provisório",
+   "fontes": [
+    "Y2026-09-14"
+   ],
+   "relacionados": [
+    "RC-585"
+   ],
+   "ficha": true,
+   "via": "P6-evidência",
+   "confianca_fonte": "média"
+  },
+  {
+   "codigo": "RC-951",
+   "nome": "Arcturianos",
+   "categoria": "Seres & Entidades",
+   "subcategoria": "1.3 Extraterrestres / Raças cósmicas",
+   "status": "provisório",
+   "fontes": [
+    "Y2026-09-14"
+   ],
+   "relacionados": [
+    "RC-007",
+    "RC-039",
+    "RC-350"
+   ],
+   "ficha": true,
+   "via": "P6-evidência",
+   "confianca_fonte": "média"
+  },
+  {
+   "codigo": "RC-952",
+   "nome": "Constituição Setenária",
+   "categoria": "Conceitos Cosmológicos",
+   "subcategoria": "2.3 Dimensões / Planos de existência",
+   "status": "provisório",
+   "fontes": [
+    "Y2026-09-14"
+   ],
+   "relacionados": [
+    "RC-035",
+    "RC-474",
+    "RC-623",
+    "RC-706"
+   ],
+   "ficha": true,
+   "via": "P6-evidência",
+   "confianca_fonte": "média"
+  },
+  {
+   "codigo": "RC-953",
+   "nome": "Circuito Colmeico",
+   "categoria": "Conceitos Cosmológicos",
+   "subcategoria": "2.2 Leis e princípios cósmicos",
+   "status": "provisório",
+   "fontes": [
+    "Y2026-09-14"
+   ],
+   "relacionados": [
+    "RC-174",
+    "RC-175",
+    "RC-176",
+    "RC-828"
+   ],
+   "ficha": true,
+   "via": "P6-evidência",
+   "confianca_fonte": "média"
+  },
+  {
+   "codigo": "RC-954",
+   "nome": "Planeta de Expiação e Provas",
+   "categoria": "Lokas & Geografias",
+   "subcategoria": "3.3 Localidades terrestres",
+   "status": "provisório",
+   "fontes": [
+    "Y2026-09-14"
+   ],
+   "relacionados": [
+    "RC-007",
+    "RC-090"
+   ],
+   "ficha": true,
+   "via": "P6-evidência",
+   "confianca_fonte": "média"
+  },
+  {
+   "codigo": "RC-955",
+   "nome": "Javé 2.0",
+   "categoria": "Seres & Entidades",
+   "subcategoria": "1.1 Divindades / Criadores",
+   "status": "provisório",
+   "fontes": [
+    "Y2026-09-14"
+   ],
+   "relacionados": [
+    "RC-001",
+    "RC-699",
+    "RC-947"
+   ],
+   "ficha": true,
+   "via": "P6-evidência",
+   "confianca_fonte": "média"
+  },
+  {
+   "codigo": "RC-956",
+   "nome": "Força da Consciência Dignificada",
+   "categoria": "Conceitos Cosmológicos",
+   "subcategoria": "2.6 Ética / Carma / Compromissos",
+   "status": "provisório",
+   "fontes": [
+    "Y2026-09-14"
+   ],
+   "relacionados": [
+    "RC-553",
+    "RC-705"
+   ],
+   "ficha": true,
+   "via": "P6-evidência",
+   "confianca_fonte": "média"
   }
  ],
  "relacoes": [
@@ -34049,6 +34227,174 @@
    "tipo": "relaciona-se-a",
    "b": "RC-109",
    "fonte": "B018"
+  },
+  {
+   "a": "RC-947",
+   "tipo": "relaciona-se-a",
+   "b": "RC-001",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-947",
+   "tipo": "relaciona-se-a",
+   "b": "RC-699",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-947",
+   "tipo": "associado",
+   "b": "RC-522",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-947",
+   "tipo": "associado",
+   "b": "RC-955",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-948",
+   "tipo": "variação",
+   "b": "RC-001",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-948",
+   "tipo": "associado",
+   "b": "RC-284",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-948",
+   "tipo": "associado",
+   "b": "RC-346",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-949",
+   "tipo": "é-um",
+   "b": "RC-097",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-949",
+   "tipo": "relaciona-se-a",
+   "b": "RC-071",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-950",
+   "tipo": "associado",
+   "b": "RC-585",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-951",
+   "tipo": "associado",
+   "b": "RC-007",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-951",
+   "tipo": "associado",
+   "b": "RC-039",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-951",
+   "tipo": "associado",
+   "b": "RC-350",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-952",
+   "tipo": "inclui",
+   "b": "RC-623",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-952",
+   "tipo": "associado",
+   "b": "RC-035",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-952",
+   "tipo": "associado",
+   "b": "RC-474",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-952",
+   "tipo": "associado",
+   "b": "RC-706",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-953",
+   "tipo": "relaciona-se-a",
+   "b": "RC-176",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-953",
+   "tipo": "associado",
+   "b": "RC-175",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-953",
+   "tipo": "associado",
+   "b": "RC-174",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-953",
+   "tipo": "associado",
+   "b": "RC-828",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-954",
+   "tipo": "associado",
+   "b": "RC-090",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-954",
+   "tipo": "relaciona-se-a",
+   "b": "RC-007",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-955",
+   "tipo": "variação",
+   "b": "RC-001",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-955",
+   "tipo": "relaciona-se-a",
+   "b": "RC-699",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-955",
+   "tipo": "associado",
+   "b": "RC-947",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-956",
+   "tipo": "relaciona-se-a",
+   "b": "RC-705",
+   "fonte": "Y2026-09-14"
+  },
+  {
+   "a": "RC-956",
+   "tipo": "envolve",
+   "b": "RC-553",
+   "fonte": "Y2026-09-14"
   }
  ]
 }

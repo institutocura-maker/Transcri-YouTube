@@ -87,7 +87,7 @@ def recalcular(pasta: Path) -> int:
         raise SystemExit("[recusado] nenhum bloco em 20-blocos/ — nada a medir")
     for l in linhas:
         v = L.norm(l.get("variante", ""))
-        l["ocorrencias_no_revisado"] = len(re.findall(r"\b" + re.escape(v) + r"\b", nb)) if v else 0
+        l["ocorrencias_no_revisado"] = len(re.findall(L.fronteira(v), nb)) if v else 0
     gravar(pasta, linhas, campos)
     return len(linhas)
 

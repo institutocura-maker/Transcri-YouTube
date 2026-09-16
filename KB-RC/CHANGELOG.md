@@ -34,6 +34,21 @@ Estado da base nesta data:
 | entidades na camada Externos | 37 (`ferramentas/dados/externos.csv`) |
 | propostas pendentes na fila | 38 (`_fila-de-curadoria.csv`) |
 
+### Estado da base depois do lote 02 (16/09/2026)
+
+| item | antes | depois |
+|---|---|---|
+| termos em `canonico.json` | 946 | **956** (RC-947 a RC-956) |
+| fichas em `termos/` | 820 | **830** |
+| termos sem ficha | 126 | 126 (nenhum termo novo nasceu sem ficha) |
+| obras em `biblio.json` | 104 | **105** — primeira fonte audiovisual, `Y2026-09-14` (padrão Y, Guia §2.5) |
+| variantes STT nas fichas | 62 | **84** |
+| relações tipadas | 1.887 | **1.915** |
+| itens na fila | 38 pendentes | 41: **26 aplicados**, 14 pendentes, 1 informativo |
+
+Nenhum termo novo nasceu como `verificado`: fonte Y é STT único, sem pontuação — entram como
+`provisório` (9) ou `candidato` (1, o Tom Teltan, cuja grafia segue `[A CONFIRMAR]`).
+
 ### Pendências anteriores a este arquivo
 
 Registradas para não se perderem — vieram do Anexo I
@@ -66,3 +81,20 @@ Curadoria: Agente 86. Ferramenta: `ferramentas/rc_curadoria.py` (atestação no 
 - RC-494 acrescentadas "dinastia das Sofias" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0024 da fila (1 ocorrência no bruto)
 - RC-596 acrescentadas "arces", "arcos" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0039 da fila (2 ocorrências no bruto)
 - RC-176 acrescentadas "circuito coméico" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0040 da fila (1 ocorrência no bruto)
+
+## 2026-09-16 — lote 02: 10 termos novos (padrão Y)
+
+Curadoria: Agente 86. Ferramenta: `ferramentas/rc_termo.py` a partir de `_lote-02-termos.json`. Autorização: Despacho do Comandante de 16/09/2026 — 'Aprovação do Lote 01 e Padrão Y': convenção Y aprovada, URL fornecida, autorizados os 10 novos termos.
+
+Fonte registrada: **Y2026-09-14** em `biblio.json`. `canonico.json` foi de 946 para 956 termos; `relacoes` ganhou 28 arestas.
+
+- RC-947 **Eu Parasitário (de Javé)** (Processos & Fenômenos / 4.2 Fenômenos espirituais / mediúnicos; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0001 da fila
+- RC-948 **/Kaggen (nome san de Javé)** (Seres & Entidades / 1.1 Divindades / Criadores; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0002 da fila
+- RC-949 **Tom Teltan** (Seres & Entidades / 1.6 Figuras humanas (históricas/míticas); status candidato) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0003 da fila
+- RC-950 **Avalokiteshvara** (Seres & Entidades / 1.1 Divindades / Criadores; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0004 da fila
+- RC-951 **Arcturianos** (Seres & Entidades / 1.3 Extraterrestres / Raças cósmicas; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0005 da fila
+- RC-952 **Constituição Setenária** (Conceitos Cosmológicos / 2.3 Dimensões / Planos de existência; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0006 da fila
+- RC-953 **Circuito Colmeico** (Conceitos Cosmológicos / 2.2 Leis e princípios cósmicos; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0007 da fila
+- RC-954 **Planeta de Expiação e Provas** (Lokas & Geografias / 3.3 Localidades terrestres; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0008 da fila
+- RC-955 **Javé 2.0** (Seres & Entidades / 1.1 Divindades / Criadores; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0009 da fila
+- RC-956 **Força da Consciência Dignificada** (Conceitos Cosmológicos / 2.6 Ética / Carma / Compromissos; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0010 da fila

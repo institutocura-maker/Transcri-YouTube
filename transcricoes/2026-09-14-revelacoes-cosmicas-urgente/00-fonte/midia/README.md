@@ -10,7 +10,7 @@
 
 ## Link para a fonte
 
-`url` em `../metadados.yaml` está **A PREENCHER**: a captura de 15/09/2026 não registrou o
+`url` em `../metadados.yaml` está **https://www.youtube.com/watch?v=enBUKAWXQRw**: a captura de 15/09/2026 não registrou o
 endereço do vídeo. Identificação conhecida até aqui:
 
 - canal **Paranormal Experience**, transmissão ao vivo de **14/09/2026**
@@ -29,3 +29,20 @@ reouvir o áudio. Nesse caso:
 2. registre o trecho em `../90-registro/diario-de-bordo.md` com o minuto aproximado;
 3. **não** faça commit do arquivo. Se a decisão do Projeto mudar para LFS, o
    `.gitattributes` já tem as regras prontas e o Plano §7 documenta o custo.
+
+
+---
+
+## Registro de 16/09/2026 — URL fornecida pelo Comandante e conferida
+
+| campo | valor |
+|---|---|
+| URL | https://www.youtube.com/watch?v=enBUKAWXQRw |
+| Título oficial | ASSISTA ANTES QUE SAIA DO AR - Jan Val Ellam |
+| Canal | PARANORMAL EXPERIENCE (@PARANORMALBR) |
+| Publicado | 2026-09-14 (upload em 2026-09-15) |
+| Duração | 2:25:50 (≈146 min — o `metadados.yaml` trazia 125, corrigido) |
+| Categoria | Education · 162.368 visualizações · 9.935 likes (em 16/09/2026) |
+| Código na base | **Y2026-09-14** (`KB-RC/biblio.json`, padrão Y do Guia §2.5) |
+
+A descrição oficial confirma dois pontos da revisão: o anúncio da Insider com cupom PARANORMAL (bloco 1) e as Mandalas Arcturianas (bloco 6). E acrescenta um alerta: ela anuncia **outro** evento — Conexão com os Guardiões Espirituais, Robson Pinheiro, R$ 160 ou 10× R$ 16 —, que não é o evento de 03/10 no Teatro Santo Agostinho citado no bloco 3 (Terry Fabris + Robson Pinheiro, R$ 180 ou 12× R$ 18,60). As duas `[NOTA]` de preço do bloco 3 continuam corretas; a diferença entre os dois eventos ficou registrada no item 0041 da fila de curadoria.
