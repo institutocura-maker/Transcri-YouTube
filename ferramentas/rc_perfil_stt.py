@@ -381,12 +381,20 @@ def eixo_integracao(arq: dict) -> dict:
     #   superada — a premissa da norma deixa de valer porque o motor já entrega o que a norma
     #              mandava o revisor fazer à mão (o trabalho manual desaparece; não é defeito).
     quebras = [
-        ("rc_novo.py / rc_indice.py medem o corpo como **a linha mais longa**",
-         "ok" if cobertura >= 0.8 else "codigo",
-         f"a maior linha cobre {cobertura:.1%} do arquivo"
-         + ("" if cobertura >= 0.8 else " — corpo fracionário em metadados.yaml, sem erro e sem aviso")),
+        # corrigido em 16/09/2026 (rc_leitura.py): a cascata é marcador → linha mais longa →
+        # arquivo inteiro COM AVISO. O que sobra é o resíduo do critério 3: sem marcador e sem linha
+        # dominante, o corpo inclui o cabeçalho — o instrumento avisa, mas não separa.
+        ("rc_novo.py / rc_indice.py medem o corpo pelo critério único de rc_leitura.py "
+         "(marcador → linha mais longa → arquivo inteiro, com aviso)",
+         "ok" if (marcador or cobertura >= 0.8) else "codigo",
+         (f"marcador presente: corpo separado do cabeçalho" if marcador else
+          f"a maior linha cobre {cobertura:.1%} do arquivo"
+          + ("" if cobertura >= 0.8 else
+             " — cai no critério 3 (arquivo inteiro): o corpo inclui o cabeçalho, medição "
+             "contaminada; rc_leitura AVISA em metadados.yaml, mas ainda não separa"))),
         ("rc_diagnostico.carregar_transcricao separa cabeçalho pelo marcador "
-         "'Transcrição Automática'", "ok" if marcador else "codigo",
+         "'Transcrição Automática' (pendência: parecer-motor-stt §8 item 2)",
+         "ok" if marcador else "codigo",
          "marcador presente" if marcador else "sem marcador: o arquivo inteiro vira corpo e o "
                                               "cabeçalho sai vazio"),
         ("diarização opção B (rótulos inferidos pelo revisor)",
