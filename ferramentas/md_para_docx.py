@@ -34,29 +34,54 @@ except ImportError:  # pragma: no cover
 AZUL = RGBColor(0x1F, 0x3B, 0x57)
 CINZA = RGBColor(0x55, 0x55, 0x55)
 
-INLINE = re.compile(r"(\*\*[^*]+\*\*|__[^_]+__|\*[^*\n]+\*|`[^`]+`)")
+# Mini-tokenizador de ênfase com ANINHAMENTO. Três desenhos foram tentados:
+#   1) regex única com alternativas (**, __, *, `)  -> o itálico *…* casava através
+#      de um `código` com asterisco e emendava dois trechos distantes;
+#   2) duas passagens (crases primeiro, ênfase depois) -> quebrava **negrito com
+#      `código` dentro**, porque as crases separavam os dois **;
+#   3) este: varre o trecho mais à esquerda, emite o texto anterior e RECURSA para
+#      dentro do marcador, acumulando negrito/itálico. Cobre `a`, **b**, *c*,
+#      **`d`**, ***e*** e qualquer combinação.
+SPAN = re.compile(r"`(?P<codigo>[^`]+)`"
+                  r"|\*\*\*(?P<negrito_italico>[^*\n]+?)\*\*\*"
+                  r"|\*\*(?P<negrito>.+?)\*\*"
+                  r"|\*(?P<italico>[^*\n]+?)\*")
+INLINE = SPAN  # nome antigo, mantido para quem importava
 
 
-def _escrever_inline(par, texto: str) -> None:
-    """Aplica negrito/itálico/código dentro de um parágrafo."""
-    for pedaco in INLINE.split(texto):
-        if not pedaco:
-            continue
-        if pedaco.startswith("**") and pedaco.endswith("**"):
-            run = par.add_run(pedaco[2:-2])
-            run.bold = True
-        elif pedaco.startswith("__") and pedaco.endswith("__"):
-            run = par.add_run(pedaco[2:-2])
-            run.bold = True
-        elif pedaco.startswith("*") and pedaco.endswith("*") and len(pedaco) > 2:
-            run = par.add_run(pedaco[1:-1])
-            run.italic = True
-        elif pedaco.startswith("`") and pedaco.endswith("`"):
-            run = par.add_run(pedaco[1:-1])
-            run.font.name = "Consolas"
-            run.font.size = Pt(10)
+def _run(par, texto: str, negrito: bool, italico: bool, codigo: bool,
+         fonte_codigo: str, tamanho_codigo: int) -> None:
+    if not texto:
+        return
+    r = par.add_run(texto)
+    if negrito:
+        r.bold = True
+    if italico:
+        r.italic = True
+    if codigo:
+        r.font.name = fonte_codigo
+        r.font.size = Pt(tamanho_codigo)
+
+
+def _escrever_inline(par, texto: str, fonte_codigo: str = "Consolas",
+                     tamanho_codigo: int = 10,
+                     negrito: bool = False, italico: bool = False) -> None:
+    """Aplica `código`, **negrito** e *itálico*, inclusive aninhados."""
+    pos = 0
+    for m in SPAN.finditer(texto):
+        _run(par, texto[pos:m.start()], negrito, italico, False, fonte_codigo, tamanho_codigo)
+        if m.group("codigo") is not None:
+            _run(par, m.group("codigo"), negrito, italico, True, fonte_codigo, tamanho_codigo)
+        elif m.group("negrito_italico") is not None:
+            # ***assim*** — sem esta alternativa o negrito engolia o primeiro * e
+            # devolvia "*Frankenstein*" com os asteriscos à mostra
+            _escrever_inline(par, m.group("negrito_italico"), fonte_codigo, tamanho_codigo, True, True)
+        elif m.group("negrito") is not None:
+            _escrever_inline(par, m.group("negrito"), fonte_codigo, tamanho_codigo, True, italico)
         else:
-            par.add_run(pedaco)
+            _escrever_inline(par, m.group("italico"), fonte_codigo, tamanho_codigo, negrito, True)
+        pos = m.end()
+    _run(par, texto[pos:], negrito, italico, False, fonte_codigo, tamanho_codigo)
 
 
 def _celula(texto: str) -> str:
@@ -147,20 +172,17 @@ def converter(md: Path, docx_saida: Path, titulo: str = "", subtitulo: str = "",
         if m:
             nivel = len(m.group(1))
             texto = m.group(2).strip()
-            if nivel == 1:
-                p = doc.add_paragraph()
-                run = p.add_run(re.sub(r"\*\*", "", texto))
-                run.bold = True
-                run.font.size = Pt(16)
-                run.font.color.rgb = AZUL
-                p.paragraph_format.space_before = Pt(14)
-            else:
-                p = doc.add_paragraph()
-                run = p.add_run(re.sub(r"\*\*|\*", "", texto))
-                run.bold = True
-                run.font.size = Pt(14 - nivel)
-                run.font.color.rgb = AZUL if nivel <= 3 else CINZA
-                p.paragraph_format.space_before = Pt(10)
+            # estilo Heading dá painel de navegação e sumário automático num
+            # documento de governança; a formatação do run é sobrescrita abaixo
+            # para preservar a identidade visual (azul/cinza, corpo fixo).
+            p = doc.add_paragraph(style=f"Heading {min(nivel, 4)}")
+            p.paragraph_format.space_before = Pt(14 if nivel == 1 else 10)
+            p.paragraph_format.keep_with_next = True
+            run = p.add_run(re.sub(r"[`*]", "", texto))
+            run.bold = True
+            run.font.name = fonte
+            run.font.size = Pt(16 if nivel == 1 else 14 - nivel)
+            run.font.color.rgb = AZUL if nivel <= 3 else CINZA
             i += 1
             continue
 
