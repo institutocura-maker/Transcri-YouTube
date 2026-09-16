@@ -1,0 +1,53 @@
+name: QA — portões de qualidade
+
+# Roda em PR que toque em trabalho de transcrição, na base ou no código, e em todo
+# push na main. O que não passa aqui não mergeia: os oito portões existem para pegar
+# regressão que olho humano não vê em 19 mil palavras.
+
+on:
+  pull_request:
+    paths:
+      - "transcricoes/**"
+      - "KB-RC/**"
+      - "ferramentas/**"
+      - "docs/**"
+      - ".github/workflows/qa.yml"
+  push:
+    branches: [main]
+
+jobs:
+  portoes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Dependências
+        run: pip install -r ferramentas/requirements.txt
+
+      - name: Testes do pipeline
+        run: python testes/test_pipeline.py
+
+      # G1 bruto intacto · G2 blocos íntegros · G3 formas proibidas · G4 ledger fechado
+      # G5 validador · G6 produto reproduzível · G7 índice consistente · G8 higiene
+      - name: Portões G1–G8 em todas as transcrições
+        run: python ferramentas/rc_qa.py --tudo
+
+      - name: Catálogo em dia
+        run: python ferramentas/rc_indice.py --checar
+
+      - name: Relatório legível (não bloqueia)
+        if: always()
+        run: python ferramentas/rc_qa.py --tudo --json > qa.json || true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relatorio-qa
+          path: qa.json

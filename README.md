@@ -43,7 +43,8 @@ transcricoes/    UM DIRETÓRIO POR VÍDEO, autossuficiente
     90-registro/    diario-de-bordo.md + despachos/ do Comandante
 
 testes/          fixture + teste de fumaça (63 verificações, sem pytest)
-.github/         CI, template de PR e papéis
+.github/         template de PR e papéis (CONTRIBUTING)
+ferramentas/ci/  configuração pronta do GitHub Actions — veja o README de lá para ativar
 ```
 
 ## Início rápido
@@ -77,6 +78,10 @@ Fluxo completo, papéis e convenções: **`.github/CONTRIBUTING.md`**.
 ## Os oito portões
 
 O CI roda tudo isto em cada PR que toque `transcricoes/`, `KB-RC/`, `ferramentas/` ou `docs/`.
+O workflow está versionado em **`ferramentas/ci/qa.yml`**, ainda não instalado em
+`.github/workflows/`: o GitHub App por onde o Agente empurra este repositório não tem a permissão
+`workflows`. Enquanto não for ativado, rode os três comandos acima — de preferência num clone
+fresco, que é o único teste capaz de pegar divergência entre repositório e cópia de trabalho.
 
 | | Portão | Pega o quê |
 |---|---|---|

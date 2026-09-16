@@ -106,10 +106,13 @@ Transcri-YouTube/
 │   ├── fixtures/mini-transcricao.txt
 │   └── test_pipeline.py
 │
-└── .github/
-    ├── workflows/qa.yml            CI: roda os portões em todo PR
-    ├── PULL_REQUEST_TEMPLATE.md
-    └── CONTRIBUTING.md             papéis: revisor, curador, Comandante
+├── .github/
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   └── CONTRIBUTING.md             papéis: revisor, curador, Comandante
+│
+└── ferramentas/ci/
+    ├── qa.yml                      CI pronto: roda os portões em todo PR
+    └── README.md                   como ativar (ver §14.4)
 ```
 
 ### 3.1 O que entra e o que não entra em cada pasta
@@ -309,7 +312,7 @@ G3 e G6 são os que valem ouro: **G3** pega a regressão terminológica que o ol
 
 ### 8.3 CI
 
-`.github/workflows/qa.yml`: em todo PR que toque `transcricoes/**`, `KB-RC/**`, `ferramentas/**` ou `docs/**`, roda `rc_qa.py --tudo` + `rc_indice.py --checar`. Falhou, não mergeia. Tempo estimado: < 2 min (o corpus inteiro são 100 mil caracteres).
+`ferramentas/ci/qa.yml` (a instalar em `.github/workflows/`): em todo PR que toque `transcricoes/**`, `KB-RC/**`, `ferramentas/**` ou `docs/**`, roda `rc_qa.py --tudo` + `rc_indice.py --checar`. Falhou, não mergeia. Tempo estimado: < 2 min (o corpus inteiro são 100 mil caracteres).
 
 ---
 
@@ -620,3 +623,28 @@ melhorada.
 | LFS para áudio | a decisão foi link externo; as regras ficaram prontas no `.gitattributes` |
 | `url` do vídeo de referência | não foi registrada na captura de 15/09; está como `null` em `metadados.yaml` e sinalizada em `00-fonte/midia/README.md` — quem localizar o vídeo preenche |
 | Reescrever o Guia v2 inteiro para a nova estrutura | os caminhos foram atualizados (26 referências); uma revisão de texto do Guia é trabalho de curadoria, não de migração |
+
+### 14.4 O CI ficou pronto, mas não pôde ser ativado
+
+O workflow `qa.yml` foi escrito e testado quanto à lógica (os três comandos que ele roda passam
+localmente), mas o push que o criaria em `.github/workflows/` foi **recusado pelo GitHub**:
+
+```
+! [remote rejected] (refusing to allow a GitHub App to create or update workflow
+  `.github/workflows/qa.yml` without `workflows` permission)
+```
+
+O Agente 86 empurra este repositório por um GitHub App sem a permissão `workflows`. Duas saídas,
+ambas do lado do Comandante: **(a)** quem tem acesso direto ao repositório copia
+`ferramentas/ci/qa.yml` para `.github/workflows/qa.yml` e faz o commit — instruções em
+`ferramentas/ci/README.md`; **(b)** concede-se *Read and write* em *Workflows* ao app, e o Agente
+mesmo instala e mantém o workflow daí em diante.
+
+Enquanto nenhuma das duas acontecer, os portões rodam **localmente e em clone fresco** —
+`rc_qa.py --tudo`, `rc_indice.py --checar`, `testes/test_pipeline.py`. A diferença não é o que se
+verifica, é quem verifica e quando: sem CI, a verificação depende de disciplina humana, e o
+incidente do §14.2 mostrou exatamente o que a disciplina sozinha não pega.
+
+Nota de transparência: para publicar as demais fases sem o arquivo bloqueante, o histórico local
+(nunca publicado) foi reescrito retirando `.github/workflows/` dos commits; o conteúdo do workflow
+está intacto em `ferramentas/ci/qa.yml`. Nenhum commit já publicado foi alterado.
