@@ -24,7 +24,9 @@ Cobre o que já quebrou de verdade neste projeto, para não quebrar de novo:
 12. o perfil de motor STT (`rc_perfil_stt.py`) mede o que diz medir: marcador oral não
     confunde "ó" com o artigo "o", equivalência conceitual não vira corrupção, e um
     arquivo paragraphado dispara as quebras de suposição da esteira em vez de passar por
-    compatível em silêncio.
+    compatível em silêncio;
+13. proveniência e ruído: o instrumento sabe dizer se dois arquivos vêm do mesmo
+    reconhecimento de fala, e separa inicial de frase de candidata real a termo novo.
 """
 from __future__ import annotations
 
@@ -363,6 +365,13 @@ verificar("'ó' vocativo não é contado como o artigo 'o'",
 verificar("'né' é contado com e sem acento (motor que não acentua)",
           PS.contar_marcador("né", "é isso ne, é isso né", L11.norm("é isso ne, é isso né")) == 2)
 
+_txt_yt, _txt_par = PS.ler(FIXTURE)["texto"], PS.ler(FIX_PARA)["texto"]
+_perfis_fix = [
+    {"assinatura": PS.assinatura(_txt_yt), "texto_bruto": _txt_yt,
+     "disfluencia": PS.eixo_disfluencia(_txt_yt)},
+    {"assinatura": PS.assinatura(_txt_par), "texto_bruto": _txt_par.replace("Brahma", "B****"),
+     "disfluencia": PS.eixo_disfluencia(_txt_par)},
+]
 _para = PS.ler(FIX_PARA)
 _int_para = PS.eixo_integracao(_para)
 _pont_para = PS.eixo_pontuacao(_para["texto"], PS.paragrafos(_para["linhas"]))
@@ -408,6 +417,44 @@ verificar("os dois fixtures expõem as mesmas corrupções ao eixo 3",
 verificar("livro-razão entra na régua quando o arquivo pertence a uma transcrição",
           len(PS.regua_para(_regua, REFERENCIA / "00-fonte" / "transcricao-bruta.txt",
                             RAIZ / "KB-RC")["proibidas"]) > len(_regua["proibidas"]))
+
+# 13. o eixo de proveniência e a separação de ruído nos ausentes — o que o experimento de 16/09
+#     descobriu na prática: os dois arquivos eram o MESMO reconhecimento de fala, e a lista de
+#     "ausentes da base" de um STT pontuado enche de inicial de frase. Sem estes dois testes o
+#     instrumento voltaria a confundir camada de reescrita com motor, e ruído com termo novo.
+_linhas_aus = [{"forma": "Antigo Testamento", "ocorrencias": "1"},
+               {"forma": "Uhum", "ocorrencias": "2"},
+               {"forma": "Infelizmente", "ocorrencias": "1"},
+               {"forma": "Kaagen", "ocorrencias": "2"}]
+_txt_aus = L11.norm("antigo testamento Infelizmente infelizmente uhum uhum kaagen kaagen")
+_cls = PS.classificar_ausentes(_linhas_aus, _txt_aus, PS.carregar_guarda())
+verificar("janela de 2+ palavras vai para o balde n_grama", _cls["n_grama"]["formas"] == 1)
+verificar("palavra do vocabulário-guarda não vira candidata a termo", _cls["comum"]["formas"] == 1)
+verificar("inicial de frase é detectada como artefato de capitalização",
+          _cls["capital"]["formas"] == 1 and _cls["capital"]["amostra"] == ["Infelizmente"])
+verificar("o que sobra é candidata real", _cls["real"]["formas"] == 1
+          and _cls["real"]["amostra"] == ["Kaagen"])
+
+verificar("artigo grudado pela janela não conta como grafia diferente",
+          PS.nucleo_grafia("do Paraíso Original") == "paraiso original")
+verificar("grafias diferentes da mesma entidade continuam separadas",
+          PS.nucleo_grafia("a constituicao centenaria") != PS.nucleo_grafia("Constituição Setenária"))
+
+_pv_idem = PS.eixo_proveniencia(_perfis_fix[0], _perfis_fix[0])
+verificar("arquivo comparado consigo mesmo tem divergência zero", _pv_idem["divergencia"] == 0.0)
+verificar("e o veredito reconhece como a mesma fala", "MESMO reconhecimento" in _pv_idem["veredito"])
+_pv_diff = PS.eixo_proveniencia(_perfis_fix[0], _perfis_fix[1])
+verificar("textos diferentes não são declarados o mesmo ASR",
+          _pv_diff["divergencia"] > 0.05 or "independentes" in _pv_diff["veredito"])
+
+_seg_para = PS.eixo_pontuacao(_para["texto"], PS.paragrafos(_para["linhas"]), _para["linhas"])
+verificar("segmento por quebra de linha conta turno de fala, não só parágrafo em branco",
+          _seg_para["segmentos_por_quebra"] >= 8 and _seg_para["paragrafos"] < _seg_para["segmentos_por_quebra"])
+verificar("censura por asterisco é detectada (a camada de reescrita mascara palavra)",
+          PS.eixo_proveniencia(_perfis_fix[0], _perfis_fix[1])["mascarados_b"] == 1
+          and PS.eixo_proveniencia(_perfis_fix[0], _perfis_fix[1])["mascarados_a"] == 0)
+verificar("'bruto' e 'solto' são a mesma leitura (não dispara falso alarme de estágio)",
+          PS.classe_de_leitura("bruto") == PS.classe_de_leitura("solto") != PS.classe_de_leitura("curado"))
 
 # o tempdir da seção 10 era criado e nunca removido — ficava um /tmp/rc-curadoria-* por execução
 shutil.rmtree(_tmp, ignore_errors=True)

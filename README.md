@@ -50,7 +50,7 @@ transcricoes/    UM DIRETÓRIO POR VÍDEO, autossuficiente
 
 upload/          ZONA DE TRÂNSITO do Comandante — ignorada pelo git, exceto o README
                  arquivo chega aqui, é medido e, se aprovado, migra para 00-fonte/ versionado
-testes/          fixtures + teste de fumaça (124 verificações, sem pytest)
+testes/          fixtures + teste de fumaça (136 verificações, sem pytest)
 .github/         template de PR e papéis (CONTRIBUTING)
 ferramentas/ci/  configuração pronta do GitHub Actions — veja o README de lá para ativar
 ```
@@ -60,7 +60,7 @@ ferramentas/ci/  configuração pronta do GitHub Actions — veja o README de l�
 ```bash
 python3 -m venv .venv && . .venv/bin/activate
 pip install -r ferramentas/requirements.txt
-python testes/test_pipeline.py            # 124 verificações de fumaça
+python testes/test_pipeline.py            # 136 verificações de fumaça
 
 # 1. abrir uma transcrição nova (valida o slug, grava o hash do bruto, atualiza o catálogo)
 python ferramentas/rc_novo.py --slug 2026-10-02-lemuria-terry-fabris \
@@ -81,10 +81,16 @@ python ferramentas/rc_qa.py transcricoes/2026-10-02-lemuria-terry-fabris
 python ferramentas/rc_indice.py
 ```
 
-## Experimento de motor de STT (em curso)
+## Experimento de motor de STT (medido, aguardando decisão)
 
-Antes de fixar o padrão de entrada da esteira, o STT do YouTube está sendo comparado com o do
-NotebookLM sobre o mesmo áudio. A medição é feita por ferramenta, não por impressão:
+O STT do YouTube foi comparado com o do NotebookLM sobre o mesmo áudio. **A descoberta central: não
+são dois motores** — divergência lexical de 3,00%, Jaccard 0,929 e nove marcadores orais com
+contagem idêntica dizem que é o mesmo reconhecimento de fala com uma camada de reescrita por cima.
+A camada ganha de forma esmagadora em pontuação e segmentação (0,22 → 15,93 sinais por 100 palavras;
+8 → 295 segmentos), empata em disfluência e **censurou cinco palavras** (`merda` ×3, `bandido` ×2,
+mascaradas com asterisco). Veredito e arquitetura recomendada: `docs/pareceres/parecer-motor-stt.md`.
+
+A medição é feita por ferramenta, não por impressão:
 
 ```bash
 # um arquivo: perfil nos quatro eixos (pontuação, disfluência, terminologia, integração)
@@ -96,9 +102,11 @@ python ferramentas/rc_perfil_stt.py \
     upload/opcao-b.txt --com-diagnostico --md docs/pareceres/parecer-motor-stt-medicao.md
 ```
 
-Critérios de decisão pré-registrados, linha de base medida e o defeito latente que o experimento
-revelou (duas ferramentas, dois critérios diferentes para achar o corpo do arquivo):
-`docs/pareceres/parecer-motor-stt.md`. Arquivos chegam por `upload/` — ver `upload/README.md`.
+Critérios de decisão pré-registrados antes de B existir, medição dos dois lados, o defeito latente
+que o experimento revelou (duas ferramentas, dois critérios diferentes para achar o corpo do
+arquivo) e o custo de código item a item: `docs/pareceres/parecer-motor-stt.md`. A saída bruta do
+instrumento fica em `docs/pareceres/parecer-motor-stt-medicao.md`. Arquivos chegam por `upload/` —
+ver `upload/README.md`.
 
 Fluxo completo, papéis e convenções: **`.github/CONTRIBUTING.md`**.
 

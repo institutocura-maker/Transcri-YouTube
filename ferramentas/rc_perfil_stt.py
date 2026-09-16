@@ -120,9 +120,19 @@ def palavras(texto: str) -> list[str]:
 # ------------------------------------------------------- eixo 1: pontuação/segmentação
 
 
-def eixo_pontuacao(texto: str, paras: list[str]) -> dict:
+def eixo_pontuacao(texto: str, paras: list[str], linhas: list[str] | None = None) -> dict:
+    """Pontuação e segmentação.
+
+    Duas medidas de segmentação, porque os motores quebram o texto de jeitos diferentes:
+    `paragrafos` conta blocos separados por linha em branco (a convenção do produto desta casa),
+    e `segmentos_por_quebra` conta linhas não vazias (a convenção de um STT que dá uma linha por
+    turno de fala). Um motor pode entregar 288 turnos e **nenhum** parágrafo em branco — medir só
+    o segundo faria parecer que ele não segmentou nada.
+    """
     pls = palavras(texto)
     n = max(len(pls), 1)
+    linhas = linhas if linhas is not None else texto.splitlines()
+    segmentos = sum(1 for l in linhas if l.strip())
     cont = {nome: texto.count(simb) for simb, nome in PONTUACAO}
     sentencas = [s.strip() for s in re.split(r"[.!?…]+", texto) if s.strip()]
     por_sent = [len(palavras(s)) for s in sentencas] or [0]
@@ -139,6 +149,8 @@ def eixo_pontuacao(texto: str, paras: list[str]) -> dict:
         "paragrafos": len(paras),
         "palavras_por_paragrafo": round(n / max(len(paras), 1), 1),
         "paragrafos_por_1000_palavras": round(len(paras) * 1000 / n, 2),
+        "segmentos_por_quebra": segmentos,
+        "palavras_por_segmento": round(n / max(segmentos, 1), 1),
     }
 
 
@@ -279,6 +291,69 @@ def eixo_terminologia(texto: str, regua: dict) -> dict:
     }
 
 
+# --------------------------------------------- eixo 5: proveniência (A × B, precisa dos dois)
+
+
+def assinatura(texto: str) -> Counter:
+    """Multiconjunto de palavras normalizadas — a impressão digital do fluxo de fala."""
+    return Counter(L.norm(w) for w in palavras(texto))
+
+
+def eixo_proveniencia(a: dict, b: dict) -> dict:
+    """Os dois arquivos vêm do MESMO reconhecimento de fala ou de motores independentes?
+
+    A pergunta parece acadêmica e não é: se B for o mesmo ASR do YouTube com uma camada de
+    reescrita por cima, então "trocar de motor" é a decisão errada — a decisão certa é sobre pôr ou
+    não pôr um LLM entre o reconhecimento e o revisor, e o risco passa a ser edição silenciosa do
+    bruto, não qualidade de escuta. Sem este eixo, o parecer compararia ouvidos que são o mesmo
+    ouvido e atribuiria ao motor errado o que é mérito (ou dano) da camada de reescrita.
+
+    Mede três coisas independentes:
+      divergência lexical  — palavras que um tem e o outro não (multiconjunto, sem alinhamento);
+      sobreposição de tipos — Jaccard e hapax em comum (paráfrase derruba os dois);
+      marcadores orais     — quantos têm contagem IDÊNTICA nos dois (mesmo ASR repete igual).
+    """
+    ca: Counter = a["assinatura"]
+    cb: Counter = b["assinatura"]
+    na, nb = sum(ca.values()), sum(cb.values())
+    removidas = ca - cb
+    acrescentadas = cb - ca
+    divergencia = (sum(removidas.values()) + sum(acrescentadas.values())) / max(na, 1)
+    tipos_a, tipos_b = set(ca), set(cb)
+    jaccard = len(tipos_a & tipos_b) / max(len(tipos_a | tipos_b), 1)
+    hapax_a = {w for w, n in ca.items() if n == 1}
+    hapax_b = {w for w, n in cb.items() if n == 1}
+    hapax_comuns = len(hapax_a & hapax_b) / max(len(hapax_a), 1)
+    ma, mb = a["disfluencia"]["marcadores_orais"], b["disfluencia"]["marcadores_orais"]
+    identicos = [m for m in ma if ma.get(m) == mb.get(m) and ma.get(m, 0) > 0]
+    taxa_ident = len(identicos) / max(len([m for m in ma if ma[m] > 0]), 1)
+    # máscara de profanidade/PII: a camada de reescrita pode CENSURAR o texto ("merda" -> "m****"),
+    # e asterisco não é palavra da língua — se entrar no produto, entra como lixo tipográfico
+    masc_a = re.findall(r"\w*\*{2,}\w*", a.get("texto_bruto", ""))
+    masc_b = re.findall(r"\w*\*{2,}\w*", b.get("texto_bruto", ""))
+    if divergencia <= 0.05 and taxa_ident >= 0.5:
+        veredito = ("MESMO reconhecimento de fala com camada de reescrita por cima "
+                    "(pontuação/segmentação e edição pontual) — não são dois motores")
+    elif divergencia <= 0.15:
+        veredito = "mesma base de áudio com edição substancial em um dos lados"
+    else:
+        veredito = "reconhecimentos independentes — a comparação de motor é válida como tal"
+    return {
+        "palavras_a": na, "palavras_b": nb,
+        "removidas": sum(removidas.values()), "acrescentadas": sum(acrescentadas.values()),
+        "divergencia": round(divergencia, 4),
+        "jaccard_tipos": round(jaccard, 4),
+        "hapax_comuns": round(hapax_comuns, 4),
+        "marcadores_iguais": len(identicos), "taxa_marcadores_iguais": round(taxa_ident, 3),
+        "marcadores_iguais_lista": sorted(identicos),
+        "top_removidas": [f"{w}×{n}" for w, n in removidas.most_common(12)],
+        "top_acrescentadas": [f"{w}×{n}" for w, n in acrescentadas.most_common(12)],
+        "mascarados_a": len(masc_a), "mascarados_b": len(masc_b),
+        "amostra_mascarados_b": masc_b[:8],
+        "veredito": veredito,
+    }
+
+
 # ------------------------------------------------- eixo 4: veredito de integração
 
 
@@ -294,31 +369,45 @@ def eixo_integracao(arq: dict) -> dict:
         achados = padrao.findall(texto)
         if achados:
             rotulos[f"padrão {i + 1}"] = len(achados)
+    # um ou dois achados são falso positivo ("Falei:" casa com "Nome: fala"); diarização nativa
+    # de verdade aparece dezenas de vezes num arquivo de 2 horas
+    diarizacao = any(v >= 3 for v in rotulos.values())
     sinais = sum(texto.count(s) for s in (",", ".", "?", "!"))
     pls = max(len(palavras(texto)), 1)
+    densidade = sinais * 1000 / pls
+    # Três desfechos, e a diferença entre os dois últimos é o que decide o parecer:
+    #   ok       — a suposição continua valendo;
+    #   codigo   — a suposição quebra e custa alteração nas ferramentas (preço pago uma vez);
+    #   superada — a premissa da norma deixa de valer porque o motor já entrega o que a norma
+    #              mandava o revisor fazer à mão (o trabalho manual desaparece; não é defeito).
     quebras = [
         ("rc_novo.py / rc_indice.py medem o corpo como **a linha mais longa**",
-         cobertura >= 0.8,
+         "ok" if cobertura >= 0.8 else "codigo",
          f"a maior linha cobre {cobertura:.1%} do arquivo"
-         + ("" if cobertura >= 0.8 else " — as métricas sairiam certas por acaso, não por regra")),
+         + ("" if cobertura >= 0.8 else " — corpo fracionário em metadados.yaml, sem erro e sem aviso")),
         ("rc_diagnostico.carregar_transcricao separa cabeçalho pelo marcador "
-         "'Transcrição Automática'", marcador,
+         "'Transcrição Automática'", "ok" if marcador else "codigo",
          "marcador presente" if marcador else "sem marcador: o arquivo inteiro vira corpo e o "
                                               "cabeçalho sai vazio"),
-        ("diarização opção B (rótulos inferidos pelo revisor)", not rotulos,
-         "sem rótulos nativos: o revisor continua inferindo" if not rotulos
-         else f"rótulos nativos detectados ({rotulos}): inferir vira conferir"),
-        ("Guia §8 (pontuação é corretiva, o STT não traz)", sinais * 1000 / pls < 5,
-         f"{sinais * 1000 / pls:.1f} sinais por 1.000 palavras"
-         + (" — pontuação praticamente ausente" if sinais * 1000 / pls < 5 else " — pontuação nativa")),
+        ("diarização opção B (rótulos inferidos pelo revisor)",
+         "superada" if diarizacao else "ok",
+         f"rótulos nativos detectados ({rotulos}): inferir vira conferir" if diarizacao
+         else "sem rótulos nativos: o revisor continua inferindo"),
+        ("Guia §8 (pontuação é corretiva, o STT não traz)",
+         "superada" if densidade >= 5 else "ok",
+         f"{densidade:.1f} sinais por 1.000 palavras"
+         + (" — pontuação praticamente ausente" if densidade < 5
+            else " — pontuação nativa: a norma passa a ser de conferência, não de reconstrução")),
     ]
     return {
         "maior_linha_chars": maior,
         "cobertura_corpo_por_linha": round(cobertura, 4),
         "marcador_cabecalho": marcador,
         "rotulos_nativos": rotulos,
+        "diarizacao_nativa": diarizacao,
         "sinais_por_1000": round(sinais * 1000 / pls, 2),
-        "quebras": [{"suposicao": s, "compativel": ok, "detalhe": d} for s, ok, d in quebras],
+        "quebras": [{"suposicao": s, "tipo": t, "compativel": t != "codigo", "detalhe": d}
+                    for s, t, d in quebras],
         "ferramentas_afetadas": [
             "rc_novo.py — mede o bruto (bytes, linhas, sha256, corpo) e grava metadados.yaml",
             "rc_indice.py — coluna palavras_brutas do catálogo vem da linha mais longa",
@@ -331,6 +420,93 @@ def eixo_integracao(arq: dict) -> dict:
 
 
 # ------------------------------------------------------------------- diagnóstico
+
+
+def carregar_guarda() -> set:
+    """Vocabulário comum pt-BR da casa (o mesmo que o rc_diagnostico usa para não propor substituição)."""
+    arq = RAIZ / "ferramentas" / "dados" / "vocabular-guarda-pt.txt"
+    if not arq.exists():
+        return set()
+    return {L.norm(l.strip()) for l in arq.read_text(encoding="utf-8").splitlines()
+            if l.strip() and not l.startswith("#")}
+
+
+def classificar_ausentes(linhas: list[dict], texto_norm: str, guarda: set) -> dict:
+    """Separa o joio do trigo na lista de "ausentes da base".
+
+    O `rc_diagnostico` procura **sequências capitalizadas** sem registro na base. A heurística é boa
+    num STT que não pontua; num STT que pontua, toda inicial de frase é capitalizada e a lista enche
+    de verbo e advérbio comuns ("Infelizmente", "Claro", "Desintegrou"). Sem esta separação, o eixo 3
+    pune o motor justamente por aquilo que ele fez de melhor.
+
+    Quatro baldes, do mais ruidoso ao que interessa:
+      n_grama   janela de 2-4 palavras — não é entidade, é recorte;
+      comum     palavra única que está no vocabulário-guarda da casa;
+      capital   palavra única que também ocorre em minúscula no texto (inicial de frase);
+      real      o que sobra — candidata de verdade a termo novo ou a [NOTA].
+    """
+    formas = [(l.get("forma", ""), int(l.get("ocorrencias") or 0)) for l in linhas]
+    multi, comum, capital, real = [], [], [], []
+    for f, n in formas:
+        if not f.strip():
+            continue
+        if " " in f.strip():
+            multi.append((f, n))
+        elif L.norm(f) in guarda:
+            comum.append((f, n))
+        elif len(re.findall(rf"(?<!\w){re.escape(L.norm(f))}(?!\w)", texto_norm)) > n:
+            capital.append((f, n))
+        else:
+            real.append((f, n))
+    res = {}
+    for nome, grupo in (("n_grama", multi), ("comum", comum), ("capital", capital), ("real", real)):
+        res[nome] = {"formas": len(grupo), "ocorrencias": sum(n for _, n in grupo),
+                     "amostra": [f for f, _ in sorted(grupo, key=lambda x: -x[1])[:12]]}
+    res["total_formas"] = len(formas)
+    res["total_ocorrencias"] = sum(n for _, n in formas)
+    return res
+
+
+# artigos, preposições e conjunções que o motor de diagnóstico gruda na janela — não fazem parte
+# da grafia da entidade, e contá-los inflaria a dispersão ("do paraíso original" ≠ "paraíso original")
+_STOP = {"o", "a", "os", "as", "um", "uma", "do", "da", "dos", "das", "de", "d", "e", "no", "na",
+         "nos", "nas", "em", "esse", "essa", "este", "esta", "aquele", "aquela", "que", "se", "ao",
+         "aos", "para", "pra", "por", "com", "seu", "sua", "seus", "suas", "ele", "ela", "meu",
+         "minha", "nosso", "nossa", "como", "mais", "mas", "ou", "ja", "é", "eh", "né", "ne", "tem"}
+
+
+def nucleo_grafia(variante: str) -> str:
+    toks = [t for t in L.norm(variante).split() if t]
+    while toks and toks[0] in _STOP:
+        toks.pop(0)
+    while toks and toks[-1] in _STOP:
+        toks.pop()
+    return " ".join(toks)
+
+
+def dispersao_de_grafias(linhas: list[dict]) -> dict:
+    """Quantas grafias diferentes cada motor produziu para a MESMA entidade.
+
+    Vem do próprio livro-razão do `rc_diagnostico` (colunas `variante` e `canonico_proposto`), com as
+    formas normalizadas e sem os artigos que a janela gruda — então não sofre o artefato de
+    capitalização nem o de recorte. Entra só o que é proposta de verdade (status_aprovacao
+    "proposta" ou "aprovada"); linhas "informativa" são artigo e flexão, ruído morfológico.
+    É a medida mais direta de "alucinou menos ou mais nas entidades", que foi o que o despacho pediu.
+    """
+    por_alvo: dict[str, set] = {}
+    for l in linhas:
+        if (l.get("status_aprovacao") or "").strip() == "informativa":
+            continue
+        alvo = (l.get("canonico_proposto") or "").strip()
+        nucleo = nucleo_grafia(l.get("variante") or "")
+        if alvo and nucleo:
+            por_alvo.setdefault(alvo, set()).add(nucleo)
+    ordenado = sorted(por_alvo.items(), key=lambda x: -len(x[1]))
+    return {"entidades": len(por_alvo),
+            "grafias_distintas": sum(len(v) for v in por_alvo.values()),
+            "media_por_entidade": round(sum(len(v) for v in por_alvo.values())
+                                        / max(len(por_alvo), 1), 2),
+            "piores": [(alvo, sorted(v)) for alvo, v in ordenado[:8]]}
 
 
 def rodar_diagnostico(caminho: Path, kb: Path) -> dict:
@@ -359,7 +535,13 @@ def rodar_diagnostico(caminho: Path, kb: Path) -> dict:
         aus = list(out.rglob("ausentes-da-base.csv"))
         if aus:
             with aus[0].open(encoding="utf-8-sig", newline="") as fh:
-                res["ausentes_da_base"] = sum(1 for _ in csv.DictReader(fh))
+                linhas_aus = list(csv.DictReader(fh))
+            res["ausentes_da_base"] = len(linhas_aus)
+            res["ausentes_classificados"] = classificar_ausentes(
+                linhas_aus, L.norm(caminho.read_text(encoding="utf-8-sig", errors="replace")),
+                carregar_guarda())
+        if cand:
+            res["dispersao"] = dispersao_de_grafias(linhas)
         md = list(out.rglob("diagnostico.md"))
         if md:
             t = md[0].read_text(encoding="utf-8")
@@ -397,6 +579,11 @@ def estagio(caminho: Path) -> tuple[str, str]:
                       "é o caso do experimento de motor")
 
 
+def classe_de_leitura(estagio: str) -> str:
+    """Agrupa estágios pela forma de ler o eixo 3: cru, curado ou outro."""
+    return {"bruto": "cru", "solto": "cru", "curado": "curado"}.get(estagio, "outro")
+
+
 def perfil(caminho: Path, kb: Path, regua: dict, com_diag: bool) -> dict:
     arq = ler(caminho)
     paras = paragrafos(arq["linhas"])
@@ -409,8 +596,10 @@ def perfil(caminho: Path, kb: Path, regua: dict, com_diag: bool) -> dict:
         "bytes": arq["bytes"], "crlf": arq["crlf"], "lf": arq["lf"],
         "linhas": len(arq["linhas"]), "linhas_nao_vazias": len(arq["nao_vazias"]),
         "paragrafos_reais": len(paras),
-        "estrutura": eixo_pontuacao(corpo, paras),
-        "pontuacao": eixo_pontuacao(corpo, paras),
+        "estrutura": eixo_pontuacao(corpo, paras, arq["linhas"]),
+        "pontuacao": eixo_pontuacao(corpo, paras, arq["linhas"]),
+        "assinatura": assinatura(corpo),
+        "texto_bruto": corpo,
         "disfluencia": eixo_disfluencia(corpo),
         "terminologia": eixo_terminologia(corpo, regua),
         "integracao": eixo_integracao(arq),
@@ -463,10 +652,11 @@ def imprimir(p: dict) -> None:
     print(f"    maior linha: {fmt(i['maior_linha_chars'])} chars = "
           f"{i['cobertura_corpo_por_linha']:.1%} do arquivo")
     print(f"    marcador 'Transcrição Automática': {'sim' if i['marcador_cabecalho'] else 'não'}")
-    print(f"    rótulos de fala nativos: {i['rotulos_nativos'] or 'nenhum'}")
+    print(f"    rótulos de fala nativos: {i['rotulos_nativos'] or 'nenhum'} "
+          f"→ diarização nativa: {'sim' if i['diarizacao_nativa'] else 'não'}")
+    marca_tipo = {"ok": "compatível", "codigo": "CUSTA CÓDIGO", "superada": "PREMISSA SUPERADA"}
     for q in i["quebras"]:
-        marca = "compatível " if q["compativel"] else "QUEBRA    "
-        print(f"      [{marca}] {q['suposicao']}\n                   {q['detalhe']}")
+        print(f"      [{marca_tipo[q['tipo']]:<18}] {q['suposicao']}\n{'':<25}{q['detalhe']}")
     if p["diagnostico"]:
         dg = p["diagnostico"]
         print(f"\n[5] DIAGNÓSTICO DA ESTEIRA (rc_diagnostico.py, exit {dg['exit']})")
@@ -474,6 +664,22 @@ def imprimir(p: dict) -> None:
                   "superficies_exatas", "sementes_atingidas"):
             if k in dg:
                 print(f"    {k}: {fmt(dg[k])}")
+        if dg.get("ausentes_classificados"):
+            ac = dg["ausentes_classificados"]
+            print(f"    ausentes da base, separando o joio do trigo "
+                  f"({ac['total_formas']} formas no total):")
+            for k, rot in (("n_grama", "janela de 2-4 palavras (recorte, não entidade)"),
+                           ("comum", "palavra única do vocabulário comum"),
+                           ("capital", "inicial de frase (a palavra também ocorre em minúscula)"),
+                           ("real", "CANDIDATA REAL a termo novo")):
+                b = ac[k]
+                print(f"      {rot:<56} {b['formas']:>4} formas · {b['ocorrencias']:>4} occ")
+        if dg.get("dispersao"):
+            dp = dg["dispersao"]
+            print(f"    dispersão de grafias: {dp['grafias_distintas']} grafias para "
+                  f"{dp['entidades']} entidades (média {dp['media_por_entidade']})")
+            for alvo, vs in dp["piores"][:5]:
+                print(f"      {alvo[:34]:<36} {len(vs)} grafias: {', '.join(vs[:6])}")
         if dg.get("por_status"):
             print("    por status_aprovacao: " + ", ".join(f"{k} {fmt(v)}" for k, v in
                                                            sorted(dg["por_status"].items())))
@@ -486,48 +692,12 @@ def imprimir(p: dict) -> None:
 
 def comparar(a: dict, b: dict) -> None:
     print(f"\n{'=' * 78}\nCOMPARATIVO — {a['nome']} (A) × {b['nome']} (B)\n{'=' * 78}")
-    if a["estagio"] != b["estagio"]:
-        print(f"  [atenção] estágios diferentes: A={a['estagio']}, B={b['estagio']}. "
-              f"Comparação justa de motor exige os dois em estado BRUTO.")
-    linhas = [
-        ("bytes", a["bytes"], b["bytes"], "maior"),
-        ("linhas", a["linhas"], b["linhas"], "maior"),
-        ("parágrafos reais", a["paragrafos_reais"], b["paragrafos_reais"], "maior"),
-        ("palavras", a["pontuacao"]["palavras"], b["pontuacao"]["palavras"], "—"),
-        ("sinais por 100 palavras", a["pontuacao"]["sinais_por_100_palavras"],
-         b["pontuacao"]["sinais_por_100_palavras"], "maior"),
-        ("sentenças", a["pontuacao"]["sentencas"], b["pontuacao"]["sentencas"], "maior"),
-        ("palavras/sentença", a["pontuacao"]["palavras_por_sentenca"],
-         b["pontuacao"]["palavras_por_sentenca"], "menor"),
-        ("maior sentença (palavras)", a["pontuacao"]["maior_sentenca_palavras"],
-         b["pontuacao"]["maior_sentenca_palavras"], "menor"),
-        ("disfluências totais", a["disfluencia"]["total_disfluencias"],
-         b["disfluencia"]["total_disfluencias"], "menor"),
-        ("disfluências/1.000 palavras", a["disfluencia"]["por_1000_palavras"],
-         b["disfluencia"]["por_1000_palavras"], "menor"),
-        ("repetições de palavra", a["disfluencia"]["repeticoes_palavra"],
-         b["disfluencia"]["repeticoes_palavra"], "menor"),
-        ("marcadores orais", a["disfluencia"]["total_marcadores"],
-         b["disfluencia"]["total_marcadores"], "menor"),
-        ("canônicos KB presentes", a["terminologia"]["canonicos_ocorrencias"],
-         b["terminologia"]["canonicos_ocorrencias"], "maior"),
-        ("variantes STT (corrupções)", a["terminologia"]["variantes_stt_ocorrencias"],
-         b["terminologia"]["variantes_stt_ocorrencias"], "menor"),
-        ("corrupções/1.000 palavras", a["terminologia"]["corrupcoes_por_1000_palavras"],
-         b["terminologia"]["corrupcoes_por_1000_palavras"], "menor"),
-        ("formas proibidas", a["terminologia"]["proibidas_ocorrencias"],
-         b["terminologia"]["proibidas_ocorrencias"], "menor"),
-        ("taxa de confiança", a["terminologia"]["taxa_fiducia"],
-         b["terminologia"]["taxa_fiducia"], "maior"),
-    ]
-    if a["diagnostico"] and b["diagnostico"]:
-        for k, rot in (("linhas_ledger", "linhas no livro-razão"),
-                       ("propostas", "propostas a adjudicar"),
-                       ("ausentes_da_base", "ausentes da base")):
-            if k in a["diagnostico"] and k in b["diagnostico"]:
-                linhas.append((rot, a["diagnostico"][k], b["diagnostico"][k], "menor"))
-    print(f"\n{'métrica':<32}{'A':>14}{'B':>14}{'Δ B−A':>14}   melhor")
-    print("-" * 84)
+    if classe_de_leitura(a["estagio"]) != classe_de_leitura(b["estagio"]):
+        print(f"  [ATENÇÃO] leituras incompatíveis: A={a['estagio']}, B={b['estagio']}. "
+              f"Medir um bruto contra um texto curado mede o revisor, não o motor.")
+    linhas = tabela_comparativa(a, b)  # fonte única: terminal e markdown mostram os mesmos números
+    print(f"\n{'métrica':<44}{'A':>12}{'B':>12}{'Δ B−A':>12}   melhor")
+    print("-" * 92)
     for rot, va, vb, criterio in linhas:
         try:
             delta = round(vb - va, 4)
@@ -537,22 +707,48 @@ def comparar(a: dict, b: dict) -> None:
             melhor = "—"
         else:
             melhor = "B" if (delta > 0) == (criterio == "maior") else "A"
-        print(f"{rot:<32}{fmt(va):>14}{fmt(vb):>14}{str(delta):>14}   {melhor}")
+        print(f"{rot:<44}{fmt(va):>12}{fmt(vb):>12}{str(delta):>12}   {melhor}")
+    if a.get("assinatura") and b.get("assinatura"):
+        pv = eixo_proveniencia(a, b)
+        print(f"\n[6] PROVENIÊNCIA — os dois lados vêm do mesmo reconhecimento de fala?")
+        print(f"    divergência lexical: {pv['divergencia']:.2%} "
+              f"({fmt(pv['removidas'])} palavras de A ausentes em B, "
+              f"{fmt(pv['acrescentadas'])} palavras de B ausentes em A)")
+        print(f"    vocabulário: Jaccard {pv['jaccard_tipos']:.3f} · hapax em comum "
+              f"{pv['hapax_comuns']:.3f}")
+        print(f"    marcadores orais com contagem IDÊNTICA: {pv['marcadores_iguais']} "
+              f"({pv['taxa_marcadores_iguais']:.0%}) → {', '.join(pv['marcadores_iguais_lista'])}")
+        print(f"    maiores perdas em B: {', '.join(pv['top_removidas'][:10])}")
+        print(f"    maiores acréscimos em B: {', '.join(pv['top_acrescentadas'][:10])}")
+        print(f"    tokens mascarados com asterisco: A {pv['mascarados_a']} · B {pv['mascarados_b']}"
+              + (f" → {', '.join(pv['amostra_mascarados_b'])}" if pv["mascarados_b"] else ""))
+        print(f"    VEREDITO: {pv['veredito']}")
     ka = sum(1 for q in a["integracao"]["quebras"] if q["compativel"])
     kb_ = sum(1 for q in b["integracao"]["quebras"] if q["compativel"])
     tot = len(a["integracao"]["quebras"])
-    print(f"\ncompatibilidade com a esteira: A {ka}/{tot} · B {kb_}/{tot}")
+    sa = sum(1 for q in a["integracao"]["quebras"] if q["tipo"] == "superada")
+    sb = sum(1 for q in b["integracao"]["quebras"] if q["tipo"] == "superada")
+    print(f"\ncompatibilidade com a esteira: A {ka}/{tot} · B {kb_}/{tot} "
+          f"(premissas superadas: A {sa}, B {sb})")
+    rotulo = {"codigo": "B CUSTA CÓDIGO  ", "superada": "B SUPERA PREMISSA"}
     for q in b["integracao"]["quebras"]:
-        if not q["compativel"]:
-            print(f"  B QUEBRA: {q['suposicao']}\n            {q['detalhe']}")
+        if q["tipo"] != "ok":
+            print(f"  [{rotulo[q['tipo']]}] {q['suposicao']}\n{'':<21}{q['detalhe']}")
 
 
 def tabela_comparativa(a: dict, b: dict) -> list[tuple]:
-    """Linhas (rótulo, valor A, valor B, critério de melhor) do comparativo."""
-    return [
+    """Linhas (rótulo, valor A, valor B, critério de melhor) do comparativo.
+
+    Fonte única: o terminal (`comparar`) e o markdown (`para_markdown`) imprimem exatamente estas
+    linhas. Duas listas separadas já produziram um relatório markdown mais curto que a medição.
+    """
+    linhas = [
         ("bytes", a["bytes"], b["bytes"], "—"),
         ("linhas", a["linhas"], b["linhas"], "—"),
-        ("parágrafos reais", a["paragrafos_reais"], b["paragrafos_reais"], "maior"),
+        ("parágrafos (separados por linha em branco)", a["paragrafos_reais"],
+         b["paragrafos_reais"], "—"),
+        ("segmentos por quebra de linha", a["pontuacao"]["segmentos_por_quebra"],
+         b["pontuacao"]["segmentos_por_quebra"], "maior"),
         ("palavras", a["pontuacao"]["palavras"], b["pontuacao"]["palavras"], "—"),
         ("sinais por 100 palavras", a["pontuacao"]["sinais_por_100_palavras"],
          b["pontuacao"]["sinais_por_100_palavras"], "maior"),
@@ -580,6 +776,36 @@ def tabela_comparativa(a: dict, b: dict) -> list[tuple]:
         ("taxa de confiança", a["terminologia"]["taxa_fiducia"],
          b["terminologia"]["taxa_fiducia"], "maior"),
     ]
+    if a.get("diagnostico") and b.get("diagnostico"):
+        da, db = a["diagnostico"], b["diagnostico"]
+        for k, rot in (("linhas_ledger", "linhas no livro-razão"),
+                       ("propostas", "propostas a adjudicar"),
+                       ("ausentes_da_base", "ausentes da base (lista bruta)")):
+            if k in da and k in db:
+                linhas.append((rot, da[k], db[k], "menor"))
+        if "ausentes_classificados" in da and "ausentes_classificados" in db:
+            linhas.append(("candidatas REAIS a termo novo",
+                           da["ausentes_classificados"]["real"]["formas"],
+                           db["ausentes_classificados"]["real"]["formas"], "menor"))
+            linhas.append(("ruído na lista de ausentes (n-grama + comum + capital)",
+                           sum(da["ausentes_classificados"][k]["formas"]
+                               for k in ("n_grama", "comum", "capital")),
+                           sum(db["ausentes_classificados"][k]["formas"]
+                               for k in ("n_grama", "comum", "capital")), "menor"))
+        if "dispersao" in da and "dispersao" in db:
+            linhas.append(("dispersão de grafias (formas distintas)",
+                           da["dispersao"]["grafias_distintas"],
+                           db["dispersao"]["grafias_distintas"], "menor"))
+            linhas.append(("dispersão: média de grafias por entidade",
+                           da["dispersao"]["media_por_entidade"],
+                           db["dispersao"]["media_por_entidade"], "menor"))
+        if "ausentes_da_base" in da and "ausentes_da_base" in db:
+            # a métrica simétrica do parecer: não depende de a KB já conhecer a corrupção, porque
+            # corrupção inédita aparece como "ausente da base" e entra na soma do mesmo jeito
+            linhas.append(("CARGA TERMINOLÓGICA TOTAL (livro-razão + ausentes)",
+                           da["linhas_ledger"] + da["ausentes_da_base"],
+                           db["linhas_ledger"] + db["ausentes_da_base"], "menor"))
+    return linhas
 
 
 def veredito(vb, va, criterio: str) -> str:
@@ -612,13 +838,32 @@ def para_markdown(perfis: list[dict], base: dict) -> str:
             except TypeError:
                 delta = "—"
             out.append(f"| {rot} | {fmt(va)} | {fmt(vb)} | {delta} | {veredito(vb, va, crit)} |")
+        pv = eixo_proveniencia(a, b)
+        out += ["", "### Proveniência — os dois lados vêm do mesmo reconhecimento de fala?", "",
+                "| medida | valor |", "|---|---:|",
+                f"| divergência lexical | {pv['divergencia']:.2%} "
+                f"({fmt(pv['removidas'])} de A ausentes em B · {fmt(pv['acrescentadas'])} de B "
+                f"ausentes em A) |",
+                f"| Jaccard de vocabulário | {pv['jaccard_tipos']:.3f} |",
+                f"| hapax em comum | {pv['hapax_comuns']:.3f} |",
+                f"| marcadores orais com contagem idêntica | {pv['marcadores_iguais']} "
+                f"({pv['taxa_marcadores_iguais']:.0%}) |",
+                f"| tokens mascarados com asterisco | A {pv['mascarados_a']} · "
+                f"B {pv['mascarados_b']} |",
+                "", f"**Veredito:** {pv['veredito']}.", ""]
         ka = sum(1 for q in a["integracao"]["quebras"] if q["compativel"])
         kb_ = sum(1 for q in b["integracao"]["quebras"] if q["compativel"])
         tot = len(a["integracao"]["quebras"])
-        out += ["", f"Compatibilidade com a esteira: **A {ka}/{tot}** · **B {kb_}/{tot}**.", ""]
+        sa = sum(1 for q in a["integracao"]["quebras"] if q["tipo"] == "superada")
+        sb = sum(1 for q in b["integracao"]["quebras"] if q["tipo"] == "superada")
+        out += ["", f"Compatibilidade com a esteira: **A {ka}/{tot}** · **B {kb_}/{tot}** "
+                f"(premissas superadas: A {sa}, B {sb}).", ""]
         for q in b["integracao"]["quebras"]:
-            if not q["compativel"]:
-                out += [f"- **B QUEBRA** `{q['suposicao']}` — {q['detalhe']}"]
+            if q["tipo"] == "codigo":
+                out += [f"- **B CUSTA CÓDIGO** `{q['suposicao']}` — {q['detalhe']}"]
+            elif q["tipo"] == "superada":
+                out += [f"- **B SUPERA A PREMISSA** `{q['suposicao']}` — {q['detalhe']} "
+                        f"(trabalho manual que deixa de existir; não é defeito)"]
         if a["diagnostico"] and b["diagnostico"]:
             out += ["", "### Carga do `rc_diagnostico.py` (mesma ferramenta da esteira)", "",
                     "| saída | A | B |", "|---|---:|---:|"]
@@ -675,7 +920,10 @@ def main(argv: list[str] | None = None) -> int:
     if len(perfis) == 2:
         comparar(perfis[0], perfis[1])
     if args.json:
-        args.json.write_text(json.dumps(perfis, ensure_ascii=False, indent=1), encoding="utf-8")
+        # a assinatura (multiconjunto de ~3 mil tipos) é meio de cálculo, não resultado: sai do JSON
+        enxutos = [{k: v for k, v in p.items() if k not in ("assinatura", "texto_bruto")}
+                   for p in perfis]
+        args.json.write_text(json.dumps(enxutos, ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"\n[ok] perfil gravado em {args.json}")
     if args.md:
         args.md.parent.mkdir(parents=True, exist_ok=True)

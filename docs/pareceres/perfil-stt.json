@@ -1,0 +1,1022 @@
+[
+ {
+  "arquivo": "transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-bruta.txt",
+  "nome": "transcricao-bruta.txt",
+  "estagio": "bruto",
+  "leitura_estagio": "STT cru: corrupções e formas proibidas SÃO esperadas — é a matéria-prima",
+  "bytes": 106243,
+  "crlf": 15,
+  "lf": 0,
+  "linhas": 15,
+  "linhas_nao_vazias": 8,
+  "paragrafos_reais": 4,
+  "estrutura": {
+   "palavras": 18966,
+   "contagem": {
+    "vírgula": 7,
+    "ponto": 23,
+    "interrogação": 11,
+    "exclamação": 0,
+    "dois-pontos": 73,
+    "ponto-e-vírgula": 0,
+    "travessão": 0,
+    "meia-risca": 2,
+    "reticências": 0,
+    "reticências (3 pontos)": 0,
+    "aspas retas": 117,
+    "aspas curvas": 1,
+    "parêntese": 0
+   },
+   "densidade_por_1000": {
+    "vírgula": 0.37,
+    "ponto": 1.21,
+    "interrogação": 0.58,
+    "exclamação": 0.0,
+    "dois-pontos": 3.85,
+    "ponto-e-vírgula": 0.0,
+    "travessão": 0.0,
+    "meia-risca": 0.11,
+    "reticências": 0.0,
+    "reticências (3 pontos)": 0.0,
+    "aspas retas": 6.17,
+    "aspas curvas": 0.05,
+    "parêntese": 0.0
+   },
+   "sinais_por_100_palavras": 0.22,
+   "sentencas": 35,
+   "palavras_por_sentenca": 541.9,
+   "mediana_palavras_por_sentenca": 331,
+   "maior_sentenca_palavras": 2604,
+   "paragrafos": 4,
+   "palavras_por_paragrafo": 4741.5,
+   "paragrafos_por_1000_palavras": 0.21,
+   "segmentos_por_quebra": 8,
+   "palavras_por_segmento": 2370.8
+  },
+  "pontuacao": {
+   "palavras": 18966,
+   "contagem": {
+    "vírgula": 7,
+    "ponto": 23,
+    "interrogação": 11,
+    "exclamação": 0,
+    "dois-pontos": 73,
+    "ponto-e-vírgula": 0,
+    "travessão": 0,
+    "meia-risca": 2,
+    "reticências": 0,
+    "reticências (3 pontos)": 0,
+    "aspas retas": 117,
+    "aspas curvas": 1,
+    "parêntese": 0
+   },
+   "densidade_por_1000": {
+    "vírgula": 0.37,
+    "ponto": 1.21,
+    "interrogação": 0.58,
+    "exclamação": 0.0,
+    "dois-pontos": 3.85,
+    "ponto-e-vírgula": 0.0,
+    "travessão": 0.0,
+    "meia-risca": 0.11,
+    "reticências": 0.0,
+    "reticências (3 pontos)": 0.0,
+    "aspas retas": 6.17,
+    "aspas curvas": 0.05,
+    "parêntese": 0.0
+   },
+   "sinais_por_100_palavras": 0.22,
+   "sentencas": 35,
+   "palavras_por_sentenca": 541.9,
+   "mediana_palavras_por_sentenca": 331,
+   "maior_sentenca_palavras": 2604,
+   "paragrafos": 4,
+   "palavras_por_paragrafo": 4741.5,
+   "paragrafos_por_1000_palavras": 0.21,
+   "segmentos_por_quebra": 8,
+   "palavras_por_segmento": 2370.8
+  },
+  "disfluencia": {
+   "marcadores_orais": {
+    "né": 49,
+    "eh": 45,
+    "uhum": 31,
+    "hum": 3,
+    "ah": 20,
+    "ó": 21,
+    "tá": 87,
+    "tô": 20,
+    "aí": 123,
+    "então": 132,
+    "tipo": 25,
+    "sabe": 17,
+    "cara": 26,
+    "quer dizer": 5,
+    "hã": 0,
+    "sei lá": 2,
+    "olha": 13,
+    "vamos dizer": 0
+   },
+   "total_marcadores": 619,
+   "repeticoes_palavra": 115,
+   "repeticoes_bigrama": 25,
+   "repeticoes_trigrama": 9,
+   "prolongamentos": 4,
+   "total_disfluencias": 768,
+   "por_1000_palavras": 40.49
+  },
+  "terminologia": {
+   "canonicos_distintos": 49,
+   "canonicos_ocorrencias": 271,
+   "canonicos_amostra": [
+    [
+     "deus",
+     "RC-052",
+     109
+    ],
+    [
+     "jave",
+     "RC-001",
+     30
+    ],
+    [
+     "jesus",
+     "RC-072",
+     21
+    ],
+    [
+     "deuses",
+     "RC-053",
+     10
+    ],
+    [
+     "revelacao cosmica",
+     "RC-094",
+     7
+    ],
+    [
+     "cosmica",
+     "RC-342",
+     7
+    ],
+    [
+     "eu parasitario",
+     "RC-947",
+     6
+    ],
+    [
+     "val",
+     "RC-109",
+     5
+    ],
+    [
+     "eva",
+     "RC-189",
+     5
+    ],
+    [
+     "arcontes",
+     "RC-474",
+     5
+    ],
+    [
+     "belial",
+     "RC-479",
+     5
+    ],
+    [
+     "demiurgo",
+     "RC-048",
+     4
+    ]
+   ],
+   "variantes_stt_distintas": 33,
+   "variantes_stt_ocorrencias": 57,
+   "variantes_stt_amostra": [
+    [
+     "brama",
+     "RC-037",
+     8
+    ],
+    [
+     "jahe",
+     "RC-001",
+     6
+    ],
+    [
+     "javer",
+     "RC-001",
+     3
+    ],
+    [
+     "belal",
+     "RC-479",
+     3
+    ],
+    [
+     "yahe",
+     "RC-001",
+     2
+    ],
+    [
+     "demiurg",
+     "RC-048",
+     2
+    ],
+    [
+     "calmeia",
+     "RC-174",
+     2
+    ],
+    [
+     "arcontos",
+     "RC-474",
+     2
+    ],
+    [
+     "ganexa",
+     "RC-756",
+     2
+    ],
+    [
+     "kaagem",
+     "RC-948",
+     2
+    ],
+    [
+     "constituicao centenaria",
+     "RC-952",
+     2
+    ],
+    [
+     "sofia",
+     "RC-009",
+     2
+    ]
+   ],
+   "proibidas_distintas": 21,
+   "proibidas_ocorrencias": 37,
+   "proibidas_amostra": [
+    [
+     "brama",
+     "Quarentena de RC-826: NUNCA \"Brama\"",
+     8
+    ],
+    [
+     "belal",
+     "ledger: 'Belal' adjudicada como aceita -> Belial",
+     3
+    ],
+    [
+     "javer",
+     "ledger: 'Javer' adjudicada como aceita -> Javé",
+     3
+    ],
+    [
+     "sofia",
+     "Quarentena de RC-826: NUNCA \"Sofia\"",
+     2
+    ],
+    [
+     "demiurg",
+     "ledger: 'Demiurg' adjudicada como aceita -> Demiurgo",
+     2
+    ],
+    [
+     "arcontos",
+     "ledger: 'arcontos' adjudicada como aceita -> Arcontes",
+     2
+    ],
+    [
+     "yahe",
+     "ledger: 'Yahé' adjudicada como aceita -> Javé",
+     2
+    ],
+    [
+     "sidarta",
+     "ledger: 'Sidarta' adjudicada como aceita -> Siddhartha Gautama",
+     2
+    ],
+    [
+     "xave",
+     "ledger: 'Xavé' adjudicada como aceita -> Javé",
+     1
+    ],
+    [
+     "chiva",
+     "ledger: 'chiva' adjudicada como aceita -> Shiva",
+     1
+    ],
+    [
+     "dinastia das sofias",
+     "ledger: 'dinastia das Sofias' adjudicada como aceita -> Dinastia das Sophias",
+     1
+    ],
+    [
+     "tirtancaras",
+     "ledger: 'tirtancaras' adjudicada como aceita -> Tirthankaras",
+     1
+    ]
+   ],
+   "externos_distintos": 27,
+   "externos_ocorrencias": 56,
+   "externos_canonicos_distintos": 17,
+   "externos_canonicos_ocorrencias": 35,
+   "corrupcoes_por_1000_palavras": 3.01,
+   "taxa_fiducia": 0.8262
+  },
+  "integracao": {
+   "maior_linha_chars": 101468,
+   "cobertura_corpo_por_linha": 0.9893,
+   "marcador_cabecalho": true,
+   "rotulos_nativos": {},
+   "diarizacao_nativa": false,
+   "sinais_por_1000": 2.16,
+   "quebras": [
+    {
+     "suposicao": "rc_novo.py / rc_indice.py medem o corpo como **a linha mais longa**",
+     "tipo": "ok",
+     "compativel": true,
+     "detalhe": "a maior linha cobre 98.9% do arquivo"
+    },
+    {
+     "suposicao": "rc_diagnostico.carregar_transcricao separa cabeçalho pelo marcador 'Transcrição Automática'",
+     "tipo": "ok",
+     "compativel": true,
+     "detalhe": "marcador presente"
+    },
+    {
+     "suposicao": "diarização opção B (rótulos inferidos pelo revisor)",
+     "tipo": "ok",
+     "compativel": true,
+     "detalhe": "sem rótulos nativos: o revisor continua inferindo"
+    },
+    {
+     "suposicao": "Guia §8 (pontuação é corretiva, o STT não traz)",
+     "tipo": "ok",
+     "compativel": true,
+     "detalhe": "2.2 sinais por 1.000 palavras — pontuação praticamente ausente"
+    }
+   ],
+   "ferramentas_afetadas": [
+    "rc_novo.py — mede o bruto (bytes, linhas, sha256, corpo) e grava metadados.yaml",
+    "rc_indice.py — coluna palavras_brutas do catálogo vem da linha mais longa",
+    "rc_diagnostico.py — separação de cabeçalho pelo marcador",
+    "metadados.yaml — campos corpo_linha, corpo_caracteres, corpo_palavras, pontuacao_original",
+    "rc_qa.py G1 — sha256 do bruto (não muda, mas o bruto passa a ter outra forma)",
+    "Guia §8 e §9 — pontuação e diarização deixam de ser corretivas se o motor já as traz"
+   ]
+  },
+  "diagnostico": {
+   "exit": 0,
+   "erro": "",
+   "linhas_ledger": 132,
+   "por_classe": {
+    "variante": 39,
+    "truncamento": 5,
+    "artigo": 47,
+    "flexao": 4,
+    "semente-guia": 37
+   },
+   "propostas": 44,
+   "informativas": 51,
+   "por_status": {
+    "proposta": 44,
+    "informativa": 51,
+    "aprovada": 36,
+    "a confirmar": 1
+   },
+   "ausentes_da_base": 131,
+   "ausentes_classificados": {
+    "n_grama": {
+     "formas": 71,
+     "ocorrencias": 87,
+     "amostra": [
+      "Antigo Testamento",
+      "Santíssima Trindade",
+      "Estados Unidos",
+      "Tati Quântica",
+      "Jean Valan",
+      "Espírito Santo",
+      "Agostinho Deus",
+      "Gordon Moore",
+      "Paranormal Experience",
+      "Janva Elan",
+      "Private Jet",
+      "Texas Miami"
+     ]
+    },
+    "comum": {
+     "formas": 8,
+     "ocorrencias": 15,
+     "amostra": [
+      "Uhum",
+      "Bíblia",
+      "Alcorão",
+      "Texas",
+      "Jardim",
+      "Putz",
+      "Alemanha",
+      "Unidos"
+     ]
+    },
+    "capital": {
+     "formas": 11,
+     "ocorrencias": 21,
+     "amostra": [
+      "Jeanval",
+      "Trump",
+      "Belal",
+      "Baal",
+      "Matrix",
+      "Claro",
+      "Ganexa",
+      "Fiquei",
+      "Musk",
+      "Fausto",
+      "Sidarta"
+     ]
+    },
+    "real": {
+     "formas": 41,
+     "ocorrencias": 52,
+     "amostra": [
+      "Pona",
+      "Instagram",
+      "Javer",
+      "Qcode",
+      "Yahé",
+      "Palestina",
+      "Galileia",
+      "Google",
+      "Qcodes",
+      "Xavé",
+      "Teresa",
+      "Espinosa"
+     ]
+    },
+    "total_formas": 131,
+    "total_ocorrencias": 175
+   },
+   "dispersao": {
+    "entidades": 58,
+    "grafias_distintas": 75,
+    "media_por_entidade": 1.29,
+    "piores": [
+     [
+      "Javé",
+      [
+       "javer",
+       "xave",
+       "yahe"
+      ]
+     ],
+     [
+      "Arcturianos",
+      [
+       "arcturianas",
+       "arturiano",
+       "arturianos"
+      ]
+     ],
+     [
+      "Ganesha",
+      [
+       "ganeixa",
+       "ganexa"
+      ]
+     ],
+     [
+      "/Kaggen",
+      [
+       "kaagem",
+       "kaagen"
+      ]
+     ],
+     [
+      "Ato de Verdade / Satyagraha",
+      [
+       "atos de verdade",
+       "trata de verdade"
+      ]
+     ],
+     [
+      "Nova Espiritualidade / Novo Paraíso",
+      [
+       "espiritualidade",
+       "paraiso"
+      ]
+     ],
+     [
+      "Ishvara",
+      [
+       "brama",
+       "testivara"
+      ]
+     ],
+     [
+      "Dinastia das Sophias",
+      [
+       "dinastia das sofias",
+       "dinastia das sofias ta"
+      ]
+     ]
+    ]
+   },
+   "superficies_exatas": 108
+  },
+  "regua": {
+   "proibidas": 24,
+   "pasta_ledger": "transcricoes/2026-09-14-revelacoes-cosmicas-urgente",
+   "aviso_ledger": ""
+  }
+ },
+ {
+  "arquivo": "Opcao-B.txt",
+  "nome": "Opcao-B.txt",
+  "estagio": "solto",
+  "leitura_estagio": "arquivo fora de transcricoes/ (ex.: upload/) — leitura de BRUTO, é o caso do experimento de motor",
+  "bytes": 109452,
+  "crlf": 299,
+  "lf": 0,
+  "linhas": 300,
+  "linhas_nao_vazias": 295,
+  "paragrafos_reais": 5,
+  "estrutura": {
+   "palavras": 18975,
+   "contagem": {
+    "vírgula": 1694,
+    "ponto": 1144,
+    "interrogação": 184,
+    "exclamação": 0,
+    "dois-pontos": 64,
+    "ponto-e-vírgula": 0,
+    "travessão": 0,
+    "meia-risca": 2,
+    "reticências": 0,
+    "reticências (3 pontos)": 0,
+    "aspas retas": 99,
+    "aspas curvas": 1,
+    "parêntese": 0
+   },
+   "densidade_por_1000": {
+    "vírgula": 89.28,
+    "ponto": 60.29,
+    "interrogação": 9.7,
+    "exclamação": 0.0,
+    "dois-pontos": 3.37,
+    "ponto-e-vírgula": 0.0,
+    "travessão": 0.0,
+    "meia-risca": 0.11,
+    "reticências": 0.0,
+    "reticências (3 pontos)": 0.0,
+    "aspas retas": 5.22,
+    "aspas curvas": 0.05,
+    "parêntese": 0.0
+   },
+   "sinais_por_100_palavras": 15.93,
+   "sentencas": 1328,
+   "palavras_por_sentenca": 14.3,
+   "mediana_palavras_por_sentenca": 11.0,
+   "maior_sentenca_palavras": 75,
+   "paragrafos": 5,
+   "palavras_por_paragrafo": 3795.0,
+   "paragrafos_por_1000_palavras": 0.26,
+   "segmentos_por_quebra": 295,
+   "palavras_por_segmento": 64.3
+  },
+  "pontuacao": {
+   "palavras": 18975,
+   "contagem": {
+    "vírgula": 1694,
+    "ponto": 1144,
+    "interrogação": 184,
+    "exclamação": 0,
+    "dois-pontos": 64,
+    "ponto-e-vírgula": 0,
+    "travessão": 0,
+    "meia-risca": 2,
+    "reticências": 0,
+    "reticências (3 pontos)": 0,
+    "aspas retas": 99,
+    "aspas curvas": 1,
+    "parêntese": 0
+   },
+   "densidade_por_1000": {
+    "vírgula": 89.28,
+    "ponto": 60.29,
+    "interrogação": 9.7,
+    "exclamação": 0.0,
+    "dois-pontos": 3.37,
+    "ponto-e-vírgula": 0.0,
+    "travessão": 0.0,
+    "meia-risca": 0.11,
+    "reticências": 0.0,
+    "reticências (3 pontos)": 0.0,
+    "aspas retas": 5.22,
+    "aspas curvas": 0.05,
+    "parêntese": 0.0
+   },
+   "sinais_por_100_palavras": 15.93,
+   "sentencas": 1328,
+   "palavras_por_sentenca": 14.3,
+   "mediana_palavras_por_sentenca": 11.0,
+   "maior_sentenca_palavras": 75,
+   "paragrafos": 5,
+   "palavras_por_paragrafo": 3795.0,
+   "paragrafos_por_1000_palavras": 0.26,
+   "segmentos_por_quebra": 295,
+   "palavras_por_segmento": 64.3
+  },
+  "disfluencia": {
+   "marcadores_orais": {
+    "né": 48,
+    "eh": 40,
+    "uhum": 31,
+    "hum": 4,
+    "ah": 19,
+    "ó": 21,
+    "tá": 89,
+    "tô": 20,
+    "aí": 121,
+    "então": 132,
+    "tipo": 25,
+    "sabe": 17,
+    "cara": 26,
+    "quer dizer": 5,
+    "hã": 0,
+    "sei lá": 2,
+    "olha": 11,
+    "vamos dizer": 0
+   },
+   "total_marcadores": 611,
+   "repeticoes_palavra": 127,
+   "repeticoes_bigrama": 26,
+   "repeticoes_trigrama": 10,
+   "prolongamentos": 11,
+   "total_disfluencias": 774,
+   "por_1000_palavras": 40.79
+  },
+  "terminologia": {
+   "canonicos_distintos": 46,
+   "canonicos_ocorrencias": 267,
+   "canonicos_amostra": [
+    [
+     "deus",
+     "RC-052",
+     110
+    ],
+    [
+     "jave",
+     "RC-001",
+     30
+    ],
+    [
+     "jesus",
+     "RC-072",
+     21
+    ],
+    [
+     "deuses",
+     "RC-053",
+     9
+    ],
+    [
+     "revelacao cosmica",
+     "RC-094",
+     7
+    ],
+    [
+     "cosmica",
+     "RC-342",
+     7
+    ],
+    [
+     "eu parasitario",
+     "RC-947",
+     6
+    ],
+    [
+     "val",
+     "RC-109",
+     5
+    ],
+    [
+     "eva",
+     "RC-189",
+     5
+    ],
+    [
+     "arcontes",
+     "RC-474",
+     5
+    ],
+    [
+     "demiurgo",
+     "RC-048",
+     4
+    ],
+    [
+     "krishna",
+     "RC-414",
+     4
+    ]
+   ],
+   "variantes_stt_distintas": 24,
+   "variantes_stt_ocorrencias": 48,
+   "variantes_stt_amostra": [
+    [
+     "brama",
+     "RC-037",
+     8
+    ],
+    [
+     "javer",
+     "RC-001",
+     4
+    ],
+    [
+     "jahe",
+     "RC-001",
+     4
+    ],
+    [
+     "ganexa",
+     "RC-756",
+     4
+    ],
+    [
+     "kaagem",
+     "RC-948",
+     3
+    ],
+    [
+     "calmeia",
+     "RC-174",
+     2
+    ],
+    [
+     "arcontos",
+     "RC-474",
+     2
+    ],
+    [
+     "belal",
+     "RC-479",
+     2
+    ],
+    [
+     "avalo testivara",
+     "RC-950",
+     2
+    ],
+    [
+     "constituicao centenaria",
+     "RC-952",
+     2
+    ],
+    [
+     "sofia",
+     "RC-009",
+     2
+    ],
+    [
+     "xave",
+     "RC-001",
+     1
+    ]
+   ],
+   "proibidas_distintas": 2,
+   "proibidas_ocorrencias": 10,
+   "proibidas_amostra": [
+    [
+     "brama",
+     "Quarentena de RC-826",
+     8
+    ],
+    [
+     "sofia",
+     "Quarentena de RC-826",
+     2
+    ]
+   ],
+   "externos_distintos": 25,
+   "externos_ocorrencias": 51,
+   "externos_canonicos_distintos": 18,
+   "externos_canonicos_ocorrencias": 35,
+   "corrupcoes_por_1000_palavras": 2.53,
+   "taxa_fiducia": 0.8476
+  },
+  "integracao": {
+   "maior_linha_chars": 4162,
+   "cobertura_corpo_por_linha": 0.0393,
+   "marcador_cabecalho": true,
+   "rotulos_nativos": {
+    "padrão 3": 1
+   },
+   "diarizacao_nativa": false,
+   "sinais_por_1000": 159.26,
+   "quebras": [
+    {
+     "suposicao": "rc_novo.py / rc_indice.py medem o corpo como **a linha mais longa**",
+     "tipo": "codigo",
+     "compativel": false,
+     "detalhe": "a maior linha cobre 3.9% do arquivo — corpo fracionário em metadados.yaml, sem erro e sem aviso"
+    },
+    {
+     "suposicao": "rc_diagnostico.carregar_transcricao separa cabeçalho pelo marcador 'Transcrição Automática'",
+     "tipo": "ok",
+     "compativel": true,
+     "detalhe": "marcador presente"
+    },
+    {
+     "suposicao": "diarização opção B (rótulos inferidos pelo revisor)",
+     "tipo": "ok",
+     "compativel": true,
+     "detalhe": "sem rótulos nativos: o revisor continua inferindo"
+    },
+    {
+     "suposicao": "Guia §8 (pontuação é corretiva, o STT não traz)",
+     "tipo": "superada",
+     "compativel": true,
+     "detalhe": "159.3 sinais por 1.000 palavras — pontuação nativa: a norma passa a ser de conferência, não de reconstrução"
+    }
+   ],
+   "ferramentas_afetadas": [
+    "rc_novo.py — mede o bruto (bytes, linhas, sha256, corpo) e grava metadados.yaml",
+    "rc_indice.py — coluna palavras_brutas do catálogo vem da linha mais longa",
+    "rc_diagnostico.py — separação de cabeçalho pelo marcador",
+    "metadados.yaml — campos corpo_linha, corpo_caracteres, corpo_palavras, pontuacao_original",
+    "rc_qa.py G1 — sha256 do bruto (não muda, mas o bruto passa a ter outra forma)",
+    "Guia §8 e §9 — pontuação e diarização deixam de ser corretivas se o motor já as traz"
+   ]
+  },
+  "diagnostico": {
+   "exit": 0,
+   "erro": "",
+   "linhas_ledger": 131,
+   "por_classe": {
+    "variante": 42,
+    "truncamento": 5,
+    "artigo": 44,
+    "flexao": 4,
+    "semente-guia": 36
+   },
+   "propostas": 47,
+   "informativas": 48,
+   "por_status": {
+    "proposta": 47,
+    "informativa": 48,
+    "aprovada": 36
+   },
+   "ausentes_da_base": 211,
+   "ausentes_classificados": {
+    "n_grama": {
+     "formas": 83,
+     "ocorrencias": 98,
+     "amostra": [
+      "Estados Unidos",
+      "Antigo Testamento",
+      "Santíssima Trindade",
+      "Jean Valelan",
+      "Espírito Santo",
+      "O Alcorão",
+      "Tati Quântica",
+      "Paranormal Experience",
+      "Experiência Paranormal",
+      "Janva Elan",
+      "Private Jet",
+      "Rio Grande"
+     ]
+    },
+    "comum": {
+     "formas": 26,
+     "ocorrencias": 59,
+     "amostra": [
+      "Uhum",
+      "Bíblia",
+      "Texas",
+      "Pronto",
+      "Serve",
+      "Tranquilo",
+      "Quantos",
+      "Acredito",
+      "Falei",
+      "Vários",
+      "Realmente",
+      "Senão"
+     ]
+    },
+    "capital": {
+     "formas": 26,
+     "ocorrencias": 44,
+     "amostra": [
+      "Jeanval",
+      "Infelizmente",
+      "Claro",
+      "Perfeito",
+      "Javer",
+      "Simplesmente",
+      "Asiais",
+      "Preocupar",
+      "Maravilha",
+      "Resolver",
+      "Nisso",
+      "Criaram"
+     ]
+    },
+    "real": {
+     "formas": 76,
+     "ocorrencias": 100,
+     "amostra": [
+      "Ganexa",
+      "Trump",
+      "Fausto",
+      "Pona",
+      "Yahvé",
+      "Instagram",
+      "Kaagem",
+      "Matrix",
+      "Qcode",
+      "Palestina",
+      "Galileia",
+      "Frankstein"
+     ]
+    },
+    "total_formas": 211,
+    "total_ocorrencias": 301
+   },
+   "dispersao": {
+    "entidades": 63,
+    "grafias_distintas": 77,
+    "media_por_entidade": 1.22,
+    "piores": [
+     [
+      "Javé",
+      [
+       "javer",
+       "xave",
+       "yahe"
+      ]
+     ],
+     [
+      "Krishna",
+      [
+       "cripto",
+       "crist",
+       "cristao"
+      ]
+     ],
+     [
+      "Brahma",
+      [
+       "ainda",
+       "brama"
+      ]
+     ],
+     [
+      "Nova Espiritualidade / Novo Paraíso",
+      [
+       "espiritualidade",
+       "paraiso"
+      ]
+     ],
+     [
+      "Ishvara",
+      [
+       "brama",
+       "testivara"
+      ]
+     ],
+     [
+      "Belial",
+      [
+       "belal",
+       "belia"
+      ]
+     ],
+     [
+      "Dinastia das Sophias",
+      [
+       "dinastia das sofias",
+       "dinastia das sofias ta"
+      ]
+     ],
+     [
+      "Arcturianos",
+      [
+       "arcturianas",
+       "artorianos"
+      ]
+     ]
+    ]
+   },
+   "superficies_exatas": 109
+  },
+  "regua": {
+   "proibidas": 5,
+   "pasta_ledger": "",
+   "aviso_ledger": ""
+  }
+ }
+]

@@ -2,432 +2,405 @@
 
 **Projeto:** Transcri-YouTube · **Data:** 16 de setembro de 2026 · **Elaborado por:** Agente 86 (Arena.ai Agent Mode)
 
-**Objeto:** decidir se o STT do **NotebookLM** substitui o STT do **YouTube** como matéria-prima
-em `transcricoes/<slug>/00-fonte/`, medindo os quatro eixos do despacho de 16/09/2026.
+**Objeto:** decidir se o STT do **NotebookLM** substitui o STT do **YouTube** como matéria-prima em
+`transcricoes/<slug>/00-fonte/`, medindo os quatro eixos do despacho de 16/09/2026.
 
-**Status: PARCIAL — a régua está construída, calibrada e a linha de base (lado A) está medida.
-O lado B não pôde ser medido porque o arquivo `Opcao-B.txt` não chegou ao workspace.**
-
-Este parecer não inventa o lado B. Onde falta número, está escrito "aguardando" — nunca um
-palpite no lugar de uma medição.
+**Status: COMPLETO.** Os dois lados foram medidos com a mesma régua, no mesmo dia, sobre o mesmo
+áudio. Saída bruta do instrumento: `docs/pareceres/parecer-motor-stt-medicao.md` (gerada, não
+redigida) e `docs/pareceres/perfil-stt.json`.
 
 ---
 
 ## 0. Sumário executivo
 
-Três coisas foram feitas e uma não foi.
+**Veredito: adotar a saída do NotebookLM como TEXTO DE TRABALHO, e nunca como fonte. `00-fonte`
+continua sendo o STT cru do YouTube.** Três razões, todas medidas:
 
-**Feitas:**
+**1. A comparação pedida não existe como foi formulada — e isso é a descoberta mais importante do
+experimento.** Não há dois motores. Há **um** reconhecimento de fala (o do YouTube) e uma **camada
+de reescrita** por cima. A evidência é quantitativa e independente:
 
-1. **O instrumento existe e funciona.** `ferramentas/rc_perfil_stt.py` mede os quatro eixos sobre
-   qualquer arquivo de STT e, passados dois arquivos, imprime o comparativo A × B com coluna
-   "melhor". Roda em 3 s; com `--com-diagnostico` (que executa o motor de diagnóstico da casa
-   inteiro sobre cada arquivo) roda em 8 s. Sai em terminal, `--json` e `--md`.
-2. **A régua foi calibrada antes de medir — e três defeitos dela teriam falsificado o resultado.**
-   Um deles contava o artigo "o" como o marcador oral "ó" e produzia 499 falsos positivos num
-   texto de 19 mil palavras; a disfluência total do lado A sairia **71% maior** do que é
-   (1.308 marcas em vez de 768). Outro contava equivalência conceitual da KB como corrupção de
-   STT e apontava "humano" ×58 como erro do motor. O terceiro lia o CSV de Externos com o
-   cabeçalho errado (a primeira linha é comentário) e achava zero entidades. Os três estão
-   corrigidos e travados por teste (§2.2).
-3. **A linha de base A está medida e publicada** (§3). Números-chave: 18.966 palavras, 0,22 sinais
-   de pontuação por 100 palavras, mediana de 331 palavras por sentença, 768 marcas de disfluência,
-   taxa de confiança terminológica 0,8262, **175 itens de curadoria** gerados pelo diagnóstico
-   (44 propostas a adjudicar + 131 formas ausentes da base).
+| prova | A (YouTube) | B (NotebookLM) | leitura |
+|---|---:|---:|---|
+| palavras | 18.966 | 18.975 | diferença de **+9 palavras** em 19 mil (+0,05%) |
+| divergência lexical (multiconjunto) | — | **3,00%** | 280 palavras de A ausentes em B, 289 de B ausentes em A |
+| Jaccard de vocabulário | — | **0,929** | paráfrase derrubaria este número |
+| hapax (palavras de ocorrência única) em comum | 1.721 | 1.735 · **93% em comum** | reescrita trocariam justamente estas |
+| marcadores orais com contagem **idêntica** | — | **9 de 16** | então 132=132, uhum 31=31, cara 26=26, tipo 25=25, ó 21=21, tô 20=20, sabe 17=17, quer dizer 5=5, sei lá 2=2 |
+| repetição "blá blá" | 22 | 22 | mesmo gaguejo, mesmo lugar |
 
-**Não feita:**
+Dois ASR diferentes erram de jeito diferente. Estes erram **igual**. Portanto "trocar o STT do
+YouTube pelo do NotebookLM" não é uma opção disponível; a opção real é **pôr ou não pôr um LLM
+entre o reconhecimento e o revisor**. O parecer responde a essa.
 
-4. **O veredito de integração.** Sem o arquivo B não há comparação, e sem comparação não há
-   parecer — há opinião. O que este documento entrega no lugar é o **critério de decisão
-   pré-registrado** (§4): os limiares numéricos que B precisa atravessar para ganhar cada eixo,
-   fixados *antes* de qualquer número de B existir. Isso tem um propósito metodológico concreto:
-   quando B chegar, ninguém (nem eu) poderá mover a trave para o lado que o resultado favorecer.
-   O commit deste documento antecede a chegada de B e é a prova auditável disso.
+**2. A camada ganha de forma esmagadora no eixo que mais custa mão de obra hoje, e não ganha nada no
+segundo mais caro.** Pontuação e segmentação passam de trabalho de reconstrução a trabalho de
+conferência (0,22 → 15,93 sinais por 100 palavras; mediana de 331 → 11 palavras por sentença; 8 →
+295 segmentos nativos). Disfluência **não muda**: 40,49 → 40,79 marcas por 1.000 palavras, empate
+técnico. O contrato editorial de nível LEVE continua inteiro sobre a mesa do revisor.
 
-**Resposta à pergunta sobre a pasta `upload/`: sim, e já está implantada** (§6). Ela é a correção
-estrutural da falha que travou este experimento: o anexo não chegou e não havia segundo caminho
-para entregá-lo.
+**3. A camada edita o conteúdo em silêncio — e censurou palavras que interessam a esta KB.** Cinco
+tokens foram mascarados com asterisco, todos inexistentes em A:
 
----
-
-## 1. O que foi pedido e o que conta como resposta
-
-Do despacho de 16/09/2026, quatro eixos e um critério de aceite:
-
-| # | eixo | pergunta do Comandante | como este parecer responde |
+| trecho | A (STT cru) | B (NotebookLM) | natureza |
 |---|---|---|---|
-| 1 | pontuação e segmentação | parágrafos razoáveis? pontuação nativa? | densidade de cada sinal por 1.000 palavras, sentenças, palavras/sentença (média, mediana, maior), parágrafos reais |
-| 2 | disfluência | repetições imediatas e "né"/"eh" diminuíram? | contagem por marcador oral + repetições de palavra, bigrama, trigrama e prolongamentos, em absoluto e por 1.000 palavras |
-| 3 | fidelidade terminológica | alucinou menos ou mais nas entidades dos lotes 01 e 02? | superfícies canônicas presentes × corrupções mapeadas na KB-RC × formas proibidas × entidades Externos, e o volume de curadoria que o `rc_diagnostico.py` gera |
-| 4 | integração | trocar o STT reduz a carga das `rc_*` e o esforço manual? | as quatro suposições que a esteira faz sobre a FORMA do arquivo de entrada, testadas uma a uma, com a lista de ferramentas que quebram |
+| "os europeus viam Jesus como um…" | **bandido** | `b******` | censura de palavra substantiva em trecho teológico |
+| "não mais um … judeu" | **bandido** | `b******` | idem, segunda ocorrência |
+| "especialistas em fazer…" | **merda** | `m****` | censura de palavrão |
+| "ih vai dar …" | **merda** | `m****` | idem |
+| "fiz … a advogado defesa não fez" | **merda** | `m****` | idem |
 
-**Critério de aceite fixado pelo Comandante:** diagnóstico de viabilidade *antes* de fixar o novo
-padrão de entrada. É exatamente o que está sendo feito — e é por isso que o parecer não fecha sem B.
+`b******` não é palavra da língua portuguesa. Se B entrasse em `00-fonte` como bruto, essas cinco
+palavras estariam **perdidas**: o QA G1 confere sha256, não conteúdo, e não há nenhum portão hoje
+que compare o produto contra o bruto palavra a palavra. É exatamente o princípio que a casa já
+adotou — bruto imutável, decisão registrada — que impede o dano.
+
+**Contra o critério pré-registrado (§4), o placar foi:** B **ganhou o eixo 1** (4 de 4 limiares),
+**perdeu o eixo 2**, **perdeu o eixo 3** pelo limiar composto (342 itens contra o teto de 197) e
+**quebra 1 das 4 suposições** de integração. A regra §4.4(a) mandava trocar. A evidência de
+proveniência e de censura — que a regra não previa, porque ninguém sabia que era o mesmo ASR —
+converte "trocar" em "acrescentar camada com guarda". Registro os dois desfechos: o que a regra
+pré-registrada disse, e o que a medição acrescentou a ela.
+
+**Custo de código da adoção recomendada: 5 itens, cerca de um dia, listados em §8.** O maior deles
+não é a quebra de integração — é o portão novo que falta (comparar produto × bruto), que é o que
+teria pego a censura sozinho.
 
 ---
 
-## 2. O instrumento
+## 1. Identificação dos dois arquivos
 
-### 2.1 Como mede
+| | A — YouTube | B — NotebookLM |
+|---|---|---|
+| caminho | `transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-bruta.txt` | `Opcao-B.txt` (raiz, commit `6eddae0`, enviado pelo Comandante via upload web do GitHub) |
+| sha256 | `34f9bcf418bf6acc7a42b40c71a915a4ac72132eb4b894036711a93823a095fc` | `5aa247f3487752423e1eb4056c0fd54c4af5394a563411d3e5e5b95110e714d7` |
+| bytes / linhas | 106.243 · 15 | 109.452 · 300 |
+| cabeçalho | linhas 0–11 | linhas 0–11, **idêntico ao de A**, mais um separador `====` na linha 10 |
+| corpo | **1 linha** de 101.468 chars | **288 linhas**, um turno de fala por linha |
+| fim de linha | CRLF | CRLF |
+| estágio na esteira | bruto | solto (leitura de bruto — mesma classe) |
 
-```
-python ferramentas/rc_perfil_stt.py <arquivo-A> [<arquivo-B>] \
-    [--kb KB-RC] [--com-diagnostico] [--md docs/pareceres/...] [--json ...]
-```
+O cabeçalho de B é cópia do de A, inclusive o "Guia de fontes". Isso tem duas consequências que
+precisam ficar escritas: a prosa do guia **não** é saída do NotebookLM (é a captura original), e a
+presença do marcador "Transcrição Automática" em B é mérito de quem preparou o arquivo, não do
+motor — um export futuro do NotebookLM sem o cabeçalho da casa quebraria também essa suposição
+(§7, item 3 do custo pré-registrado).
 
-A régua é a KB-RC carregada pela mesma porta que o resto da esteira usa (`rc_kb.carregar_kb` +
-`carregar_fichas` + `como_termos` + `rc_lexicon.superficies`), o que torna os números comparáveis
-com os do `rc_diagnostico.py` já publicados. Nesta data: **956 termos, 1.085 superfícies canônicas,
-124 corrupções mapeadas, 5 formas proibidas pela Quarentena (24 com o livro-razão da transcrição de
-referência), 37 formas Externos e 32 canônicos Externos.**
+---
 
-Duas decisões de medição que mudam o resultado e não são cosméticas:
+## 2. O instrumento e os quatro defeitos de régua
 
-* **Corrupção é `variante_stt` + semente curada.** O campo `Variações` da ficha é equivalência
-  *conceitual* (Guia §5) e não entra. Contá-lo mediria vocabulário comum, não erro de motor.
-* **O eixo 3 sabe em que estágio o arquivo está.** Medir um texto curado e um bruto na mesma
-  escala seria injusto: o curado já teve as corrupções substituídas. A ferramenta imprime o
-  estágio (`bruto`, `curado`, `solto`) e avisa em voz alta quando A e B estão em estágios
-  diferentes.
+`ferramentas/rc_perfil_stt.py` mede os quatro eixos do despacho sobre qualquer arquivo de STT e, com
+dois argumentos, imprime o comparativo com coluna "melhor". Com `--com-diagnostico` executa o motor
+da casa inteiro sobre cada lado — é a medida direta de "carga das ferramentas `rc_*`", porque é a
+mesma ferramenta que a esteira usa. Roda em 15 s nos dois arquivos.
 
-### 2.2 Os três defeitos de régua corrigidos antes de medir
+A régua vem da KB-RC pela mesma porta que o resto da esteira usa: **956 termos, 1.085 superfícies
+canônicas, 124 corrupções mapeadas, 5 formas proibidas pela Quarentena (24 com o livro-razão desta
+transcrição), 37 formas Externos e 32 canônicos Externos.**
 
-Isto importa para o parecer porque uma régua torta não compara dois motores — ela fabrica um
-vencedor.
+Quatro defeitos da régua foram encontrados e corrigidos **antes de qualquer conclusão**. Os três
+primeiros eram meus; o quarto é do motor da casa e continua lá — está documentado em §7 como item de
+código.
 
-| defeito | efeito se não corrigido | correção | teste |
+| # | defeito | efeito se não corrigido | estado |
 |---|---|---|---|
-| marcador oral contado no texto normalizado: `L.norm("ó") == "o"` | 499 falsos positivos; disfluência do lado A inflada de 768 para 1.308 marcas (+71%) | "ó" e "hã" são buscados na forma **acentuada** no texto original; os demais, cuja forma sem acento não é palavra da língua ("ne", "ta", "ai"), são buscados no texto normalizado — o que captura tanto o motor que acentua quanto o que não acentua | `'ó' vocativo não é contado como o artigo 'o'`; `'né' é contado com e sem acento` |
-| `Variações` da ficha contado como corrupção | "'humano'×58, 'espirito'×12, 'brama'×8" apareciam como erros do motor; taxa de confiança caía de 0,8262 para 0,6040 | só `variante_stt` e sementes; superfície que também é canônica é excluída do conjunto de corrupções | `corrupção não pode ser também canônico`; `campo 'Variações' não entra como corrupção` |
-| `externos.csv` lido sem pular os comentários `#` que antecedem o cabeçalho | 0 entidades Externos medidas — a camada que protege "Ray Kurzweil" de virar variante interna ficava invisível | linhas `#` descartadas antes do `DictReader`; contam-se os dois lados (forma canônica e forma corrompida) | `externos.csv é lido apesar dos comentários antes do cabeçalho` |
+| 1 | marcador oral contado no texto normalizado: `norm("ó") == "o"` | 499 falsos positivos; disfluência de A inflada de 768 para 1.308 marcas (**+71%**) | corrigido + teste |
+| 2 | `Variações` da ficha (equivalência **conceitual**, Guia §5) contada como corrupção | apontava "humano"×58 e "espirito"×12 como erro de motor; taxa de confiança caía de 0,8262 para 0,6040 | corrigido + teste |
+| 3 | `externos.csv` lido sem pular os comentários `#` que antecedem o cabeçalho | zero entidades Externos medidas — justamente a camada que protege "Ray Kurzweil" | corrigido + teste |
+| 4 | `rc_diagnostico.py:372` procura **sequências capitalizadas** sem registro na base | num STT pontuado toda inicial de frase é capitalizada: a lista de "ausentes" de B encheu de verbo e advérbio comum (211 formas, das quais só 76 são candidatas reais) | **não corrigido no motor**; o perfil separa os baldes e o parecer registra (§6.3) |
 
-O teste de fumaça da casa subiu de 105 para **124 verificações, 0 falhas**, e o QA G1–G8 continua
-verde (sha256 do bruto intacto: `34f9bcf418bf…`).
-
-### 2.3 Um aviso sobre o fixture sintético
-
-Para provar que o eixo 4 detecta arquivo paragraphado, foi criado
-`testes/fixtures/stt-com-paragrafos-sintetico.txt`. **É sintético, escrito à mão, e não é saída de
-motor nenhum** — o cabeçalho do próprio arquivo diz isso. Ele existe só para o teste afirmar que o
-instrumento acusa a quebra em vez de deixá-la passar em silêncio. Nenhum número dele entra neste
-parecer como resultado.
+Teste de fumaça da casa: **105 → 136 verificações, 0 falhas.** QA G1–G8 verde, bruto de A intacto.
 
 ---
 
-## 3. Linha de base A — STT do YouTube (medida, não estimada)
+## 3. Critérios de decisão pré-registrados — e o resultado contra cada um
 
-Arquivo: `transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-bruta.txt`
-(106.243 bytes, 15 linhas, CRLF, estágio **bruto**).
+Os limiares abaixo foram fixados no commit anterior à chegada de B (`cb291f1`), quando só existia a
+linha de base A. Nenhum foi revisto depois de visto o resultado; onde a medição mostrou que o limiar
+estava mal especificado, isso está declarado em vez de corrigido em silêncio.
 
-### Eixo 1 — pontuação e segmentação
+### 3.0 Guarda de comparabilidade
 
-| métrica | A (YouTube) | leitura |
-|---|---:|---|
-| palavras | 18.966 | live de 2h25min |
-| sinais por 100 palavras | **0,22** | pontuação praticamente inexistente |
-| vírgulas | 7 | 0,37 por 1.000 palavras |
-| pontos | 23 | 1,21 por 1.000 — e parte deles é numérico ("2007.") |
-| interrogações | 11 | — |
-| dois-pontos | 73 | herança do cabeçalho e de marcações internas |
-| aspas retas | 117 | — |
-| sentenças | 35 | para 18.966 palavras |
-| palavras/sentença (média) | **541,9** | não são sentenças: são trechos entre os poucos pontos |
-| palavras/sentença (mediana) | 331 | — |
-| maior "sentença" | **2.604 palavras** | — |
-| parágrafos reais | **4** | e os 4 vêm do cabeçalho; o corpo é **uma** linha |
-| palavras/parágrafo | 4.741,5 | — |
+| guarda | limiar | resultado |
+|---|---|---|
+| mesma extensão de áudio | B entre 90% e 110% das palavras de A (17.069 a 20.862) | **18.975 — PASSA com folga (+0,05%)** |
+| mesmo estágio | ambos em estado bruto | **PASSA** (A "bruto", B "solto": mesma classe de leitura) |
+| diacríticos comparáveis | perda de diacríticos equivalente | **PASSA** — os dois acentuam |
 
-Referência interna: o produto final curado desta mesma transcrição tem **151 parágrafos**
-(QA G6). Ou seja, entre o bruto (1 linha de corpo) e o produto (151 parágrafos) existe um trabalho
-de segmentação que hoje é **100% manual**. Esse é o tamanho do prêmio que o eixo 1 disputa.
+Sem a guarda, nada do resto valeria: ferramenta que resume devolve síntese, e síntese parece limpa
+em toda métrica de qualidade.
 
-### Eixo 2 — disfluência
+### 3.1 Eixo 1 — pontuação e segmentação: **B GANHA, 4 de 4**
 
-| métrica | A (YouTube) |
-|---|---:|
-| marcas totais | **768** |
-| por 1.000 palavras | **40,49** |
-| repetições de palavra imediata | 115 |
-| repetições de bigrama | 25 |
-| repetições de trigrama | 9 |
-| prolongamentos ("ééé") | 4 |
+| limiar pré-registrado | A | B | resultado |
+|---|---:|---:|:---:|
+| sinais por 100 palavras **> 2,0** | 0,22 | **15,93** | ✅ 72× |
+| mediana de palavras/sentença **< 60** | 331 | **11,0** | ✅ 30× |
+| maior sentença **< 200 palavras** | 2.604 | **75** | ✅ |
+| segmentação nativa **≥ 100 unidades** | 8 | **295** | ✅ *ver ressalva* |
 
-Marcadores orais, em ordem: então 132 · aí 123 · tá 87 · né 49 · eh 45 · uhum 31 · cara 26 ·
-tipo 25 · ó 21 · ah 20 · tô 20 · sabe 17 · olha 13 · quer dizer 5 · hum 3 · sei lá 2.
+Detalhe de B: 1.328 sentenças; 1.694 vírgulas (89,28/1.000 palavras); 1.144 pontos (60,29/1.000);
+184 interrogações; 64,3 palavras por segmento.
 
-O contrato editorial desta casa é disfluência **nível LEVE** (remover repetições imediatas e
-"né"/"eh"/"uhum", preservar sintaxe e identidade oral). Sobre A, isso significa intervir em
-centenas de pontos à mão. Se B já entregar menos marcas, a economia é direta — mas veja a
-ressalva de §4.2: menos disfluência também pode ser menos texto.
+> **Ressalva declarada.** O limiar foi escrito contra "parágrafos separados por linha em branco",
+> convenção do produto desta casa. B quebra por linha, sem linha em branco: tem **5** parágrafos
+> nesse critério e **295** segmentos no critério de quebra. A métrica foi corrigida no instrumento
+> (passou a medir os dois) e aplicada igualmente a A, que tem 8. A substância do limiar — cem ou
+> mais unidades de segmentação nativa — é atendida por 295. Registro que o limiar, como estava
+> escrito, teria reprovado B por um detalhe de formatação.
 
-### Eixo 3 — fidelidade terminológica
+Referência interna: o produto final curado desta transcrição tem **151 parágrafos** (QA G6). B
+entrega 295 turnos de ~64 palavras — mais fino que o produto. O trabalho do revisor deixa de ser
+*descobrir* fronteiras e passa a ser *juntar* turnos.
 
-| métrica | A (YouTube) |
-|---|---:|
-| superfícies canônicas da KB presentes | 49 formas distintas, **271 ocorrências** |
-| corrupções mapeadas (`variante_stt` + sementes) | 33 formas, **57 ocorrências** (3,01/1.000 palavras) |
-| formas proibidas (Quarentena + livro-razão) | 21 formas, 37 ocorrências |
-| Externos — forma canônica | 17 formas, 35 ocorrências |
-| Externos — forma corrompida | 27 formas, **56 ocorrências** |
-| **taxa de confiança** (canônico ÷ canônico+corrupção) | **0,8262** |
+### 3.2 Eixo 2 — disfluência: **B PERDE**
 
-Piores corrupções: `brama`×8, `jahe`×6, `javer`×3, `belal`×3, `yahe`×2, `demiurg`×2, `calmeia`×2,
-`arcontos`×2.
+| limiar pré-registrado | A | B | resultado |
+|---|---:|---:|:---:|
+| marcas por 1.000 palavras **≤ 20,0** | 40,49 | **40,79** | ❌ |
+| repetições de palavra imediata **≤ 57** | 115 | **127** | ❌ |
 
-**A ressalva metodológica mais importante deste parecer.** A KB-RC foi construída *a partir* das
-corrupções deste STT: as 90 variantes registradas nos lotes 01 e 02 são, em boa parte, grafias que
-o motor do YouTube produziu. A régua é portanto **assimétrica a favor de A** — as corrupções de A
-já estão mapeadas (contam no eixo 3), enquanto as de B, sendo novas, não aparecem como corrupção:
-aparecem como *forma ausente da base*. Medir só "corrupções mapeadas" daria a B um falso zero.
+Totais: 768 × 774 marcas (+0,8%). Marcadores orais: 619 × 611. Bigramas 25 × 26, trigramas 9 × 10,
+prolongamentos 4 × 11.
 
-A métrica simétrica é a **carga terminológica total**, que soma o que o motor dá de trabalho
-independentemente de a KB já conhecer a corrupção:
+A diferença de 12 repetições a mais em B é ruído de palavras funcionais, não conteúdo novo:
+"que" 17→14, "não" 10→13, "blá" 22→22 nos dois. **A camada de reescrita não limpa disfluência** —
+ela preserva "tão pequeno, tão pequeno, tão pequeno, tão pequeno" inteiro, o que é fidelidade, não
+defeito, mas significa que o contrato de nível LEVE continua custando exatamente o mesmo.
 
-| componente | A (YouTube) |
-|---|---:|
-| linhas geradas no livro-razão pelo `rc_diagnostico.py` | **132** |
-| — das quais `proposta` (exigem decisão do revisor) | **44** |
-| — das quais `informativa` (artigo 47, flexão 4 — ruído morfológico) | 51 |
-| — das quais semente do Guia já aprovada (é só aplicar) | 36 |
-| — das quais "a confirmar" | 1 |
-| formas ausentes da base (candidatas a termo novo) | **131** |
-| superfícies exatas da KB encontradas | 108 |
-| **carga terminológica total (132 + 131)** | **263 itens** |
+### 3.3 Eixo 3 — fidelidade terminológica: **B PERDE pelo limiar composto, ganha nos três acessórios**
 
-É contra **263** que B será medido, não contra 57.
+| limiar pré-registrado | A | B | resultado |
+|---|---:|---:|:---:|
+| carga terminológica total **≤ 197 itens** | **263** | **342** | ❌ |
+| taxa de confiança **> 0,8262** | 0,8262 | **0,8476** | ✅ |
+| formas proibidas **≤ 37 ocorrências** | 37 | **10** | ✅ |
+| Externos corrompidos **< 56 ocorrências** | 56 | **51** | ✅ |
 
-### Eixo 4 — integração à esteira
+Composição da carga (o que o `rc_diagnostico.py` gera sobre cada arquivo):
 
-| suposição que a esteira faz hoje | A | detalhe |
-|---|:---:|---|
-| `rc_novo.py` e `rc_indice.py` medem o corpo como **a linha mais longa** (`max(linhas, key=len)`) | ✅ | a maior linha (101.468 chars) cobre **98,9%** do arquivo |
-| `rc_diagnostico.carregar_transcricao` separa o cabeçalho pelo marcador "Transcrição Automática" | ✅ | marcador presente |
-| diarização opção B: rótulos **inferidos** pelo revisor | ✅ | nenhum rótulo nativo; o revisor continua inferindo |
-| Guia §8: pontuação é corretiva, o STT não traz | ✅ | 2,2 sinais por 1.000 palavras |
+| componente | A | B |
+|---|---:|---:|
+| linhas no livro-razão | 132 | 131 |
+| — propostas a adjudicar | 44 | 47 |
+| — informativas (artigo/flexão) | 51 | 48 |
+| — sementes do Guia já aprovadas | 36 | 36 |
+| formas ausentes da base (bruto) | 131 | **211** |
+| **carga total** | **263** | **342** |
 
-**A é 4/4 compatível — por construção, não por mérito.** A esteira foi desenhada em volta de A.
-É isso que torna o eixo 4 o eixo decisivo: um motor melhor que não caiba na esteira custa código;
-um motor pior que caiba custa curadoria. O parecer tem que dizer qual dos dois preços está na mesa.
+Placar completo da tabela comparativa (26 métricas, em `parecer-motor-stt-medicao.md`): **B melhor
+em 11, A melhor em 9, empate/sem critério em 6.** A leitura que interessa não é o placar, é o
+padrão: B ganha tudo que é **forma** (pontuação, segmentação, sentença) e A ganha tudo que é
+**volume de curadoria** — em boa parte porque a régua da casa conta mais candidatos quando o texto é
+pontuado (§5).
+
+### 3.4 Eixo 4 — integração: **B é 3 de 4; uma quebra custa código, uma premissa foi superada**
+
+| suposição da esteira | A | B | desfecho em B |
+|---|:---:|:---:|---|
+| `rc_novo.py`/`rc_indice.py` medem o corpo como a linha mais longa | ✅ 98,9% | ❌ **3,9%** | **CUSTA CÓDIGO** — `corpo_palavras` sairia fracionário, sem erro e sem aviso |
+| `rc_diagnostico` separa cabeçalho pelo marcador "Transcrição Automática" | ✅ | ✅ | compatível (por cópia do cabeçalho, não por mérito do motor) |
+| diarização opção B (rótulos inferidos pelo revisor) | ✅ nenhum | ✅ nenhum | compatível — B **não** traz nome de falante; traz 288 turnos sem rótulo |
+| Guia §8 (pontuação é corretiva, o STT não traz) | ✅ 2,2/1.000 | **159,3/1.000** | **PREMISSA SUPERADA** — a norma passa a ser de conferência |
+
+Os três estados importam: "custa código" é preço pago uma vez; "premissa superada" é trabalho manual
+que **deixa de existir**. Confundir os dois levaria a recusar B por "incompatibilidade" exatamente
+no ponto em que ele mais ajuda.
 
 ---
 
-## 4. Critério de decisão pré-registrado
+## 4. A pergunta literal do despacho: B alucinou menos ou mais nas entidades dos lotes 01 e 02?
 
-Fixado em 16/09/2026, **antes** de qualquer número de B existir. B ganha o eixo se atravessar o
-limiar; não ganha se ficar abaixo; e nenhum limiar será revisto depois de visto o resultado.
+**Resposta: praticamente igual, com vantagem pequena de B — e a diferença que aparece nos totais é
+da régua, não do motor.** Contagem de ocorrências das formas canônicas e das variantes STT
+registradas na KB, nos termos dos dois lotes:
 
-### 4.0 Guarda de comparabilidade (vem antes de tudo)
+| código | termo | canônico A | canônico B | corrupto A | corrupto B |
+|---|---|---:|---:|---:|---:|
+| RC-947 | Eu Parasitário | 12 | 12 | 0 | 0 |
+| RC-948 | /Kaggen | 0 | 0 | 3 | 3 |
+| RC-949 | Tom Teltan | 2 | 2 | 0 | 0 |
+| RC-950 | Avalokiteshvara | 0 | 0 | 3 | 2 |
+| RC-952 | Constituição Setenária | 2 | 2 | 2 | 2 |
+| RC-953 | Circuito Colmeico | 0 | 0 | 1 | 0 |
+| RC-954 | Planeta de Expiação e Provas | 2 | **0** | 0 | 0 |
+| RC-955 | Javé 2.0 | 2 | 2 | 0 | 0 |
+| RC-956 | Força da Consciência Dignificada | 4 | 4 | 0 | 0 |
+| RC-001 | Javé | 60 | 60 | 12 | 10 |
+| RC-037 | Brahma | 0 | 0 | 8 | 8 |
+| RC-048 | Demiurgo | 8 | 8 | 2 | **0** |
+| RC-474 | Arcontes | 10 | 10 | 3 | 2 |
+| RC-479 | Belial | 10 | 8 | 4 | 3 |
+| RC-756 | Ganesha | 0 | 0 | 3 | **4** |
+| **total** | | **113** | **109** | **51** | **43** |
 
-| guarda | limiar | se falhar |
-|---|---|---|
-| mesma extensão de áudio | palavras de B entre **90% e 110%** das de A (17.069 a 20.862) | o parecer **não compara motores**: compara recortes. Ferramentas que resumem podem devolver síntese, não transcrição — e aí qualquer métrica de qualidade é ilusão |
-| mesmo estágio | ambos em estado **bruto** | comparar bruto com texto curado mede o revisor, não o motor |
-| mesmo idioma e diacríticos | perda de diacríticos comparável (A: "nao" 402 sem acento × 8; "voce" 205 × 3; "entao" 132 × 3) | se B não acentua, o eixo 2 usa a contagem sem acento (já prevista no instrumento) e o eixo 3 perde precisão — registrar no veredito |
+Leituras que valem mais que o total:
 
-### 4.1 Eixo 1 — pontuação e segmentação
+* **/Kaggen é corrompido de forma idêntica nos dois** (3 ocorrências de `kaagen`/`kaagem`). Um
+  segundo ASR não erraria o mesmo nome raro do mesmo jeito — é a mesma escuta.
+* **RC-048 Demiurgo: B eliminou os dois truncamentos `demiurg`** que A trazia. A camada de reescrita
+  completa palavra truncada — ganho real.
+* **RC-756 Ganesha: B piorou** (4 grafias contra 3, `ganexa` incluído). A camada também inventa.
+* **RC-954 sumiu em B por uma microedição:** A diz "planeta de expiação **e** provas"; B diz
+  "planeta de expiação **em** provas". Uma preposição trocada derrubou o casamento com o canônico do
+  lote 02. É o retrato do risco: a edição é pequena demais para notar lendo, e grande o bastante
+  para quebrar a automação.
+* **RC-953:** A traz "as calmeias começaram a colapsar"; B harmonizou para "as colmeias". Aqui a
+  camada corrigiu uma corrupção — mas corrigiu **uma** das duas ocorrências, o que produz
+  inconsistência interna, exatamente o que a curadoria existe para evitar.
 
-| limiar | valor | por quê |
-|---|---|---|
-| sinais por 100 palavras | **> 2,0** (A: 0,22) | dez vezes A já significa pontuação nativa, não corretiva |
-| mediana de palavras/sentença | **< 60** (A: 331) | oralidade revisável vive entre 15 e 40 palavras; 60 é o teto generoso |
-| maior sentença | **< 200 palavras** (A: 2.604) | uma sentença de 2.604 palavras não é revisável, é um capítulo |
-| parágrafos reais | **≥ 100** (A: 4; produto curado: 151) | mesma ordem de grandeza do resultado humano já publicado significa que a segmentação deixou de ser trabalho manual |
-
-**B ganha o eixo 1 se atender aos quatro.** Se atender só a pontuação e não a segmentação (ou
-vice-versa), o eixo é declarado **parcial** e o veredito de §4.4 desconta isso.
-
-### 4.2 Eixo 2 — disfluência
-
-| limiar | valor | por quê |
-|---|---|---|
-| marcas por 1.000 palavras | **≤ 20,0** (A: 40,49) | metade do trabalho manual do contrato nível LEVE |
-| repetições de palavra imediata | **≤ 57** (A: 115) | idem, no componente mais caro de remover |
-
-**Ressalva obrigatória:** se B ganhar o eixo 2 com queda de palavras próxima do limite inferior da
-guarda (§4.0), o parecer deve dizer que a vitória pode ser **supressão de conteúdo**, não limpeza.
-Disfluência menor com texto muito menor não é mérito — é corte. Nesse caso o eixo 2 é anulado.
-
-### 4.3 Eixo 3 — fidelidade terminológica
-
-| limiar | valor | por quê |
-|---|---|---|
-| **carga terminológica total** (linhas no livro-razão + ausentes da base) | **≤ 197 itens** (A: 263; redução de 25%) | é a métrica simétrica, imune ao viés de a KB ter sido construída sobre A |
-| taxa de confiança | **> 0,8262** (A) | mais canônico, menos corrupção — mas só vale como evidência secundária, pelo viés acima |
-| formas proibidas presentes | **≤ 37 ocorrências** (A) | o motor não pode produzir as formas que a Quarentena e o livro-razão vetam |
-| Externos corrompidos | **< 56 ocorrências** (A) | nomes próprios do mundo real são o teste mais duro de alucinação fonética |
-
-**B ganha o eixo 3 se a carga terminológica total ficar ≤ 197.** Os outros três limiares são
-evidência de apoio e não decidem sozinhos.
-
-### 4.4 Eixo 4 — veredito de integração
-
-Regra composta, porque é aqui que a decisão realmente mora:
-
-1. **Se B for 4/4 compatível** e ganhar 2 ou mais eixos entre 1–3 → **trocar**, sem custo de código.
-2. **Se B quebrar a suposição da "linha mais longa"** (cobertura da maior linha < 80%) → a troca
-   exige alteração em: `rc_novo.py` (medição do corpo), `rc_indice.py` (coluna `palavras_brutas`),
-   campos `corpo_linha`/`corpo_caracteres`/`corpo_palavras`/`pontuacao_original` do
-   `metadados.yaml`, Guia §8 e §9, e os testes 3 e 12 do pipeline. Custo estimado: **meio dia de
-   código**, uma vez, e o resultado é uma esteira que deixa de depender da forma do arquivo —
-   ganho estrutural permanente.
-3. **Se B quebrar também o marcador de cabeçalho** (ausência de "Transcrição Automática") → soma-se
-   o ajuste em `rc_diagnostico.carregar_transcricao` (critério de separação passa a ser posição ou
-   regex de cabeçalho, não marcador literal). Custo adicional pequeno, mesmo padrão de correção.
-4. **Veredito final:** trocar se **(a)** B ganhar o eixo 1 completo, **ou** **(b)** B ganhar o eixo 3
-   pelo limiar de 197, **e** em ambos os casos o custo de código for o dos itens 2 e 3 — que é
-   finito, conhecido e pago uma única vez. **Não trocar** se B ganhar apenas o eixo 2: limpeza de
-   disfluência é o que a esteira já faz bem e barato, e é o eixo mais fácil de fingir suprimindo texto.
+Dispersão de grafias por entidade (do livro-razão, sem artigos grudados pela janela): A **75 grafias
+para 58 entidades** (média 1,29); B **77 para 63** (média **1,22**). B espalha por mais entidades,
+mas com menos variantes por entidade.
 
 ---
 
-## 5. O que já se pode afirmar sobre o eixo 4, mesmo sem B
+## 5. Onde a régua mente: o quarto defeito, quantificado
 
-Uma descoberta que vale independentemente do resultado do experimento, porque é um defeito latente
-da esteira atual:
+O `rc_diagnostico` procura **sequências capitalizadas** sem registro na base. Num STT que não pontua,
+a heurística é ótima: maiúscula só aparece em nome próprio. Num STT pontuado, toda inicial de frase
+é maiúscula. Separando os baldes — a lógica está implementada em `rc_perfil_stt.classificar_ausentes`:
 
-> **Duas ferramentas diferentes usam dois critérios diferentes para decidir o que é o corpo do
-> arquivo — e uma delas produz métricas erradas em silêncio.**
+| balde | A | B |
+|---|---:|---:|
+| janela de 2–4 palavras (recorte, não entidade) | 71 formas · 87 occ | 83 formas · 98 occ |
+| palavra única do vocabulário comum (guarda de 1.884 formas) | 8 · 15 | 26 · 59 |
+| inicial de frase (a palavra também ocorre em minúscula no texto) | 11 · 21 | 26 · 44 |
+| **candidata real a termo novo** | **41 formas · 52 occ** | **76 formas · 100 occ** |
 
-* `rc_novo.py:71` e `rc_indice.py:62`: corpo = `max(linhas, key=len)`.
-* `rc_diagnostico.carregar_transcricao`: corpo = o que vem depois do marcador "Transcrição Automática".
+Mesmo depois da limpeza B apresenta 1,9× mais candidatas — e ainda assim parte do resíduo é artefato:
+entre as 76 estão "Desintegrou", "Oremos", "Acreditem", "Estudando", "Resoluções", verbos e
+substantivos capitalizados de ocorrência única que a heurística não distingue de nome próprio. As
+candidatas genuínas que B acrescenta são entidades reais que A grafou de outro jeito ou não
+capitalizou: Trump, Fausto, Matrix, Miami, Trácia, Cristian, Yahvé, Frankstein.
 
-Sobre A os dois critérios coincidem (a linha 12 tem 101.468 chars e começa depois do marcador), e
-por isso ninguém notou. Sobre um STT paragraphado, `max(linhas, key=len)` devolve **um parágrafo**
-— o maior — e grava em `metadados.yaml` um `corpo_palavras` que seria uma fração do real, sem erro,
-sem exceção, sem aviso. O QA G1 confere o sha256 do bruto, não a coerência da medição: passaria verde.
-
-**Recomendação, independente de B ganhar ou perder:** unificar o critério num único lugar
-(`rc_lexicon` ou um módulo de leitura de bruto) com fallback em cascata — marcador, depois linha
-mais longa, depois arquivo inteiro — e com um aviso explícito quando a cobertura da maior linha for
-abaixo de 80%. O `rc_perfil_stt.py` já calcula essa cobertura; transformá-la em guarda da esteira é
-trabalho pequeno e remove uma classe inteira de erro silencioso.
+**Conclusão honesta do eixo 3:** não há evidência de que B alucine **mais** entidades. Há evidência
+sólida de que a régua da casa **conta mais candidatos** quando o texto é pontuado. O limiar composto
+de 197 itens, aplicado sobre uma métrica contaminada por capitalização, reprovou B por um efeito da
+virtude de B. Registro o resultado pré-registrado como **derrota no eixo 3** e registro também que a
+métrica precisa da versão 2 (ciente de inicial de frase) antes de ser usada de novo — correção que
+vale para os dois lados e que está orçada em §8, item 2.
 
 ---
 
-## 6. A pasta `upload/` — resposta à pergunta do Comandante
+## 6. Arquitetura recomendada
 
-**Opinião: faz falta, e não como conveniência — como correção de uma falha que já ocorreu.** O
-anexo `Opcao-B.txt` não chegou e não havia segundo caminho de entrega; o experimento parou e nenhum
-dos dois lados podia dizer onde o arquivo estava.
-
-**Implantada nesta data:**
-
-| item | estado |
-|---|---|
-| `upload/` criada | ✅ |
-| `upload/README.md` (versionado) | ✅ regras, formatos aceitos, quatro vias de entrega, o que acontece quando o arquivo chega |
-| `.gitignore`: `/upload/*` + `!/upload/README.md` | ✅ verificado com `git check-ignore` |
-
-**Por que ignorada pelo git, se a casa versiona até o bruto?** Porque `upload/` é **zona de
-trânsito**, não arquivo. O ciclo é:
+Não é "trocar o arquivo de `00-fonte`". É separar **fonte** de **texto de trabalho**:
 
 ```
-upload/<arquivo>  →  rc_perfil_stt.py  →  parecer  →  aprovado?
-                                                      ↓ sim
-                              transcricoes/<slug>/00-fonte/  →  versionado, com sha256
-                                                                 no metadados.yaml e
-                                                                 fiscalizado pelo QA G1
+00-fonte/
+  transcricao-bruta.txt           ← STT cru do YouTube. IMUTÁVEL, sha256, portão G1.
+                                     Continua sendo a autoridade sobre o que foi dito.
+  transcricao-pontuada.txt        ← saída do NotebookLM. DERIVADO de trabalho, versionado,
+                                     com sha256 próprio e proveniência registrada.
+  metadados.yaml                  ← ganha: motor_derivado, data_derivado, sha256_derivado,
+                                     divergencia_lexical, palavras_mascaradas
 ```
 
-Nada que seja fonte de verdade pode morar só em `upload/`. Se a pasta fosse versionada, ela viraria
-um segundo depósito de brutos fora do controle do QA — que é exatamente o problema que o sha256 do
-G1 existe para impedir.
+Com um portão novo no QA — **G9, divergência** — que compara o produto final contra o bruto pelo
+multiconjunto de palavras e exige que toda diferença esteja registrada: teto sugerido de 5% (o
+medido hoje é 3,00%), mais lista nominal das perdas. Sobre este experimento, o G9 teria apontado
+sozinho: `merda ×3` e `bandido ×2` removidos, cinco tokens de asterisco inseridos, "expiação e
+provas" → "expiação em provas".
 
-**As quatro vias de entrega** (detalhe em `upload/README.md`): reanexar no chat; colar o texto;
-link público (busco com `fetch_page`; Drive precisa estar como "qualquer pessoa com o link"); ou
-commit direto do Comandante com `git add -f upload/<arquivo>`, que vence o ignore.
+Por que não simplesmente adotar B como bruto: porque então a autoridade sobre o que Jan Val Ellam
+disse passaria a ser um LLM que mascara palavra, e a casa não teria como conferir. O sha256 do G1
+continuaria verde sobre um texto que já não é a fonte.
+
+Por que não recusar B e continuar como está: porque 295 segmentos e 15,93 sinais por 100 palavras
+são, em trabalho humano, a maior economia disponível nesta esteira — a revisão dos 8 blocos gastou a
+maior parte do esforço reconstruindo pontuação e descobrindo onde um turno termina, e isso B já
+entrega.
+
+**O revisor passa a trabalhar assim:** leitura e curadoria sobre o texto pontuado; conferência de
+qualquer trecho duvidoso, entidade, palavrão ou palavra rara **contra o bruto**; divergências
+registradas no livro-razão como já se faz hoje. A disfluência continua sendo tratada à mão (eixo 2
+empatado), e a terminologia continua dependendo da KB (eixo 3 praticamente inalterado).
 
 ---
 
-## 7. O que falta para fechar este parecer
+## 7. Riscos que a adoção cria, com o gatilho de cada um
 
-**Um arquivo.** `Opcao-B.txt` — a transcrição do NotebookLM sobre o mesmo áudio
-(`https://www.youtube.com/watch?v=enBUKAWXQRw`, 2h25min50s).
+| risco | evidência nesta medição | contenção |
+|---|---|---|
+| censura silenciosa de vocabulário | 5 tokens mascarados (`m****` ×3, `b******` ×2) | portão G9 + conferência contra o bruto; asterisco nunca entra no produto |
+| microedição que quebra casamento com a KB | "expiação **e** provas" → "**em** provas" (RC-954 zerado) | idem; divergência lexical registrada em `metadados.yaml` |
+| correção parcial, gerando inconsistência | "calmeias" → "colmeias" em 1 de 2 ocorrências | curadoria continua decidindo por termo, não por ocorrência |
+| acréscimo de palavra | "num circuito" → "num num circuito" | G9 pega como acréscimo não registrado |
+| export futuro sem o cabeçalho da casa | o cabeçalho de B foi copiado de A à mão | `rc_novo.py` passa a aceitar bruto sem marcador (cascata em §8, item 1) |
+| depender de serviço de terceiro sem contrato | NotebookLM é caixa-preta; a camada pode mudar de comportamento sem aviso | a medição de proveniência fica como rotina: rodar `rc_perfil_stt.py` a cada captura nova e conferir divergência e mascarados antes de revisar |
 
-Assim que ele existir em qualquer lugar acessível, a execução é esta, e o parecer é completado com
-os números reais no mesmo turno:
+---
+
+## 8. Custo de código, item a item
+
+| # | item | onde | tamanho |
+|---|---|---|---|
+| 1 | critério de corpo em cascata (marcador → linha mais longa → arquivo inteiro) + guarda que avise quando a cobertura da maior linha ficar abaixo de 80% | `rc_novo.py:71`, `rc_indice.py:62`, `metadados.yaml`, testes 3 e 12 | meio dia |
+| 2 | heurística de "sequências capitalizadas" ciente de inicial de frase (a lógica já está pronta em `rc_perfil_stt.classificar_ausentes`) | `rc_diagnostico.py:372` | ~15 linhas |
+| 3 | campos de proveniência do derivado | `rc_novo.py`, `metadados.yaml`, `rc_indice.py` | pequeno |
+| 4 | **portão G9 — divergência produto × bruto** | `rc_qa.py` | pequeno; é o item de maior retorno |
+| 5 | Guia §8 (pontuação vira conferência), §9 (segmentação nativa por turno; diarização continua inferida) e nova seção sobre derivados de STT | `docs/normas/guia-revisao-v2.md` + `.docx` | redação |
+
+O item 1 vale **mesmo que B nunca seja adotado**: é um defeito latente da esteira atual. Hoje
+`rc_novo.py`/`rc_indice.py` tomam o corpo como `max(linhas, key=len)` e `rc_diagnostico` o separa
+pelo marcador — dois critérios diferentes para a mesma pergunta. Sobre A eles coincidem (a linha 12
+tem 101.468 chars) e ninguém notou. Sobre qualquer arquivo paragraphado, o primeiro devolve **um
+parágrafo** e grava `corpo_palavras` fracionário em silêncio, com o QA verde.
+
+---
+
+## 9. `upload/` — e o lugar do `Opcao-B.txt`
+
+**A pasta foi implantada** (`upload/README.md` versionado; `.gitignore` com `/upload/*` e
+`!/upload/README.md`, verificado com `git check-ignore`). É zona de trânsito: o que for aprovado
+migra para `transcricoes/<slug>/00-fonte/` e passa a ser versionado com sha256, sob o alcance do QA.
+Nada que seja fonte de verdade pode morar só ali — se a pasta fosse versionada, viraria um segundo
+depósito de brutos fora do controle do G1.
+
+**Ironia útil:** o arquivo acabou chegando pela quarta via documentada no README — commit direto do
+Comandante pela interface web do GitHub (`6eddae0`, "Add files via upload"). Só que o upload web
+grava na **raiz**, não em `upload/`. Então `Opcao-B.txt` está hoje num lugar que o Plano de
+Organização não prevê: arquivo de uma transcrição específica fora de `transcricoes/<slug>/`.
+
+**Recomendação, para decisão do Comandante** (não movi o arquivo por conta própria — é entrega dele
+e o destino depende da arquitetura aprovada):
+
+* se a arquitetura de §6 for aprovada → `git mv Opcao-B.txt transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-pontuada.txt`, com os campos de proveniência em `metadados.yaml`;
+* se for recusada → mover para `upload/` com `git rm --cached`, mantendo o histórico e o sha256 registrados neste parecer.
+
+Para upload futuro pela web do GitHub, o caminho pode ser digitado na interface
+(`upload/nome-do-arquivo.txt`), o que já cai na zona de trânsito prevista.
+
+---
+
+## 10. Na geladeira, conforme ordem expressa
+
+Os **14 itens pendentes** da fila de curadoria (8 `correcao-ficha`, 5 `divergencia-factual`,
+1 `novo-registro-biblio` 0033) e a **segunda transcrição tradicional** seguem suspensos por decisão
+do Comandante de 16/09/2026. As pendências residuais da KB (Jeane Miranda, B095) continuam com ele.
+Nada disso foi tocado neste turno.
+
+---
+
+## 11. O que proponho como próximo passo
+
+1. **Decisão do Comandante** sobre a arquitetura de §6 (derivado ao lado do bruto) — é o que destrava
+   tudo o mais.
+2. Se aprovada: itens 1, 2 e 4 de §8 (código), depois item 5 (Guia), e só então a segunda transcrição
+   entra já no padrão novo.
+3. **Rotina permanente:** toda captura nova passa por `rc_perfil_stt.py` antes da revisão — 15 segundos
+   que dizem se o arquivo é o que parece, quanto vai custar em curadoria e se a camada de reescrita
+   censurou alguma coisa.
+
+Comando que reproduz tudo o que está neste parecer:
 
 ```bash
 python ferramentas/rc_perfil_stt.py \
     transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-bruta.txt \
-    upload/opcao-b.txt \
+    Opcao-B.txt \
     --com-diagnostico \
     --md docs/pareceres/parecer-motor-stt-medicao.md \
     --json docs/pareceres/perfil-stt.json
-```
-
-Verificações que serão feitas antes de escrever qualquer conclusão: guarda de comparabilidade
-(§4.0) → eixos 1 a 3 contra os limiares de §4.1–§4.3 → quebras de integração de §4.4 → veredito.
-
----
-
-## 8. Na geladeira, conforme ordem expressa
-
-Registrado para não se perder: os **14 itens pendentes** da fila de curadoria (8 `correcao-ficha`,
-5 `divergencia-factual`, 1 `novo-registro-biblio` 0033) e a **segunda transcrição tradicional**
-estão suspensos por decisão do Comandante de 16/09/2026, com foco total neste experimento. As
-pendências residuais da KB (Jeane Miranda, B095) seguem com o Comandante. Nada disso foi tocado
-neste turno.
-
----
-
-## Anexo A — saída integral do instrumento sobre o lado A
-
-Reprodutível com o comando de §7 (omitindo o segundo arquivo). Os números do §3 saem daqui; se um
-dia divergirem, o que vale é esta execução.
-
-```text
-[régua] KB-RC: 956 termos · 1085 superfícies canônicas · 124 corrupções mapeadas (variante_stt + sementes) · 5 proibidas na Quarentena · 37 formas Externos · 32 canônicos Externos
-[régua] livro-razão de transcricoes/2026-09-14-revelacoes-cosmicas-urgente: 24 formas proibidas no total
-
-==============================================================================
-transcricao-bruta.txt  (106.243 bytes · 15 linhas · 4 parágrafos reais · CRLF 15/LF 0)
-==============================================================================
-    estágio na esteira: bruto — STT cru: corrupções e formas proibidas SÃO esperadas — é a matéria-prima
-
-[1] PONTUAÇÃO E SEGMENTAÇÃO — 18.966 palavras
-    sinais por 100 palavras: 0.22
-    sentenças: 35 · palavras/sentença: 541.9 (mediana 331, maior 2.604)
-    parágrafos: 4 · palavras/parágrafo: 4741.5
-      vírgula                      7  (0.37/1.000 palavras)
-      ponto                       23  (1.21/1.000 palavras)
-      interrogação                11  (0.58/1.000 palavras)
-      dois-pontos                 73  (3.85/1.000 palavras)
-      meia-risca                   2  (0.11/1.000 palavras)
-      aspas retas                117  (6.17/1.000 palavras)
-      aspas curvas                 1  (0.05/1.000 palavras)
-
-[2] DISFLUÊNCIA — 768 marcas (40.49 por 1.000 palavras)
-    repetições: palavra 115 · bigrama 25 · trigrama 9 · prolongamentos 4
-    marcadores orais: então 132 · aí 123 · tá 87 · né 49 · eh 45 · uhum 31 · cara 26 · tipo 25 · ó 21 · ah 20
-
-[3] FIDELIDADE TERMINOLÓGICA (contra a KB-RC)
-    canônicos presentes: 49 formas distintas, 271 ocorrências
-    variantes STT mapeadas presentes: 33 formas, 57 ocorrências (3.01/1.000 palavras)
-    formas proibidas (Quarentena + livro-razão): 21 formas, 37 ocorrências
-    Externos — forma canônica: 17 formas, 35 ocorrências · forma corrompida: 27 formas, 56 ocorrências
-    taxa de confiança (canônico ÷ canônico+variante): 0.8262
-    piores corrupções: 'brama'×8, 'jahe'×6, 'javer'×3, 'belal'×3, 'yahe'×2, 'demiurg'×2, 'calmeia'×2, 'arcontos'×2
-
-[4] INTEGRAÇÃO À ESTEIRA
-    maior linha: 101.468 chars = 98.9% do arquivo
-    marcador 'Transcrição Automática': sim
-    rótulos de fala nativos: nenhum
-      [compatível ] rc_novo.py / rc_indice.py medem o corpo como **a linha mais longa**
-                   a maior linha cobre 98.9% do arquivo
-      [compatível ] rc_diagnostico.carregar_transcricao separa cabeçalho pelo marcador 'Transcrição Automática'
-                   marcador presente
-      [compatível ] diarização opção B (rótulos inferidos pelo revisor)
-                   sem rótulos nativos: o revisor continua inferindo
-      [compatível ] Guia §8 (pontuação é corretiva, o STT não traz)
-                   2.2 sinais por 1.000 palavras — pontuação praticamente ausente
-
-[5] DIAGNÓSTICO DA ESTEIRA (rc_diagnostico.py, exit 0)
-    linhas_ledger: 132
-    propostas: 44
-    informativas: 51
-    ausentes_da_base: 131
-    superficies_exatas: 108
-    por status_aprovacao: a confirmar 1, aprovada 36, informativa 51, proposta 44
-    por classe: artigo 47, flexao 4, semente-guia 37, truncamento 5, variante 39
 ```

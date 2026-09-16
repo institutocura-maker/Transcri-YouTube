@@ -231,3 +231,70 @@ audiovisuais. O que isso fechou, nesta pasta:
   comportamento correto em arquivo grande, e o teste passou a medir a discriminação (3× entre os dois
   formatos) em vez de um limiar absoluto.
 - **Pendente, e só isso fecha o parecer:** o arquivo B. Comando pronto no §7 do parecer.
+\n
+---
+
+## 16/09/2026 — o arquivo B chegou: medição completa e a descoberta de que não são dois motores
+
+- **`Opcao-B.txt` chegou pela quarta via do `upload/README.md`** — commit direto do Comandante pela
+  interface web do GitHub (`6eddae0`, "Add files via upload"), que grava na **raiz** do repositório.
+  109.452 bytes, 300 linhas, sha256 `5aa247f3487752…`. Meu trabalho local foi rebasado sobre ele.
+- **O cabeçalho de B é cópia do de A** (linhas 0–11 idênticas, mais um separador `====` na linha 10).
+  Logo a prosa do "Guia de fontes" não é saída do NotebookLM, e o marcador "Transcrição Automática"
+  presente em B é mérito de quem preparou o arquivo, não do motor. Um export futuro sem cabeçalho
+  quebraria essa suposição também.
+- **Guarda de comparabilidade aprovada:** 18.966 palavras em A contra 18.975 em B (+9, +0,05%), mesmo
+  áudio de 2h25min50s, os dois acentuados, os dois em estado bruto.
+- **A descoberta que requalifica a pergunta do despacho: não há dois motores.** Divergência lexical
+  3,00% (280 palavras de A ausentes em B, 289 de B ausentes em A), Jaccard de vocabulário 0,929,
+  93% dos hapax em comum, e **nove marcadores orais com contagem idêntica ao dígito** (então 132,
+  uhum 31, cara 26, tipo 25, ó 21, tô 20, sabe 17, quer dizer 5, sei lá 2). A repetição "blá"×22
+  aparece igual nos dois. Dois ASR diferentes erram diferente; estes erram igual. É o reconhecimento
+  de fala do YouTube com uma **camada de reescrita** por cima.
+- **A camada CENSURA.** Cinco tokens mascarados com asterisco, todos inexistentes em A: três `m****`
+  (onde A diz "merda") e dois `b******` (onde A diz "bandido") — estes num trecho teologicamente
+  central: "os europeus viam Jesus como um b******" e "não mais um b****** judeu". Asterisco não é
+  palavra; se B entrasse em `00-fonte` como bruto, essas cinco palavras estariam perdidas e o QA G1
+  continuaria verde, porque ele confere sha256, não conteúdo.
+- **Outras microedições localizadas, todas conferidas nos dois textos:** "planeta de expiação **e**
+  provas" → "**em** provas" (uma preposição derrubou o casamento com RC-954, que zerou em B);
+  "as calmeias começaram a colapsar" → "as colmeias" (corrigiu uma das duas ocorrências, produzindo
+  inconsistência interna); "num circuito" → "num num circuito" (acrescentou palavra).
+- **Placar dos quatro eixos contra os limiares pré-registrados:** eixo 1 **B ganha 4 de 4** (sinais
+  por 100 palavras 0,22 → 15,93; mediana de palavras por sentença 331 → 11; maior sentença 2.604 →
+  75; segmentos nativos 8 → 295). Eixo 2 **B perde** (40,49 → 40,79 marcas por 1.000 palavras: a
+  camada não limpa disfluência, e as 12 repetições a mais são ruído de palavra funcional — "que"
+  17→14, "não" 10→13, "blá" 22→22). Eixo 3 **B perde pelo limiar composto** (carga terminológica
+  total 263 → 342 contra teto de 197) mas **ganha nos três acessórios** (taxa de confiança 0,8262 →
+  0,8476; formas proibidas 37 → 10 ocorrências; Externos corrompidos 56 → 51). Eixo 4 **B é 3/4**:
+  uma quebra custa código (linha mais longa: cobertura de 98,9% → 3,9%) e uma premissa foi superada
+  (Guia §8, pontuação nativa).
+- **A pergunta literal do despacho — B alucinou menos ou mais nas entidades dos lotes 01 e 02? —
+  resposta: praticamente igual.** Canônicos 113 (A) × 109 (B); corrupções 51 × 43. `/Kaggen` é
+  corrompido de forma **idêntica** nos dois (3× `kaagen`/`kaagem`), o que é mais uma prova do mesmo
+  ouvido. B eliminou os dois truncamentos `demiurg` de RC-048 e piorou RC-756 (Ganesha: 4 grafias
+  contra 3). Dispersão: 75 grafias/58 entidades (1,29) em A contra 77/63 (1,22) em B.
+- **Quarto defeito de régua, este do motor da casa:** `rc_diagnostico.py:372` procura **sequências
+  capitalizadas** sem registro. Num STT pontuado toda inicial de frase é maiúscula, e a lista de
+  ausentes de B encheu de verbo comum. Separando os baldes: dos 211 ausentes de B, 83 são janelas,
+  26 vocabulário comum e 26 inicial de frase — sobram **76 candidatas reais**, contra 41 em A (que
+  tem 131 brutos). Ainda é resíduo contaminado ("Desintegrou", "Oremos", "Acreditem"). Conclusão
+  honesta: não há evidência de que B alucine mais entidades; há evidência de que a régua conta mais
+  candidatos quando o texto é pontuado. O limiar de 197 reprovou B por um efeito da virtude de B —
+  registrado no parecer como derrota pré-registrada **e** como métrica que precisa de versão 2.
+- **Veredito do parecer:** adotar a saída do NotebookLM como **texto de trabalho**, nunca como fonte.
+  `00-fonte` continua sendo o STT cru do YouTube (imutável, sha256, G1); o derivado pontuado entra
+  ao lado, versionado, com proveniência e divergência registradas em `metadados.yaml`; e a esteira
+  ganha o portão **G9 (divergência produto × bruto)**, que sobre este experimento teria apontado
+  sozinho as cinco palavras censuradas. Custo de código: 5 itens, cerca de um dia.
+- **Instrumento ampliado no caminho:** eixo de **proveniência** (divergência lexical, Jaccard, hapax,
+  marcadores idênticos, tokens mascarados) — é o que impede o parecer de atribuir ao motor errado o
+  que é mérito ou dano da camada de reescrita; separação de ruído nos ausentes; dispersão de grafias
+  por entidade; e o veredito de integração em **três estados** (compatível / custa código / premissa
+  superada), porque "incompatível" estava rotulando como defeito justamente o ponto em que B mais
+  ajuda. Tabela comparativa virou fonte única entre terminal e markdown — duas listas separadas já
+  tinham produzido um relatório mais curto que a medição.
+- **Testes: 124 → 136 verificações, 0 falhas.** QA G1–G8 verde, bruto de A intacto.
+- **Pendência de decisão do Comandante:** (1) a arquitetura de três camadas do parecer §6; (2) o
+  destino do `Opcao-B.txt`, que está na raiz — lugar que o Plano de Organização não prevê. Não movi o
+  arquivo por conta própria: é entrega dele e o destino depende da arquitetura aprovada.
