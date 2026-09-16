@@ -1,0 +1,63 @@
+# Metadados da transcrição — preenchidos na captura, conferidos pelo rc_qa.py (G1/G7).
+# Este arquivo é a identidade do vídeo: sem ele, o bruto é um .txt órfão.
+# rc_novo.py preenche sozinho o que consegue derivar; o resto é responsabilidade de quem captura.
+
+slug: {{slug}}
+titulo: "{{titulo}}"
+titulo_completo: "{{titulo}}"
+chamada: null                 # chamada da thumbnail, se houver
+canal: "{{canal}}"
+url: {{url}}                  # A PREENCHER se a captura não registrou
+data_gravacao: {{data}}
+data_publicacao: {{data}}
+data_captura: {{data_captura}}
+duracao_min: null             # A PREENCHER
+idioma: pt-BR
+ferramenta_stt: youtube-autosub
+licenca: uso interno do Projeto
+
+falantes: []
+# Preencher após a primeira leitura, com os rótulos usados na diarização:
+#  - rotulo: "[NOME]"
+#    papel: apresentador | entrevistado | coapresentador | nao-identificado
+#    turnos: 0
+#    observacao: ""
+
+bruto:
+  arquivo: transcricao-bruta.txt
+  bytes: {{bytes}}
+  linhas: {{linhas}}
+  sha256: {{sha256}}
+  linhas_cabecalho: {{linhas_cabecalho}}   # linhas antes do corpo (guia de fontes etc.)
+  corpo_linha: {{corpo_linha}}             # linha onde o corpo começa (1-based)
+  corpo_caracteres: {{corpo_caracteres}}
+  corpo_palavras: {{corpo_palavras}}       # tokenizador: sequência de letras/dígitos/apóstrofo
+  pontuacao_original: nenhuma              # STT puro não entrega vírgula, ponto nem interrogação
+
+midia:
+  audio: nao-arquivado        # política do Plano §7: só link externo
+  video: nao-arquivado
+  link: {{url}}
+
+revisao:
+  guia: docs/normas/guia-revisao-v2.md
+  anexo: docs/normas/resolucao-de-conflitos.md
+  disfluencia: leve           # leve | medio | pesado — fixado por despacho
+  diarizacao: opcao-b-rotulos-inferidos-explicitos
+  anuncios: preservados-no-corpo
+  guia_de_fontes: removido-do-produto-final
+  politica_de_numeros: nenhum número alterado; divergência vira [NOTA]
+  despachos: []               # caminhos dos despachos que regem esta transcrição
+
+resultado:
+  blocos: 0
+  palavras_revisadas: 0
+  paragrafos: 0
+  notas: 0
+  a_confirmar: 0
+  inaudivel: 0
+  adjudicacao: null           # ex.: "98 linhas decididas (24 aceitas, 7 parciais, 20 recusadas…)"
+  novos_termos_propostos: 0
+  divergencias_factuais: 0
+  revisor: null
+  concluido_em: null

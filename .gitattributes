@@ -1,0 +1,15 @@
+# Normalização: fim de linha LF no repositório, independentemente do SO de quem clona.
+* text=auto eol=lf
+
+# Binários — sem diff textual, sem normalização de linha
+*.docx binary
+*.xlsx binary
+*.pdf  binary
+*.png  binary
+*.jpg  binary
+
+# Mídia pesada (Plano de Organização §7): LFS pronto caso a decisão mude.
+# Hoje a política é link externo; nenhuma destas linhas deve casar com arquivo real.
+transcricoes/**/00-fonte/midia/*.mp3 filter=lfs diff=lfs merge=lfs -text
+transcricoes/**/00-fonte/midia/*.m4a filter=lfs diff=lfs merge=lfs -text
+transcricoes/**/00-fonte/midia/*.wav filter=lfs diff=lfs merge=lfs -text

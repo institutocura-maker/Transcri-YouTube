@@ -10,9 +10,18 @@ Thumbs.db
 ~$*.docx
 ~$*.xlsx
 
-# Artefatos grandes ou regeneráveis (manter fora do Git)
+# Artefatos de CI e logs
 *.log
-40-final.pdf
+qa.json
 
-# Diagnóstico bruto em JSON: regenerável por `ferramentas/rc_diagnostico.py`
-analise/**/diagnostico.json
+# Regeneráveis pelo motor (Plano de Organização §7 e Princípio P8)
+transcricoes/**/10-diagnostico/diagnostico.json
+
+# Mídia pesada: nunca no repositório comum (Princípio P9).
+# Áudio só entraria via Git LFS — as regras estão no .gitattributes.
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.wav
+*.flac
