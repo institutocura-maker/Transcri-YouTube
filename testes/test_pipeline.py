@@ -20,11 +20,16 @@ Cobre o que já quebrou de verdade neste projeto, para não quebrar de novo:
     markdown da ficha e respeita o status da fila (aplicada não se reaplica);
 11. o padrão Y fecha o ciclo da fonte audiovisual: termo novo nasce citando fonte
     registrada, fronteira de palavra serve a "/Kaggen", e os três lugares que guardam o
-    URL (biblio.json, metadados.yaml, midia/README.md) concordam entre si.
+    URL (biblio.json, metadados.yaml, midia/README.md) concordam entre si;
+12. o perfil de motor STT (`rc_perfil_stt.py`) mede o que diz medir: marcador oral não
+    confunde "ó" com o artigo "o", equivalência conceitual não vira corrupção, e um
+    arquivo paragraphado dispara as quebras de suposição da esteira em vez de passar por
+    compatível em silêncio.
 """
 from __future__ import annotations
 
 import re
+import shutil
 import sys
 import tempfile
 from pathlib import Path
@@ -343,6 +348,70 @@ verificar("sem URL em captura é aviso (não reprova pasta nova)", not _p2 and b
 _p3, _a3 = RI.checar_fonte_y({"slug": "2026-09-14-revelacoes-cosmicas-urgente",
                               "estatus": "40-devolvida", "url": _y["url"]}, REFERENCIA)
 verificar("URL registrada e apontando de volta passa limpa", not _p3 and not _a3)
+
+# 12. o perfil de motor STT mede o que diz medir — e avisa quando a esteira não cabe no arquivo.
+#     Nasceu do experimento de 16/09/2026 (YouTube × NotebookLM): trocar o motor de STT muda a
+#     FORMA do arquivo de entrada, e três suposições da esteira dependem dessa forma.
+import rc_perfil_stt as PS  # noqa: E402
+import rc_lexicon as L11  # noqa: E402
+
+FIX_PARA = RAIZ / "testes" / "fixtures" / "stt-com-paragrafos-sintetico.txt"
+
+# o bug que a régua tinha: "ó" normalizado vira "o" e contava artigo como marcador oral
+verificar("'ó' vocativo não é contado como o artigo 'o'",
+          PS.contar_marcador("ó", "o gato viu o cão, ó fulano", L11.norm("o gato viu o cão, ó fulano")) == 1)
+verificar("'né' é contado com e sem acento (motor que não acentua)",
+          PS.contar_marcador("né", "é isso ne, é isso né", L11.norm("é isso ne, é isso né")) == 2)
+
+_para = PS.ler(FIX_PARA)
+_int_para = PS.eixo_integracao(_para)
+_pont_para = PS.eixo_pontuacao(_para["texto"], PS.paragrafos(_para["linhas"]))
+verificar("fixture paragraphado tem parágrafos de verdade", _pont_para["paragrafos"] >= 8)
+verificar("fixture paragraphado tem pontuação nativa", _pont_para["sinais_por_100_palavras"] > 5)
+verificar("em arquivo paragraphado a 'linha mais longa' NÃO é o corpo",
+          _int_para["cobertura_corpo_por_linha"] < 0.8)
+verificar("e o perfil acusa isso como quebra, não em silêncio",
+          any(not q["compativel"] for q in _int_para["quebras"]))
+verificar("rótulos de fala nativos são detectados", bool(_int_para["rotulos_nativos"]))
+verificar("ausência do marcador 'Transcrição Automática' é detectada",
+          _int_para["marcador_cabecalho"] is False)
+
+_int_yt = PS.eixo_integracao(PS.ler(FIXTURE))
+verificar("a cobertura da maior linha discrimina os dois formatos",
+          _int_yt["cobertura_corpo_por_linha"] > 3 * _int_para["cobertura_corpo_por_linha"] > 0.3)
+# a REGRA em si, medida num corpo de linha única — no fixture pequeno o cabeçalho pesa e a
+# cobertura fica abaixo do corte, o que é comportamento correto, não defeito do instrumento
+_corpo = "olá eu sou o apresentador e hoje nós vamos falar sobre brahma. " * 40
+_int_mono = PS.eixo_integracao({"texto": _corpo, "linhas": [_corpo]})
+verificar("corpo de linha única é reconhecido como compatível",
+          _int_mono["cobertura_corpo_por_linha"] >= 0.8 and
+          all(q["compativel"] for q in _int_mono["quebras"] if "linha mais longa" in q["suposicao"]))
+
+verificar("estágio do bruto de referência é 'bruto'",
+          PS.estagio(REFERENCIA / "00-fonte" / "transcricao-bruta.txt")[0] == "bruto")
+verificar("estágio de arquivo em upload/ é 'solto' (leitura de bruto)",
+          PS.estagio(RAIZ / "upload" / "opcao-b.txt")[0] == "solto")
+
+_regua = PS.superficies_kb(RAIZ / "KB-RC")
+verificar("a régua carrega canônicos da KB", len(_regua["canonicos"]) > 500)
+verificar("corrupção não pode ser também canônico (senão o eixo 3 mente)",
+          not (set(_regua["variantes"]) & set(_regua["canonicos"])))
+verificar("campo 'Variações' (equivalência conceitual) não entra como corrupção",
+          L11.norm("humano") not in _regua["variantes"])
+verificar("externos.csv é lido apesar dos comentários antes do cabeçalho",
+          len(_regua["externos"]) > 0 and len(_regua["externos_canonicos"]) > 0)
+
+_term_para = PS.eixo_terminologia(_para["texto"], _regua)
+_term_yt = PS.eixo_terminologia(PS.ler(FIXTURE)["texto"], _regua)
+verificar("os dois fixtures expõem as mesmas corrupções ao eixo 3",
+          _term_para["variantes_stt_distintas"] >= 5 and _term_yt["variantes_stt_distintas"] >= 5)
+verificar("livro-razão entra na régua quando o arquivo pertence a uma transcrição",
+          len(PS.regua_para(_regua, REFERENCIA / "00-fonte" / "transcricao-bruta.txt",
+                            RAIZ / "KB-RC")["proibidas"]) > len(_regua["proibidas"]))
+
+# o tempdir da seção 10 era criado e nunca removido — ficava um /tmp/rc-curadoria-* por execução
+shutil.rmtree(_tmp, ignore_errors=True)
+verificar("teste não deixa tempdir para trás", not _tmp.exists())
 
 # --------------------------------------------------------------------------------------
 print(f"\n{'=' * 66}\n{_ok} verificações ok, {len(_falhas)} falhas")

@@ -162,3 +162,72 @@ audiovisuais. O que isso fechou, nesta pasta:
   movida e RC-176 recebeu remissiva. É o único caso de variante que trocou de ficha.
 - **Item 0023 desbloqueado:** "constituição centenária" esperava o termo *Constituição Setenária*
   (RC-952) existir; já nasceu na ficha dele.
+\n
+---
+
+## 16/09/2026 — experimento de motor STT: régua pronta, lado B ausente
+
+- **Despacho do Comandante:** lote 02 ratificado (com elogio ao tratamento do bug `/Kaggen`) e nova
+  missão, urgente e substitutiva — comparar o STT do YouTube com o do **NotebookLM** sobre o mesmo
+  áudio e emitir parecer de engenharia em quatro eixos (pontuação/segmentação, disfluência,
+  fidelidade terminológica contra a KB, veredito de integração). Critério de aceite fixado por ele:
+  diagnóstico de viabilidade **antes** de definir o novo padrão de entrada da esteira. Os 14 itens
+  pendentes da fila e a segunda transcrição tradicional foram para a **geladeira** por ordem expressa.
+- **O arquivo `Opcao-B.txt` não chegou.** Varredura completa (`/home/user`, `/tmp`, `git status`
+  limpo em `3d45365`, workspace do Arena): não existe cópia em lugar nenhum. Nenhuma comparação foi
+  simulada e nenhum número de B foi inventado — o parecer saiu com status **PARCIAL** e "aguardando"
+  onde falta medição.
+- **Instrumento construído: `ferramentas/rc_perfil_stt.py`.** Mede os quatro eixos sobre qualquer
+  arquivo de STT; com dois argumentos imprime o comparativo A × B com coluna "melhor"; com
+  `--com-diagnostico` roda o motor da casa inteiro sobre cada arquivo, que é a medida mais direta de
+  carga das `rc_*`. Sai em terminal, `--json` e `--md`. 3 s sem diagnóstico, 8 s com.
+- **A régua tinha três defeitos que teriam falsificado o resultado — corrigidos antes de medir:**
+  1. marcador oral contado no texto normalizado: `norm("ó") == "o"` contava o artigo e inflava a
+     disfluência do lado A de 768 para 1.308 marcas (+71%);
+  2. `Variações` da ficha (equivalência **conceitual**, Guia §5) contado como corrupção: apontava
+     "humano"×58 e "espirito"×12 como erro do motor e derrubava a taxa de confiança de 0,8262 para
+     0,6040;
+  3. `externos.csv` lido sem pular os comentários `#` que antecedem o cabeçalho: zero entidades
+     Externos medidas, exatamente a camada que protege "Ray Kurzweil".
+  Os três estão travados por teste. Teste de fumaça: **105 → 124 verificações, 0 falhas**. QA G1–G8
+  verde, sha256 do bruto intacto.
+- **Linha de base A medida** (`00-fonte/transcricao-bruta.txt`, 106.243 bytes, estágio bruto):
+  18.966 palavras · 0,22 sinais por 100 palavras · 35 sentenças · mediana de 331 palavras/sentença
+  (maior: 2.604) · **4 parágrafos reais, todos do cabeçalho — o corpo é uma linha só** · 768 marcas
+  de disfluência (40,49/1.000; 115 repetições de palavra) · 271 ocorrências canônicas × 57 corrupções
+  mapeadas · taxa de confiança 0,8262 · 56 ocorrências de Externos corrompidos · e **263 itens de
+  curadoria** gerados pelo diagnóstico (132 linhas de livro-razão, das quais 44 propostas a decidir,
+  + 131 formas ausentes da base).
+- **Viés da régua registrado:** a KB foi construída *sobre* as corrupções deste STT (90 variantes dos
+  lotes 01 e 02), então as corrupções de A já estão mapeadas e as de B apareceriam como "ausentes da
+  base". Métrica simétrica adotada: **carga terminológica total = linhas do livro-razão + ausentes**.
+  Limiar de vitória de B pré-registrado em ≤ 197 itens (redução de 25%).
+- **Defeito latente da esteira, descoberto pelo experimento e independente do resultado:**
+  `rc_novo.py:71` e `rc_indice.py:62` tomam o corpo como `max(linhas, key=len)`, enquanto
+  `rc_diagnostico.carregar_transcricao` o separa pelo marcador "Transcrição Automática". Sobre A os
+  dois critérios coincidem (a linha 12 tem 101.468 chars) e ninguém notou. Sobre um STT paragraphado,
+  `max(linhas, key=len)` devolve **um parágrafo** e grava `corpo_palavras` fracionário no
+  `metadados.yaml` — sem exceção, sem aviso, com o QA G1 verde (ele confere sha256, não coerência).
+  Recomendação escrita no parecer §5: unificar o critério num só lugar, com cascata
+  marcador → linha mais longa → arquivo inteiro, e guarda que avise quando a cobertura da maior linha
+  ficar abaixo de 80%.
+- **`upload/` implantada** (resposta à pergunta do Comandante, com implementação em vez de opinião):
+  zona de trânsito ignorada pelo git (`/upload/*` + `!/upload/README.md`, verificado com
+  `git check-ignore`), porque fonte de verdade não pode morar fora do alcance do QA G1. O ciclo é
+  `upload/` → perfil → parecer → `00-fonte/` versionado com sha256. O README lista as quatro vias de
+  entrega para quando o anexo do chat falhar: reanexar, colar, link público (Drive aberto) ou commit
+  do Comandante com `git add -f`.
+- **Parecer publicado:** `docs/pareceres/parecer-motor-stt.md` + `.docx`. Traz a linha de base, os
+  três defeitos de régua, os **critérios de decisão pré-registrados** (limiares numéricos fixados
+  antes de existir qualquer número de B, para que a trave não possa ser movida depois) e a guarda de
+  comparabilidade: se B tiver menos de 90% ou mais de 110% das palavras de A, o parecer não compara
+  motores — compara recortes, porque ferramenta que resume pode devolver síntese em vez de transcrição.
+- **Fixture sintético** `testes/fixtures/stt-com-paragrafos-sintetico.txt`: escrito à mão para provar
+  que o eixo 4 detecta arquivo paragraphado. Está rotulado como sintético no próprio cabeçalho e
+  **nenhum número dele entra no parecer**.
+- **Becos sem saída deste turno:** caminhos relativos em ferramenta de escrita criaram um diretório
+  `Transcri-YouTube/` aninhado dentro do repositório (movido e removido); e assertiva de teste com
+  corte fixo de 0,8 de cobertura falhou sobre o fixture pequeno, onde o cabeçalho pesa — o corte é
+  comportamento correto em arquivo grande, e o teste passou a medir a discriminação (3× entre os dois
+  formatos) em vez de um limiar absoluto.
+- **Pendente, e só isso fecha o parecer:** o arquivo B. Comando pronto no §7 do parecer.

@@ -25,3 +25,9 @@ transcricoes/**/10-diagnostico/diagnostico.json
 *.mov
 *.wav
 *.flac
+
+# Zona de trânsito do Comandante: caixa de entrada, não arquivo permanente.
+# O que for aprovado migra para transcricoes/<slug>/00-fonte/ e passa a ser versionado
+# (metadados.yaml com sha256, fiscalizado pelo QA G1). Ver upload/README.md.
+/upload/*
+!/upload/README.md

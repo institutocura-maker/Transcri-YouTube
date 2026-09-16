@@ -14,12 +14,12 @@ decide, e a decisão fica registrada**.
 ```
 docs/            documentos DO PROJETO — valem para todas as transcrições
   normas/        guia-revisao-v2.md/.docx · resolucao-de-conflitos.md/.docx (Anexo I)
-  pareceres/     parecer-de-viabilidade.md/.docx
+  pareceres/     parecer-de-viabilidade.md/.docx · parecer-motor-stt.md/.docx
   planos/        plano-de-organizacao.md/.docx — a estrutura deste repositório e o porquê dela
   legado/        Guia v1, planilha e protótipo: congelados, datados, somente leitura
 
 KB-RC/           FONTE DE VERDADE
-  canonico.json  946 termos + 1.887 relações · biblio.json 104 obras · termos/ 820 fichas
+  canonico.json  956 termos + 1.915 relações · biblio.json 105 obras · termos/ 830 fichas
   CHANGELOG.md   histórico de curadoria: o que mudou, quando, a pedido de quem
   _fila-de-curadoria.csv   propostas, consolidadas de todas as transcrições
   _relatorio-curadoria-lote-01.md   prestação de contas do lote 01 (22 variantes STT)
@@ -34,6 +34,7 @@ ferramentas/     somente código
   rc_termo.py    cria termo novo (ficha + canonico.json) a partir de especificação validada
   rc_indice.py   gera e confere o catálogo
   rc_qa.py       os oito portões de qualidade
+  rc_perfil_stt.py  perfil comparativo de motores de STT (os quatro eixos do parecer)
   dados/         sementes de variantes, externos.csv, vocabulário-guarda
 
 transcricoes/    UM DIRETÓRIO POR VÍDEO, autossuficiente
@@ -47,7 +48,9 @@ transcricoes/    UM DIRETÓRIO POR VÍDEO, autossuficiente
     40-devolucao/   devolucao-a-kb.md · adjudicacao.md · externos-novos.csv
     90-registro/    diario-de-bordo.md + despachos/ do Comandante
 
-testes/          fixture + teste de fumaça (63 verificações, sem pytest)
+upload/          ZONA DE TRÂNSITO do Comandante — ignorada pelo git, exceto o README
+                 arquivo chega aqui, é medido e, se aprovado, migra para 00-fonte/ versionado
+testes/          fixtures + teste de fumaça (124 verificações, sem pytest)
 .github/         template de PR e papéis (CONTRIBUTING)
 ferramentas/ci/  configuração pronta do GitHub Actions — veja o README de lá para ativar
 ```
@@ -57,7 +60,7 @@ ferramentas/ci/  configuração pronta do GitHub Actions — veja o README de l�
 ```bash
 python3 -m venv .venv && . .venv/bin/activate
 pip install -r ferramentas/requirements.txt
-python testes/test_pipeline.py            # 63 verificações de fumaça
+python testes/test_pipeline.py            # 124 verificações de fumaça
 
 # 1. abrir uma transcrição nova (valida o slug, grava o hash do bruto, atualiza o catálogo)
 python ferramentas/rc_novo.py --slug 2026-10-02-lemuria-terry-fabris \
@@ -77,6 +80,25 @@ python ferramentas/rc_diagnostico.py \
 python ferramentas/rc_qa.py transcricoes/2026-10-02-lemuria-terry-fabris
 python ferramentas/rc_indice.py
 ```
+
+## Experimento de motor de STT (em curso)
+
+Antes de fixar o padrão de entrada da esteira, o STT do YouTube está sendo comparado com o do
+NotebookLM sobre o mesmo áudio. A medição é feita por ferramenta, não por impressão:
+
+```bash
+# um arquivo: perfil nos quatro eixos (pontuação, disfluência, terminologia, integração)
+python ferramentas/rc_perfil_stt.py upload/opcao-b.txt --com-diagnostico
+
+# dois arquivos: sai também o comparativo A × B com coluna "melhor"
+python ferramentas/rc_perfil_stt.py \
+    transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-bruta.txt \
+    upload/opcao-b.txt --com-diagnostico --md docs/pareceres/parecer-motor-stt-medicao.md
+```
+
+Critérios de decisão pré-registrados, linha de base medida e o defeito latente que o experimento
+revelou (duas ferramentas, dois critérios diferentes para achar o corpo do arquivo):
+`docs/pareceres/parecer-motor-stt.md`. Arquivos chegam por `upload/` — ver `upload/README.md`.
 
 Fluxo completo, papéis e convenções: **`.github/CONTRIBUTING.md`**.
 

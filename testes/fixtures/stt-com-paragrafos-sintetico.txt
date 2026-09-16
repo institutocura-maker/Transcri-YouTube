@@ -1,0 +1,22 @@
+SINTÉTICO — fixture de teste, não é saída de motor nenhum.
+Imita a FORMA que um STT paragraphado teria (parágrafos curtos, pontuação nativa, rótulos de
+falante), para que os testes possam afirmar que `rc_perfil_stt.py` detecta as suposições da esteira
+que deixam de valer. O vocabulário é o mesmo de `mini-transcricao.txt` (brahma, xavé, sherminetro,
+raymond kzwell, demiurg, circuito coméico, avaloque texwara, kaagen) justamente para que o eixo 3
+seja comparável entre os dois fixtures.
+
+[APRESENTADOR] Olá, eu sou o apresentador e hoje nós vamos falar sobre Brahma e Xavé.
+
+[APRESENTADOR] Também vamos falar sobre o Sherminetro, que é meu colega. Segundo a Lei de Gordon War, a inteligência artificial vai dominar o mundo.
+
+[CONVIDADO] É, e o Raymond Kzwell escreveu um livro em 2007 chamado "A Singularidade Está Próxima", né?
+
+[CONVIDADO] Tem também o Demiurg e a Dinastia das Sofias.
+
+[APRESENTADOR] E o Circuito Coméico, que eu chamo de colmeia, uhum.
+
+[CONVIDADO] E o Avaloque Texwara, que é um bodhisattva.
+
+[APRESENTADOR] Pois é. E tem o Thomas Robs, o Agostinho de Pona e a Mary Chiley, que escreveu o Frankstein.
+
+[CONVIDADO] Ah, e o Kaagen dos bosquímanos do Kalahari!
