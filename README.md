@@ -26,6 +26,7 @@ KB-RC/           FONTE DE VERDADE
 ferramentas/     somente código
   rc_kb.py rc_lexicon.py rc_variantes.py rc_diagnostico.py rc_docx.py md_para_docx.py
   rc_novo.py     cria a pasta de uma transcrição a partir do modelo
+  rc_ledger.py   mantém o livro-razão da adjudicação (decisões + contagem de sobrevivências)
   rc_indice.py   gera e confere o catálogo
   rc_qa.py       os oito portões de qualidade
   dados/         sementes de variantes, externos.csv, vocabulário-guarda

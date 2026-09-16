@@ -37,8 +37,11 @@ python ferramentas/rc_diagnostico.py transcricoes/<slug>/00-fonte/transcricao-br
 # 4. revisar em blocos — um arquivo por bloco, nome zero-padded
 #    transcricoes/<slug>/20-blocos/bloco-01.md …
 
-# 5. adjudicar linha a linha em 10-diagnostico/variantes-propostas.csv
-#    colunas adjudicacao + motivo_adjudicacao; nenhuma linha pode ficar sem decisão
+# 5. adjudicar linha a linha o livro-razão (nenhuma linha pode ficar sem decisão)
+python ferramentas/rc_ledger.py transcricoes/<slug> --pendencias
+python ferramentas/rc_ledger.py transcricoes/<slug> --marcar "Brama=recusada" \
+    --motivo "flexão legítima; o canônico Brahma já está aplicado"
+python ferramentas/rc_ledger.py transcricoes/<slug> --recalcular --resumo
 
 # 6. montar o produto e escrever a devolução
 python ferramentas/rc_docx.py transcricoes/<slug>/20-blocos/bloco-*.md \

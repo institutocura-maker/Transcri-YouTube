@@ -133,7 +133,9 @@ def artefatos_faltando(pasta: Path, estagio: str) -> list[str]:
 
 def escrever(linhas: list[dict]) -> None:
     with (TRANSCRICOES / "_indice.csv").open("w", encoding="utf-8", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=CAMPOS)
+        # lineterminator explícito: o padrão do csv.writer é CRLF e o .gitattributes
+        # normaliza para LF — sem isto o catálogo fica eternamente "modificado"
+        w = csv.DictWriter(fh, fieldnames=CAMPOS, lineterminator="\n")
         w.writeheader()
         w.writerows(linhas)
 
