@@ -8,13 +8,17 @@ status = "verificado"
 fontes = ["P2024-03-02", "P2021-05-15"]
 via = "P6-evidência"
 confianca_fonte = "média"
-atualizado = "2026-08-28"
+atualizado = "2026-09-16"
 +++
 # Ganesha (exceção à metamorfose; cabeça de elefante) — RC-756
 
 ## Definição Sintética
 
 Na cosmologia de Jan Val Ellam (P2024-03-02), Ganesha é a divindade hindu descrita como **exceção à regra da metamorfose** dos seres da criação: sua cabeça de elefante não resulta de metamorfose (doença dos seres demos/daiva), mas de uma **origem própria** — Shiva decepou a cabeça do filho de Parvati num acesso de impaciência e, para reparar, colou a cabeça de um elefante de uma loca de **elefantes racionais** (seres diferentes dos humanos). Ellam registra ainda que escreve um livro sobre essa "loca de elefantes racionalizados".
+
+## Etimologia e Grafias
+- **Grafia preferida:** Ganesha (exceção à metamorfose; cabeça de elefante)
+- **Variações STT capturadas:** Ganexa; Ganeixa
 
 ## Estrutura interna
 
@@ -29,6 +33,12 @@ Na cosmologia de Jan Val Ellam (P2024-03-02), Ganesha é a divindade hindu descr
 ### P2021-05-15 (As Etnias Hiperbóreas e os Anunnakis)
 
 - **[P2021-05-15 · GANESHA, A CANETA ESPECIAL E A TRADUÇÃO PARA OS GANDARVAS]** "Para locas, paraas locas dos gandarvas, Gene ajudou adaptando o que Viaza tava contando ao tipo de entendimento que a turma dos Gandarvas, que pertence a quatro locas distintas poderiam obter." (U0003) — ⚠️ A fonte classifica Ganesha como «aquele tipo de ser demobio» — leitura ausente da base: registrar como variante, sem alterar a ficha.
+
+## Atualização
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0021)
+- **"Ganexa"** — 2 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- **"Ganeixa"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 3
 
 ## Fontes
 

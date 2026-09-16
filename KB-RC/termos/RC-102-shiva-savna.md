@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["B031", "B024", "B044", "B001", "B033", "B016", "B020", "B021", "B022", "B050", "B051", "B036", "B060", "B037", "P2022-12-17", "P2021-12-04", "P2026-07-30", "P2024-05-04", "P2025-03-15", "P2025-02-16", "P2024-11-30", "P2024-11-09", "P2024-07-14", "P2025-11-29", "P2023-06-24", "P2023-04-15", "P2023-04-29", "P2020-07-04", "P2020-05-09", "P2024-11-03", "P2025-02-22", "P2021-05-15", "P2023-10-14", "P2022-03-26", "P2022-05-07", "P2024-06-16", "P2012-02-19", "P2022-12-03", "P2022-07-16", "P2026-03-21", "P2021-04-10", "P2021-06-26", "P2022-09-17", "P2023-12-25-01", "P2020-04-04"]
 via = "P6-evidência"
 confianca_fonte = "alta"
-atualizado = "2026-08-28"
+atualizado = "2026-09-16"
 +++
 # Shiva (Savna) — RC-102
 
@@ -16,13 +16,19 @@ atualizado = "2026-08-28"
 
 Um dos três da Trimurti (RC-104) — na RC, **Savna** (RC-409 ADHYSAVNA); princípio de reciclagem vinculado à entropia cósmica e à força tamásica (RC-151 Gunas).
 
+## Etimologia e Grafias
+- **Grafia preferida:** Shiva (Savna)
+- **Variações STT capturadas:** Chiva
+
 ## Atualização
 ### P2025-11-29 (A Revelação de Ifá)
 
 - **Força tamásica = entropia:** "a força tamásica de Shiva é a entropia dessa criação" (reforço de P2021-03-27/P2023-12-02) — Shiva como reciclagem que "funciona até o fim";
 - **Na leitura da Ogdóade (P2023-12-02):** Shiva/Parvati funcionam (reciclagem, entropia, força tamasica, "circuito fechado");
 - Contexto: Shiva entre os seres da Trimurti que disputam com Moros o destino dos seres (RC-454; ver RC-767).
-
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0018)
+- **"Chiva"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: blocos 2 e 8
 
 ## Ampliação
 ### P2021-01-23

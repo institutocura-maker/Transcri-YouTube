@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["B031"]
 via = "P6-evidência"
 confianca_fonte = "alta"
-atualizado = "2026-09-13"
+atualizado = "2026-09-16"
 +++
 # Demiurgo — RC-048
 
@@ -19,6 +19,10 @@ Artífice ou Criador Divino — o nome que Platão dá ao Criador. Segundo o glo
 ## Contexto / Origem
 
 **Materialização (não é criação).** Este código vivia só no cadastro (`ficha=False`). A virada foi despachada pelo Curador em 13/09/2026 — rota **R1** do dossiê `diagnostico/CENSO-GAP-FICHAS-2026-09-13.md` — e executada na unidade U44 (lote 2 da família B), na esteira do precedente U30 (RC-367/RC-537) e do piloto U41. Conteúdo restrito ao que a fonte sustém.
+
+## Etimologia e Grafias
+- **Grafia preferida:** Demiurgo
+- **Variações STT capturadas:** Demiurg
 
 ## Escopo e evidência
 
@@ -39,6 +43,11 @@ Artífice ou Criador Divino — o nome que Platão dá ao Criador. Segundo o glo
 | Obra (sigla) | Título | Página | Tipo |
 |---|---|---|---|
 | B031 | Painéis Emergentes da Revelação Cósmica | p. 129, p. 130 | livro; citação intra-linha |
+
+## Atualização
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0019)
+- **"Demiurg"** — 2 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 2; atenção: é substring de Demiurgo, o QA exige fronteira de palavra
 
 ## Citações-chave
 

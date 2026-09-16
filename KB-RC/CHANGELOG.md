@@ -46,3 +46,23 @@ Registradas para não se perderem — vieram do Anexo I
 
 A elas somam-se os itens 11 a 18 propostos pela revisão de
 `2026-09-14-revelacoes-cosmicas-urgente` (ver `_fila-de-curadoria.csv`).
+
+## 2026-09-16 — lote 01: variantes STT devolvidas por `2026-09-14-revelacoes-cosmicas-urgente`
+
+Curadoria: Agente 86. Ferramenta: `ferramentas/rc_curadoria.py` (atestação no bruto antes de gravar).
+
+- RC-699 acrescentadas "espírito mantado" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0011 da fila (1 ocorrência no bruto)
+- RC-479 acrescentadas "Jah Baal", "Belal" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0012 da fila (4 ocorrências no bruto)
+- RC-474 acrescentadas "arcontos", "erontes" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0013 da fila (3 ocorrências no bruto)
+- RC-001 acrescentadas "Xavé", "Yahé", "Javer", "Jahé" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0014 da fila (12 ocorrências no bruto)
+- RC-009 acrescentadas "Cosmo Rock" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0015 da fila (1 ocorrência no bruto)
+- RC-037 acrescentadas "Brama" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0016 da fila (8 ocorrências no bruto)
+- RC-104 acrescentadas "Virgin" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0017 da fila (1 ocorrência no bruto)
+- RC-102 acrescentadas "Chiva" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0018 da fila (1 ocorrência no bruto)
+- RC-048 acrescentadas "Demiurg" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0019 da fila (2 ocorrências no bruto)
+- RC-397 acrescentadas "tirtancaras" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0020 da fila (1 ocorrência no bruto)
+- RC-756 acrescentadas "Ganexa", "Ganeixa" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0021 da fila (3 ocorrências no bruto)
+- RC-174 acrescentadas "calmeia" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0022 da fila (2 ocorrências no bruto)
+- RC-494 acrescentadas "dinastia das Sofias" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0024 da fila (1 ocorrência no bruto)
+- RC-596 acrescentadas "arces", "arcos" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0039 da fila (2 ocorrências no bruto)
+- RC-176 acrescentadas "circuito coméico" — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0040 da fila (1 ocorrência no bruto)

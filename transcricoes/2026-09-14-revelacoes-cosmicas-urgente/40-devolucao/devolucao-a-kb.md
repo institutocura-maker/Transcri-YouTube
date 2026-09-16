@@ -131,3 +131,24 @@ Novas, somadas às 10 ações residuais do Anexo I (`docs/normas/resolucao-de-co
 Inquisição Trimurtiana (B022) · Inquisição Poética (B029) · Inquisição Filosófica (B037) · A Divina Colmeia (B044) · Mentalma (B074/B077/B078, RC-166) · Trimurti (RC-104) · Corpo Átmico (RC-623) · Abelha-Rainha (RC-175) · Modelo Colmeia (RC-176) · Sistema Arcaico Mental (RC-828) · Bilatérios (RC-035) · Eu Profundo (RC-553) · Ato de Verdade / Satyagraha (RC-705) · Criaturas-ferramenta (RC-164) · Dinastia das Sophias (RC-494) · Belial (RC-479) · Arcontes (RC-474) · Demiurgo (RC-048) · Tirthankaras (RC-397) · Ganesha (RC-756) · Jainismo (RC-759) · Krishna (RC-414) · Capela e derivados (RC-007/RC-039/RC-350) · Imantação em IAs / Corpos de Sílica (RC-699) · Transumanismo (RC-874) · Especiação (RC-056/RC-778/RC-783) · Choque de Realidade (RC-898) · Quetzalcóatl via RC-463 · Sophia (RC-009) e a Quarentena `NUNCA "Sofia"` · Brahma (RC-037) e a Quarentena `NUNCA "Brama"` · Yel Luzbel (RC-142).
 
 **Registro de eficiência da base nesta transcrição:** 100 superfícies da base presentes literalmente no texto; 90 termos relevantes no dossiê de trabalho (≈1.153 tokens); 32 sementes de correção atingidas; 11 sementes suspensas por homografia, vocabulário comum ou colisão com a camada Externos.
+
+---
+
+## 6. Aplicação — o que já voltou para a base (lote 01, 16/09/2026)
+
+Curadoria aplicada com `ferramentas/rc_curadoria.py`; prestação de contas completa em
+**`KB-RC/_relatorio-curadoria-lote-01.md`** e entrada no `KB-RC/CHANGELOG.md`.
+
+| Grupo desta devolução | Itens | Estado |
+|---|---|---|
+| Variantes STT (§3) | 15 itens · 22 variantes · 43 ocorrências atestadas no bruto | **aplicado** — 15 fichas; KB passou de 62 para 84 variantes STT |
+| Novos termos (§1) | 10 | **na fila** — depende de registrar a fonte audiovisual em `biblio.json` (e do URL desta live, ainda `null` em `metadados.yaml`) e de decidir hospedagem: termo novo RC-947+ ou variação na ficha apontada |
+| Correções de ficha (§2/§4) | 8 | **na fila** — reescrita de prosa, uma ficha por vez |
+| Registro bibliográfico (§4) | 1 | **na fila** — *Valores Supremos da Consciência*; mesma convenção que destrava os novos termos |
+| Divergências factuais (§4) | 5 | **na fila** — já tratadas no produto como `[NOTA]`; na KB viram alerta de Quarentena ou nada, a critério do Comandante |
+
+Três emendas foram feitas na própria proposta antes de aplicar, porque o **livro-razão** (registro de
+decisão aprovado) divergia da fila: "arces"/"arcos" são de RC-596 (Archeons de Ereon), não de RC-474;
+"ser silicato" não é variante, é termo do autor (RC-699 *Corpos de Sílica*); "circuito coméico" é de
+RC-176 (Modelo Colmeia), não de RC-174. "Corpo rátmico" foi retirado: **não ocorre no bruto**, que
+traz "corpo átmico" correto. Detalhes e justificativas no relatório do lote, §2.

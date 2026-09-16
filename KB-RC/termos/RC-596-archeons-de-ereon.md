@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["P2021-12-04", "P2024-05-04", "P2022-03-26"]
 via = "P6-evidência"
 confianca_fonte = "média"
-atualizado = "2026-08-28"
+atualizado = "2026-09-16"
 +++
 # Archeons de Ereon — RC-596
 
@@ -21,6 +21,7 @@ A palestra os descreve como padrões dimensionais com grupos de seres e estilos 
 ## Etimologia e Grafias
 - Grafia preferida: Archeons de Ereon. STT: arquelos, arquieron, arcãos, arcos.
 - **Fonte de decisão:** Quadro 9 aprovado pelo curador.
+- **Variações STT capturadas:** arces; arcos
 
 
 ## Ampliação
@@ -36,6 +37,12 @@ A palestra os descreve como padrões dimensionais com grupos de seres e estilos 
 
 - **[P2022-03-26 · ARCHEONS DE EREON NA FALA DE 26/03/2022]** "tem planetas em Oreon que tem cinco tipos de sexo rolando lá." (U0005) — **Selo temporal (D-10):** fórmula oral de 26/03/2022, transcrita como dita — grafia degradada do STT preservada, nenhuma cifra arredondada, nenhuma divergência harmonizada. · ⚠️ **sem ganho de anterioridade**: a ficha já tem fonte oral **mais antiga ou igual** (`P2021-12-04`); a entrada desta fonte é de **conteúdo**, não de data.
 - **[P2022-03-26 · O QUE OS ARCHEONS TÊM DE SEXO E O QUE ISSO FAZ DA REBELIÃO]** "A possibilidade de transmitir doença, porque lá vai surgir essa coisa chamada sexualidade. Aqui não tem, é tudo por clonagem. Seres eram criados aqui. Como não é mais um tirando de si para criar outro, agora são dois unindo suas células para gerar outro. Essa opção aqui permite que a doença do criador seja repassada num grau menor, já que na clonagem ela vai total pro outro." (U0005); "Aqui há 2 bilhões 500 milhões de anos atrás outros seres já eram produzidos. E esses seres eram animalizados, eram sensórios, ou seja, tinham sensação de todo tipo e eram sexualizados, eles eram polarizados." (U0005) — A fala liga a polarização sexual à possibilidade de transmitir doença — a chave para ler `RC-596` sem exotismo: o sexo entra como **via de infecção** no argumento sanitário.
+
+## Atualização
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0039)
+- **"arces"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- **"arcos"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 8; no livro-razão estão como aceita-parcial de 'Archeons de Ereon' (RC-596), em hipótese concorrente com Arcontes (RC-474). ATENÇÃO: 'arcos' é palavra comum do português — só aceitar com contexto; como semente de detecção gera candidato, não substituição automática
 
 ## Fontes
 | Obra/palestra | Localização | Tipo |

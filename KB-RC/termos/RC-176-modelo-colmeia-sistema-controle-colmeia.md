@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["B044", "B035", "B048", "P2021-12-04", "P2025-03-15", "P2024-11-30", "P2024-07-13", "P2023-05-13", "P2021-03-27", "P2020-04-25", "P2022-03-26", "P2023-12-03", "P2024-06-16", "P2018-12-15"]
 via = "P6-evidência"
 confianca_fonte = "alta"
-atualizado = "2026-08-29"
+atualizado = "2026-09-16"
 +++
 # Modelo Colmeia (Sistema/Controle Colmeia) — RC-176
 
@@ -20,6 +20,7 @@ O modelo colmeia **já vigia entre Javé e os seus anjos-clones no universo anti
 
 ## Etimologia e Grafias
 - **Grafia preferida:** Modelo Colmeia
+- **Variações STT capturadas:** circuito coméico
 - **Variações:** sistema colmeia; controle colmeia; "modelo colmeia" (aspas na obra)
 
 
@@ -80,6 +81,9 @@ O modelo colmeia **já vigia entre Javé e os seus anjos-clones no universo anti
 - **Unidades:** U0490–U0493.
 - **Contexto acrescentado:** O STT “sistema colbaico” foi interpretado como Sistema Colmeia: modelo atávico em que os Adhy mandam e os demais funcionam sob lógica de abelha-rainha.
 - **Status da evidência:** transcrição automatizada, pré-curada e aprovada quanto à integração terminológica; conferir com áudio/obra antes de promover status.
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0040)
+- **"circuito coméico"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: blocos 4 e 6: 'circuito coméico' → 'circuito colmeico'; ligado à proposta de novo termo 'Circuito Colmeico' (item 0007), que tem RC-176 como ficha hospedeira
 
 ## Reforço
 ### Sistema Operacional Colmeico-Clone / P2024-11-30

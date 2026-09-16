@@ -8,7 +8,7 @@ status = "em análise"
 fontes = ["P2022-12-17", "P2025-02-16", "P2024-11-30", "P2026-08-04", "P2023-12-02", "P2023-06-03", "P2022-09-24", "P2025-02-22", "P2023-10-14", "P2022-03-26", "P2023-12-03", "P2022-05-07", "P2025-05-10", "P2023-02-11", "P2022-11-26", "P2022-11-20", "P2022-09-17", "P2025-12-14"]
 via = "P7-conhecimento"
 confianca_fonte = "baixa"
-atualizado = "2026-09-12"
+atualizado = "2026-09-16"
 +++
 # Arcontes (= Sophias e Indras; Conselho dos 70) — RC-474
 
@@ -16,13 +16,20 @@ atualizado = "2026-09-12"
 
 Na RC, colegiado de seres = "Sophias e Indras; Conselho dos 70" — linhagem de regentes ligada ao drama da criação (RC-167) e aos desdobramentos da vinda de Sophia (RC-009).
 
+## Etimologia e Grafias
+- **Grafia preferida:** Arcontes (= Sophias e Indras; Conselho dos 70)
+- **Variações STT capturadas:** arcontos; erontes
+
 ## Atualização
 ### P2023-12-02
 
 - **Arcontes = descendentes:** "Arcontes são os descendentes dessas figuras aí, principalmente os seis da Tridevi e da Trimurti" [STT parcial — `[REVISAR → CHANCELA 10/09/2026 · F039-L5: AGUARDA-ÁUDIO (transcrição parcial assumida; sem normalização) — ver nota]`];
 - **Intriga sobre a herança:** "a vinda de Sophia é uma promessa que Jesus ou humano fez, mas dentro de um contexto geopolítico de intriga entre os arcontes, ver quem deles herdava o fal..." [frase truncada] — a vinda de Sophia (RC-009) situada em disputa arconte;
 - "vários outros arcontes não querem que nenhum desses dois assuma nada" (Cristo/Sophia vs. o processo em curso) — confusão registrada pelo autor.
-
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0013)
+- **"arcontos"** — 2 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- **"erontes"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 8; observar a hipótese concorrente Archeons de Ereon (RC-596); 'arces' e 'arcos' foram adjudicados no livro-razão para RC-596 (Archeons de Ereon), não RC-474 — desmembrados no item 0039
 
 ## Ampliação
 ### P2026-07-25

@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["B044", "P2024-11-30", "P2024-07-13", "P2023-02-12", "P2022-12-03", "P2022-11-26", "P2022-11-20", "P2022-09-18"]
 via = "P6-evidência"
 confianca_fonte = "alta"
-atualizado = "2026-08-12"
+atualizado = "2026-09-16"
 +++
 # Colmeia Universal — RC-174
 
@@ -20,6 +20,7 @@ Termo-título da obra *A Divina Colmeia: A Trimurti Desencantada* (B044, 2019), 
 
 ## Etimologia e Grafias
 - **Grafia preferida:** Colmeia Universal
+- **Variações STT capturadas:** calmeia
 - **Variações:** Colmeia (geral); Colmeia Trimurtina (a colmeia original do universo demo); a "Colmeia" de Javé
 
 
@@ -55,6 +56,11 @@ Termo-título da obra *A Divina Colmeia: A Trimurti Desencantada* (B044, 2019), 
 
 - **[As abelhas foram as primeiras a dizer] (U0006)** «Só que no nosso universo, de vez em quando, algo vai começar a colapsar e as abelhas foram as primeiras a dizer: "Ei, tá russo, os elétrons que nos dão suporte, não.» — o sistema colmeico como primeiro sistema estruturado a somatizar: "quem primeiro somatizou a bronca foi o sistema colmico do lado biológico" (U0012: «Quem primeiro somatizou a bronca foi o sistema colmico do lado biológico»); "o colapso geral começou lá, mas o colapso dos sistemas estruturados como uma espécie foi a Calmeia"; "o sistema colméico que funciona numa colmeia é o mesmo que funciona entre Jahé e os anjos... esses sistemas estão interligados"; o aviso ignorado: "a natureza terrestre na hora em que as abelhas começaram a colapsar várias colônias, aquilo era um aviso para Jé" (U0012: «a natureza terrestre na hora em que as abelhas começaram a colapsar várias colônias, aquilo era um aviso para Jé»).
 - **[O sistema colmeico sucumbiu de vez] (U0012)** «O sistema colméico entre Jahé e os anjos foi se degradando entre os anos 2019 e 2020 sucumbiu de vez.» — a degradação: "ainda que em 2016, 17, 18 já se sentia a fraqueza total do sistema operativo desses anjos colonos"; "primeiro colapsam os sistemas, depois os entes que geram sistemas" (U0031: «Primeiro colapsam os sistemas, depois os entes que geram sistemas»); a colmeia real como circuito: "E o que nós entendemos como comé é na verdade um circuito eletromagnético consciencial funcionando e a gente não percebe, a gente só vê a Calmeia" (U0002: «E o que nós entendemos como comé é na verdade um circuito eletromagnético consciencial funcionando e a gente não percebe, a gente só vê a Calmeia»).
+
+## Atualização
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0022)
+- **"calmeia"** — 2 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: blocos 4 e 6; também A Divina Calmeia -> A Divina Colmeia (B044); 'circuito coméico' → 'circuito colmeico' pertence ao sistema colmeia (RC-176) — item 0040; o título 'A Divina Calmeia' → 'A Divina Colmeia' é de B044 — item 0032
 
 ## Fontes
 | Obra (sigla) | Capítulo | Página | Tipo |

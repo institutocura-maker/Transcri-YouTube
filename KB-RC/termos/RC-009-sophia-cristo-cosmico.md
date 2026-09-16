@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["B031", "B017", "B018", "B039", "B016", "B014", "B013", "B057", "B058", "B060", "P2024-02-25", "P2022-12-17", "P2021-12-04", "P2026-07-30", "P2024-05-04", "P2026-04-02", "P2025-02-16", "P2025-02-15", "P2024-11-30", "P2024-11-09", "P2024-08-03", "P2024-07-14", "P2024-03-03", "P2026-08-04", "P2024-03-02", "ART-2026-08-18", "P2023-05-13", "P2023-12-02", "P2021-03-27", "P2024-09-28", "P2023-11-19", "P2023-04-30", "P2023-04-15", "P2023-04-29", "P2020-04-18", "P2020-07-04", "P2020-05-09", "P2020-08-08", "P2021-03-13", "P2021-05-08", "P2021-07-24", "P2021-09-04", "P2022-09-24", "P2024-11-03", "P2025-02-22", "P2021-05-15", "P2023-10-14", "P2020-04-25", "P2022-03-26", "P2023-12-03", "P2021-01-30", "P2022-05-07", "P2024-06-16", "P2018-12-15", "P2025-05-10", "P2023-02-11", "P2022-11-26", "P2022-11-20", "P2022-10-01", "P2022-09-18", "P2022-07-16", "P2021-06-26", "P2022-11-19", "P2025-12-14", "P2023-12-25-01", "P2020-04-04"]
 via = "P6-evidência"
 confianca_fonte = "alta"
-atualizado = "2026-09-12"
+atualizado = "2026-09-16"
 +++
 # Sophia (Cristo Cósmico) — RC-009
 
@@ -20,6 +20,7 @@ A vinda de Sophia ("Jesus em seu corpo glorioso") marca o fim do Isolamento Cós
 
 ## Etimologia e Grafias
 - **Grafia preferida:** Sophia
+- **Variações STT capturadas:** Cosmo Rock
 - **Variações:** Cristo Cósmico; Suserano Cósmico; "Jesus em seu corpo glorioso"; Sofia; **Hochmah** (epíteto hebraico = Sabedoria, ver RC-565; grafia oral da palestra P2024-02-25 registrada como "Rockman/Rochman" por erro de STT, confirmada pelo curador como **Hochmah**); Sapienza (italiano)
 - **Idioma de origem:** Grego (σοφία = sabedoria)
 
@@ -484,6 +485,9 @@ A vinda de Sophia ("Jesus em seu corpo glorioso") marca o fim do Isolamento Cós
 
 - Sophia é descrita como biodemo/radiata e alvo hipotético de organoides humanos.
 - Divergências e alegações científicas permanecem abertas/atribuídas à palestra.
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0015)
+- **"Cosmo Rock"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 8: 'Sofia o Cristo Cosmo Rock' -> Sophia, o Cristo Cósmico
 
 ## Reforço
 ### P2025-02-15

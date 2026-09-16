@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["B031", "B044", "B035", "B001", "B002", "B033", "B015", "B013", "B014", "B020", "B021", "B022", "B023", "B048", "B003", "B025", "B026", "B034", "B036", "B060", "B019", "B043", "B037", "B039", "P2022-12-17", "P2026-07-30", "P2024-05-04", "P2025-06-26", "P2025-02-16", "P2025-02-15", "P2024-11-30", "P2024-11-09", "P2024-09-29", "P2024-08-03", "P2024-07-14", "P2024-03-03", "P2024-04-13", "P2024-04-14", "P2026-08-04", "P2024-03-02", "P2024-02-03", "P2023-05-13", "P2023-12-02", "P2021-03-27", "P2025-11-29", "P2023-04-15", "P2023-04-01", "P2023-04-29", "P2020-07-04", "P2020-05-09", "P2020-09-19", "P2021-05-08", "P2021-07-24", "P2021-09-04", "P2022-09-24", "P2023-04-01b", "P2024-11-03", "P2025-02-22", "P2021-05-15", "P2023-10-14", "P2020-04-25", "P2022-03-26", "P2023-12-03", "P2021-01-30", "P2022-05-07", "P2024-06-16", "P2017-10-14", "P2012-02-19", "P2022-12-03", "P2022-11-26", "P2022-11-20", "P2022-10-01", "P2022-09-18", "P2022-07-16", "P2026-03-21", "P2021-02-28", "P2021-04-10", "P2021-06-26", "P2022-11-19", "P2025-12-14", "P2023-12-25-01", "P2020-04-04"]
 via = "P6-evidência"
 confianca_fonte = "alta"
-atualizado = "2026-08-29"
+atualizado = "2026-09-16"
 +++
 # Javé (Senhor Javé) — RC-001
 
@@ -20,6 +20,7 @@ Tema central da obra de Ellam (livros *O Drama Cósmico de Javé*, 2010, e *O Dr
 
 ## Etimologia e Grafias
 - **Grafia preferida:** Javé
+- **Variações STT capturadas:** Xavé; Yahé; Javer; Jahé
 - **Variações:** Senhor Javé; Jeová; Yahweh; YHWH; Deus Bíblico; Brahma (no sistema RC); Criador
 - **Idioma de origem:** Hebraico (tetragrama YHWH)
 
@@ -611,6 +612,12 @@ Atitudes de **Enlil (RC-487)** "perigosamente parecidas" com as do Criador caíd
 ---
 ---
 ---
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0014)
+- **"Xavé"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- **"Yahé"** — 2 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- **"Javer"** — 3 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- **"Jahé"** — 6 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: blocos 2 e 3; 'Xavé' só foi pego pelo QA na revisão final
 
 ## Observações
 

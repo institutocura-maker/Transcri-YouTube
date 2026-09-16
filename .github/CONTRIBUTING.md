@@ -55,6 +55,38 @@ python ferramentas/rc_qa.py transcricoes/<slug>
 python ferramentas/rc_indice.py
 ```
 
+## Curadoria — aplicar a fila na fonte de verdade
+
+Papel distinto do revisor: aqui se mexe em `KB-RC/`. Cada mudança precisa de evidência, data e
+assinatura, e entra no `KB-RC/CHANGELOG.md` — que só recebe linha quando a mudança **foi aplicada**.
+
+```bash
+# 1. ver o que entraria, com a atestação no bruto (não grava nada)
+python ferramentas/rc_curadoria.py --simular
+
+# 2. aplicar o lote mecânico (hoje: variantes STT já adjudicadas)
+python ferramentas/rc_curadoria.py --aplicar --curador "Nome do Curador"
+
+# 3. conferir que nada quebrou
+python ferramentas/rc_qa.py --tudo && python ferramentas/rc_indice.py --checar
+python testes/test_pipeline.py
+```
+
+Regras que a ferramenta impõe, e que valem também para curadoria manual:
+
+- **variante sem ocorrência no bruto não entra** (`--forcar` existe para evidência externa, e o uso
+  fica registrado na proveniência da ficha);
+- **o livro-razão manda na fila**: se a adjudicação diz que a forma pertence a outro termo, a fila é
+  emendada antes de aplicar — foi o que aconteceu com "arces"/"arcos" no lote 01
+  (`KB-RC/_relatorio-curadoria-lote-01.md` §2);
+- **item `aplicada` não volta**: a ferramenta é idempotente, e reaplicar não duplica variante nem
+  reescreve fila e CHANGELOG;
+- **o que exige julgamento não é automatizado**: novo termo, correção de prosa, registro
+  bibliográfico e divergência factual continuam manuais, um por vez, com o relatório do lote
+  dizendo o que falta e quem decide.
+
+Todo lote aplicado ganha um relatório em `KB-RC/_relatorio-curadoria-lote-NN.md`.
+
 ## Branches e commits
 
 - `main` — só trabalho fechado. Nunca revisão em andamento.

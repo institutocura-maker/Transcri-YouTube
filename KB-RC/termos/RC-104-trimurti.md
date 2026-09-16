@@ -8,12 +8,16 @@ status = "verificado"
 fontes = ["B031", "B035", "B001", "B033", "B014", "B044", "B024", "B021", "B022", "B023", "B060", "B037", "B017", "B018", "B039", "B020", "P2022-12-17", "P2021-12-04", "P2025-03-15", "P2025-02-16", "P2024-11-30", "P2024-11-09", "P2024-08-03", "P2024-07-14", "P2024-03-02", "P2023-12-02", "P2025-11-29", "P2023-11-19", "P2023-09-09", "P2023-06-03", "P2023-04-15", "P2023-04-01", "P2023-04-29", "P2020-05-09", "P2022-09-24", "P2023-04-01b", "P2024-11-03", "P2025-02-22", "P2021-05-15", "P2023-10-14", "P2022-03-26", "P2023-12-03", "P2022-05-07", "P2024-06-16", "P2022-11-26", "P2022-11-20", "P2022-10-01", "P2022-09-25", "P2022-09-18", "P2022-07-16", "P2026-03-21", "P2021-06-26", "P2022-11-19", "P2025-12-14", "P2023-12-25-01"]
 via = "P6-evidência"
 confianca_fonte = "alta"
-atualizado = "2026-08-29"
+atualizado = "2026-09-16"
 +++
 # Trimurti — RC-104
 
 ## Definição Sintética
 Tríade hindu de princípios ontológicos de gênese (Brahma, Vishnu, Shiva) — na RC, correlacionada à leitura que Thot fazia da **Ogdóade de Hermópolis (RC-609)** e ao drama da criação problemática (RC-167).
+
+## Etimologia e Grafias
+- **Grafia preferida:** Trimurti
+- **Variações STT capturadas:** Virgin
 
 ## Citações-chave
 
@@ -365,3 +369,6 @@ Tríade hindu de princípios ontológicos de gênese (Brahma, Vishnu, Shiva) —
 
 
 > Notas de processo: 5 bloco(s) arquivado(s) VERBATIM em `notas/fichas/RC-104.md` (migração 2.4 — 12/09/2026). Histórico de mutirão/governança — consultar lá, não reescrever.
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0017)
+- **"Virgin"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 2: na tríade 'Brama Virgin Chiva' -> Brahma, Vishnu, Shiva

@@ -15,7 +15,9 @@ Cobre o que já quebrou de verdade neste projeto, para não quebrar de novo:
     acusar dentro de "Demiurgo", nem "enoteísmo" dentro de "henoteísmo";
  7. os portões rápidos do QA continuam verdes na transcrição de referência;
  8. o catálogo mede a transcrição de referência como ela é;
- 9. o modelo de pasta continua íntegro (é dele que toda transcrição nova nasce).
+ 9. o modelo de pasta continua íntegro (é dele que toda transcrição nova nasce);
+10. a curadoria da KB é cirúrgica: atesta antes de gravar, não duplica, não estraga o
+    markdown da ficha e respeita o status da fila (aplicada não se reaplica).
 """
 from __future__ import annotations
 
@@ -187,6 +189,77 @@ for rel in esperados:
 if (MODELO / "00-fonte" / "metadados.yaml").exists():
     modelo_txt = (MODELO / "00-fonte" / "metadados.yaml").read_text(encoding="utf-8")
     verificar("modelo tem marcadores {{…}} para substituir", "{{slug}}" in modelo_txt)
+
+# --------------------------------------------------------------------------------------
+print("\n10. curadoria da KB (rc_curadoria)")
+import rc_curadoria as CU  # noqa: E402
+import rc_kb as KB10  # noqa: E402
+import rc_lexicon as L10  # noqa: E402
+
+# a atestação tem fronteira de palavra: "Demiurg" não pode casar dentro de "Demiurgo"
+verificar("atestar usa fronteira de palavra",
+          CU.atestar(L10.norm("o Demiurgo e também Demiurg"), "Demiurg") == 1)
+
+# o separador de seção é sempre uma linha em branco — nem zero, nem duas
+_base = "# Título\n\nTexto.\n## Outra\n"
+_res = CU._inserir(_base, len("# Título\n\nTexto.\n"), "## Nova\n- item")
+verificar("_inserir separa com exatamente uma linha em branco",
+          "\n\n## Nova\n- item\n\n## Outra\n" in _res and "\n\n\n" not in _res)
+
+# a fila: item aplicado não volta, item bloqueado só entra se pedido
+_linhas = [{"id": "1", "tipo": "nova-variante", "status": "aplicada"},
+           {"id": "2", "tipo": "nova-variante", "status": "pendente"},
+           {"id": "3", "tipo": "novo-termo", "status": "pendente"},
+           {"id": "4", "tipo": "nova-variante", "status": "bloqueada"}]
+verificar("selecionar ignora aplicada e bloqueada",
+          [l["id"] for l in CU.selecionar(_linhas, "nova-variante", [])] == ["2"])
+verificar("selecionar inclui bloqueada quando pedido",
+          [l["id"] for l in CU.selecionar(_linhas, "nova-variante", [], True)] == ["2", "4"])
+verificar("selecionar por id ignora status (revisão pontual)",
+          [l["id"] for l in CU.selecionar(_linhas, "nova-variante", ["1"])] == ["1"])
+verificar("variantes_do_item separa por barra",
+          CU.variantes_do_item({"termo": "arcontos / erontes"}) == ["arcontos", "erontes"])
+
+# cirurgia numa ficha sintética: cria a seção, registra a proveniência, não estraga nada
+_tmp = Path(tempfile.mkdtemp(prefix="rc-curadoria-"))
+(_tmp / "termos").mkdir()
+_ficha = _tmp / "termos" / "RC-999-termo-de-teste.md"
+_ficha.write_text(
+    '+++\ncodigo = "RC-999"\nnome = "Termo de Teste"\nstatus = "candidato"\n'
+    'atualizado = "2020-01-01"\n+++\n'
+    "# Termo de Teste — RC-999\n\n## Definição Sintética\nDefinição.\n\n"
+    "## Ampliação\n### P2020-01-01\n- citação.\n", encoding="utf-8")
+_f = KB10.carregar_ficha(_ficha)
+_r1 = CU.aplicar_variantes(_ficha, _f, ["Termo Deteçte", "termo de teste"],
+                           "### nota\n- evidência da transcrição de teste.")
+_txt = _ficha.read_text(encoding="utf-8")
+verificar("variante nova gravada", "Termo Deteçte" in _r1["adicionadas"])
+verificar("variante igual ao canônico é recusada",
+          any("canônica" in m for _, m in _r1["puladas"]))
+verificar("seção Etimologia criada quando a ficha não a tem", _r1["secao_criada"])
+_f2 = KB10.carregar_ficha(_ficha)
+verificar("parser da KB enxerga a variante gravada", "Termo Deteçte" in _f2.variacoes_stt)
+verificar("proveniência registrada em Atualização",
+          "evidência da transcrição de teste" in _f2.secoes.get("Atualização", ""))
+verificar("frontmatter atualizado sai do valor velho", 'atualizado = "2020-01-01"' not in _txt)
+verificar("sem cabeçalho colado na linha anterior", not re.search(r"[^\n]\n##\s", _txt))
+verificar("sem três linhas em branco seguidas", "\n\n\n" not in _txt)
+
+# idempotência: rodar de novo não acrescenta nada nem toca no arquivo
+_r2 = CU.aplicar_variantes(_ficha, KB10.carregar_ficha(_ficha), ["Termo Deteçte"], "### nota\n- x")
+verificar("reaplicar não duplica variante", _r2["adicionadas"] == [])
+verificar("reaplicar não modifica o arquivo",
+          _ficha.read_text(encoding="utf-8") == _txt)
+
+# a fila real: o que está marcado como aplicado tem data e curador
+_fila, _ = CU.carregar_fila(CU.FILA_PADRAO)
+_aplicadas = [l for l in _fila if l["status"] == "aplicada"]
+verificar("fila tem itens aplicados com data e curador",
+          bool(_aplicadas) and all(l["data_aplicada"] and l["curador"] for l in _aplicadas))
+verificar("item bloqueado continua bloqueado (não foi aplicado à força)",
+          any(l["status"] == "bloqueada" for l in _fila))
+verificar("nenhum item aplicado sem variante legível",
+          all(CU.variantes_do_item(l) for l in _aplicadas))
 
 # --------------------------------------------------------------------------------------
 print(f"\n{'=' * 66}\n{_ok} verificações ok, {len(_falhas)} falhas")

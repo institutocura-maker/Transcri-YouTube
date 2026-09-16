@@ -8,7 +8,7 @@ status = "provisório"
 fontes = ["B050", "P2025-10-25", "P2025-02-16", "P2024-02-03"]
 via = "P6-evidência"
 confianca_fonte = "média"
-atualizado = "2026-09-13"
+atualizado = "2026-09-16"
 +++
 # Tirthankaras (Rishabh Dev, Jina Mahavira) — RC-397
 
@@ -19,6 +19,10 @@ Na B050 (*Guia das Eras Universais · Mapa* — infográfico «Linha do Tempo da
 ## Contexto / Origem
 
 **Materialização (não é criação).** Este código vivia só no cadastro (`ficha=False`). A virada foi despachada pelo Curador em 13/09/2026 — rota **R1** do dossiê `diagnostico/CENSO-GAP-FICHAS-2026-09-13.md` — e executada na unidade U61 (lote 18 da família B), na esteira do precedente U30 (RC-367/RC-537) e do piloto U41. Conteúdo restrito ao que a fonte sustém.
+
+## Etimologia e Grafias
+- **Grafia preferida:** Tirthankaras (Rishabh Dev, Jina Mahavira)
+- **Variações STT capturadas:** tirtancaras
 
 ## Escopo e evidência
 
@@ -42,6 +46,11 @@ Na B050 (*Guia das Eras Universais · Mapa* — infográfico «Linha do Tempo da
 | Obra (sigla) | Título | Página | Tipo |
 |---|---|---|---|
 | B050 | Guia das Eras Universais (Mapa) | — | livro; citação intra-linha |
+
+## Atualização
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0020)
+- **"tirtancaras"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 3
 
 ## Citações-chave
 

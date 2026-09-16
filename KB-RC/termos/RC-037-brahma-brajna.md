@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["B031", "B024", "B044", "B001", "B033", "B013", "B020", "B022", "B060", "B037", "P2022-12-17", "P2026-07-30", "P2025-03-15", "P2025-02-16", "P2025-02-15", "P2024-11-30", "P2024-11-09", "P2024-09-29", "P2024-08-03", "P2024-07-14", "P2025-11-29", "P2023-06-24", "P2023-04-15", "P2023-04-29", "P2021-09-04", "P2022-09-24", "P2024-11-03", "P2025-02-22", "P2023-10-14", "P2022-05-07", "P2024-06-16", "P2012-02-19", "P2022-12-03", "P2022-09-18", "P2022-07-16", "P2021-02-28", "P2021-06-26", "P2022-11-19", "P2025-12-14", "P2023-12-25-01"]
 via = "P6-evidência"
 confianca_fonte = "alta"
-atualizado = "2026-09-12"
+atualizado = "2026-09-16"
 +++
 # Brahma (Brajna) — RC-037
 
@@ -20,6 +20,7 @@ Brahma integra a **Trimurti** (com Vishnu e Shiva) e é o **Primeiro Logos** da 
 
 ## Etimologia e Grafias
 - **Grafia preferida:** Brahma
+- **Variações STT capturadas:** Brama
 - **Variações:** Brajna (condição Adhyatman, antes da queda); identificado a Javé, Caos, Pan Ku, Alá, Atom
 
 
@@ -252,6 +253,9 @@ Ficha baseada no glossário de B031. Verificar nas obras primárias: a condiçã
 - **Brama caído e os Vedas:** "ele já tinha produzido os Vedas, que é o manual de como os humanos podem cantar hinos aos deuses, fazer sacrifícios e ofertar oferendas aos deuses";
 - **Templos:** "quando Krishna surgiu na Índia, existiam mais de 5.000 templos que adoravam Brama. Hoje tem um templo só para Brahma na Índia e o resto Krishna" (RC-414);
 - **Brama = Javé = Obatalá (RC-001/RC-666):** a fome de devoção; o Islã como linha de frente.
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0016)
+- **"Brama"** — 8 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: blocos 2 e 8; a Quarentena já proíbe a forma, falta registrá-la como variante STT
 
 ## Ampliação
 ### P2019-08-25 (Os Três Fornos Replicadores do Projeto Talm)

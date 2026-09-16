@@ -21,12 +21,14 @@ docs/            documentos DO PROJETO — valem para todas as transcrições
 KB-RC/           FONTE DE VERDADE
   canonico.json  946 termos + 1.887 relações · biblio.json 104 obras · termos/ 820 fichas
   CHANGELOG.md   histórico de curadoria: o que mudou, quando, a pedido de quem
-  _fila-de-curadoria.csv   propostas pendentes, consolidadas de todas as transcrições
+  _fila-de-curadoria.csv   propostas, consolidadas de todas as transcrições
+  _relatorio-curadoria-lote-01.md   prestação de contas do que já foi aplicado
 
 ferramentas/     somente código
   rc_kb.py rc_lexicon.py rc_variantes.py rc_diagnostico.py rc_docx.py md_para_docx.py
   rc_novo.py     cria a pasta de uma transcrição a partir do modelo
   rc_ledger.py   mantém o livro-razão da adjudicação (decisões + contagem de sobrevivências)
+  rc_curadoria.py aplica a fila na KB: variante só entra se estiver atestada no bruto
   rc_indice.py   gera e confere o catálogo
   rc_qa.py       os oito portões de qualidade
   dados/         sementes de variantes, externos.csv, vocabulário-guarda
@@ -105,7 +107,8 @@ Três estados por portão: `OK`, `FALHA` e `N/A` — não se cobra `.docx` de qu
 3. **Script levanta evidência, revisor decide.** A varredura reduz 18 mil palavras a algumas dezenas
    de candidatos com contexto; a substituição exige julgamento — e fica registrada com motivo.
 4. **O revisor propõe; o curador aplica.** Trabalho de revisão não altera `KB-RC/`: vai para
-   `40-devolucao/` e para `_fila-de-curadoria.csv`.
+   `40-devolucao/` e para `_fila-de-curadoria.csv`. A aplicação é outro papel, com outra ferramenta
+   (`rc_curadoria.py`), outra branch e um relatório por lote.
 5. **Saída determinística e dupla.** `.md` para versionar (inegociável), `.docx` para ler — sempre
    gerado, nunca editado à mão. Tipografia, negrito de primeira menção e QA são feitos por código.
 6. **O bruto é sagrado.** Nunca editado, hash registrado, protegido de normalização de fim de linha.
@@ -119,5 +122,5 @@ Três estados por portão: `OK`, `FALHA` e `N/A` — não se cobra `.docx` de qu
 |---|---|
 | Transcrições | 1 devolvida — [`transcricoes/_indice.md`](transcricoes/_indice.md) |
 | Referência | `2026-09-14-revelacoes-cosmicas-urgente` · 8 blocos · 18.966 palavras revisadas · 98 linhas adjudicadas |
-| Propostas na fila de curadoria | 38 (10 novos termos, 14 variantes, 8 correções de ficha, 1 obra, 5 divergências factuais) |
+| Fila de curadoria | 40 itens: **15 aplicados** no lote 01 (22 variantes STT em 15 fichas), 24 pendentes, 1 bloqueado |
 | Base | 946 termos · 820 fichas · 104 obras · 299 regras de substituição · 37 entidades externas |

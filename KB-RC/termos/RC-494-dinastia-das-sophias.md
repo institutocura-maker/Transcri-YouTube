@@ -8,13 +8,17 @@ status = "em análise"
 fontes = ["P2026-07-30"]
 via = "P7-conhecimento"
 confianca_fonte = "baixa"
-atualizado = "2026-09-13"
+atualizado = "2026-09-16"
 +++
 # Dinastia das Sophias — RC-494
 
 ## Definição Sintética
 
 Nome do terceiro conselho dos deuses na leitura da RC: a dinastia dos arcontes ("Conselho dos 70", "Eloim", "Conselho dos Arcontes", "Dinastia das Sophias" são faces do mesmo colegiado). Composta por consciências fatiadas dos espíritos Emá (En Ma) e Ensá; surgiu quando a humanidade emergiu (últimos ~25.000 anos; fixada em 70 membros nos últimos ~4.000 anos). Na palestra P2026-07-25: "Sofia não é nome — é epíteto (personificação de um tipo de sabedoria)"; cada arconte é dono de um clã humano (70 clãs desde a Torre de Babel); a dinastia está em crise terminal (universo vizinho colapsando, sem novos membros, alguns se retirando — "dias contados").
+
+## Etimologia e Grafias
+- **Grafia preferida:** Dinastia das Sophias
+- **Variações STT capturadas:** dinastia das Sofias
 
 ## Ampliação
 ### P2026-07-25
@@ -24,6 +28,11 @@ Nome do terceiro conselho dos deuses na leitura da RC: a dinastia dos arcontes (
 - **Lógica não humana:** nenhum membro pensa como humano; o único arconte humano legítimo rejeitado foi Jesus; Saibaba não quis entrar.
 - **Valores supremos:** ritos de passagem e Timé (RC-293).
 - **Crise:** colapso do universo vizinho; decisão recente atribuída a Krishna ("desde a semana passada"); fim da dinastia como transição (arcontes nascendo como humanos).
+
+## Atualização
+### 2026-09-16 — variante STT devolvida por `2026-09-14-revelacoes-cosmicas-urgente` (fila 0024)
+- **"dinastia das Sofias"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 8 -> Dinastia das Sophias
 
 ## Fontes
 
