@@ -42,7 +42,7 @@ Estado da base nesta data:
 | fichas em `termos/` | 820 | **830** |
 | termos sem ficha | 126 | 126 (nenhum termo novo nasceu sem ficha) |
 | obras em `biblio.json` | 104 | **105** — primeira fonte audiovisual, `Y2026-09-14` (padrão Y, Guia §2.5) |
-| variantes STT nas fichas | 62 | **84** |
+| variantes STT nas fichas | 62 | **90** (84 no lote 01, +7 dos termos novos, −1 remanejada) |
 | relações tipadas | 1.887 | **1.915** |
 | itens na fila | 38 pendentes | 41: **26 aplicados**, 14 pendentes, 1 informativo |
 

@@ -129,4 +129,4 @@ Três estados por portão: `OK`, `FALHA` e `N/A` — não se cobra `.docx` de qu
 | Transcrições | 1 devolvida — [`transcricoes/_indice.md`](transcricoes/_indice.md) |
 | Referência | `2026-09-14-revelacoes-cosmicas-urgente` · 8 blocos · 18.966 palavras revisadas · 98 linhas adjudicadas |
 | Fila de curadoria | 41 itens: **26 aplicados** (lote 01: 22 variantes STT; lote 02: 10 termos novos + 1 desbloqueio), 14 pendentes, 1 informativo |
-| Base | 956 termos · 830 fichas · 105 obras (1 fonte Y) · 84 variantes STT · 41 entidades externas |
+| Base | 956 termos · 830 fichas · 105 obras (1 fonte Y) · 90 variantes STT · 41 entidades externas |

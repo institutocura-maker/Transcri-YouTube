@@ -100,7 +100,9 @@ observações de cautela. `canonico.json` foi de 946 para **956** termos; `relac
 nome, variantes STT, fontes e status — divergência teria revertido tudo.
 
 Variantes STT que nasceram com os termos: `Kaagen`/`kaagem` (RC-948), `avaloque texwara`/`avalo
-testivara`/`avaloxivara` (RC-950), `constituição centenária` (RC-952), `circuito coméico` (RC-953).
+testivara`/`avaloxivara` (RC-950), `constituição centenária` (RC-952), `circuito coméico` (RC-953) —
+**7 novas, menos 1 remanejada**: a base foi de 84 variantes STT (lote 01) para **90**. O número do
+lote 01 continua 84 no relatório dele, que é retrato daquele momento, não estado atual.
 
 ---
 
