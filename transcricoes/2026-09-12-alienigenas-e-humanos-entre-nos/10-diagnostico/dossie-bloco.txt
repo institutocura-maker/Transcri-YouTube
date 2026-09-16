@@ -1,0 +1,30 @@
+RC-034|Big Bang|Conceitos Cosmológicos|em análise
+RC-037|Brahma|Seres & Entidades|verificado
+RC-041|Criador|Seres & Entidades|verificado
+RC-053|Deuses|Seres & Entidades|provisório
+RC-054|Divindades|Seres & Entidades|provisório
+RC-071|Jan Val Ellam|Seres & Entidades|verificado
+RC-072|Jesus|Seres & Entidades|verificado
+RC-077|Lokas|Termos Específicos|verificado
+RC-108|Universo Paralelo|Conceitos Cosmológicos|verificado
+RC-120|Val El / Val Ellam|Seres & Entidades|provisório
+RC-127|Val-Ha|Lokas & Geografias|provisório
+RC-133|Val dos Corpos Perdidos / Dimensionados|Seres & Entidades|provisório
+RC-161|Memória Quântica dos Elétrons|Conceitos Cosmológicos|verificado
+RC-162|Elétrons|Processos & Fenômenos|verificado
+RC-174|Colmeia Universal|Conceitos Cosmológicos|verificado
+RC-175|Abelha-Rainha|Seres & Entidades|verificado
+RC-222|Filhos das Estrelas|Seres & Entidades|provisório
+RC-342|Quarentena Sideral / Cósmica|Eventos & Eras|em análise
+RC-490|Caim|Seres & Entidades|verificado
+RC-514|Tikun Cósmico|Conceitos Cosmológicos|verificado
+RC-527|Antimundo / antimatéria|Conceitos Cosmológicos|candidato
+RC-577|Xamanismo Cósmico|Conceitos Cosmológicos|verificado
+RC-579|Noreia|Seres & Entidades|verificado
+RC-584|Rama|Seres & Entidades|verificado
+RC-618|Moksha|Termos Específicos|verificado
+RC-768|Princípio da Externalização|Processos & Fenômenos|verificado
+RC-772|Morlens|Seres & Entidades|verificado
+RC-782|Javé como Caos Personificado|Conceitos Cosmológicos|verificado
+RC-787|Egrégora de Lilith / Noreia|Processos & Fenômenos|verificado
+RC-924|Loop Mental|Processos & Fenômenos|verificado

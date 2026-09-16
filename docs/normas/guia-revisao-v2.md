@@ -222,6 +222,18 @@ Regras:
    citado em relatório deve dizer de qual instrumento veio.
 7. Nomes ASCII, sem espaço e sem acento (Plano de Organização). O cabeçalho do vídeo (título, canal,
    URL) fica **fora** do corpo e fora do produto (§1.2).
+8. **Texto obtido por *fetch* de página não é camada nenhuma: não é fonte** (norma de 16/09/2026,
+   nascida do vídeo 2). O transcript do painel do YouTube lido por `fetch_page` em
+   `v0gJWn50gg8` foi conferido contra o bruto oficial entregue depois: 1,22% de divergência lexical,
+   mas **pontuado** (144 vírgulas contra zero do bruto), **capitalizado**, com **anotações de áudio
+   que o bruto não tem** (`[roncando]`, `[limpando a garganta]`) e ao menos **uma palavra corrompida**
+   ("ovo cósmico" → "novo cósmico"). É um derivado de fidelidade desconhecida e não verificável.
+   Serve para **identificar** o vídeo (título, canal, duração, descrição, data); **nunca** para
+   instalar bruto, atestar variante STT, propor termo nem medir motor. Se o bruto não existe, ele não
+   existe: a fila de curadoria fica bloqueada (§15) e a pasta espera o arquivo — que chega por
+   `upload/` (via A, B ou D do `upload/README.md`) ou por commit do Comandante. O que o *fetch*
+   devolveu fica em `docs/pareceres/` como **evidência do defeito da rota**, com sha256, e é citado
+   como tal.
 
 ---
 
@@ -489,8 +501,10 @@ python3 -m venv /tmp/venv && /tmp/venv/bin/pip install -r ferramentas/requiremen
 python ferramentas/rc_variantes.py --kb KB-RC --transcricao "<Título>.txt"
 
 # 2) diagnóstico com a KB-RC como fonte de verdade
-python ferramentas/rc_diagnostico.py "<Título>.txt" --kb KB-RC \
-    --saida "transcricoes/<slug>"
+#    SEM --saida: a ferramenta descobre sozinha transcricoes/<slug>/10-diagnostico/ a partir do
+#    caminho do bruto. Passar --saida "transcricoes/<slug>" joga os arquivos na raiz da pasta e
+#    deixa diagnostico.json fora do padrão do .gitignore (135 KB regeneráveis versionados).
+python ferramentas/rc_diagnostico.py transcricoes/<slug>/00-fonte/transcricao-bruta.txt --kb KB-RC
 ```
 
 Saídas usadas no dia a dia: `diagnostico.md` (leitura), `variantes-propostas.csv` (fila de decisão), `ausentes-da-base.csv` (novos registros), `dossie-bloco.txt` (recorte enxuto da base, ≈1.153 tokens).

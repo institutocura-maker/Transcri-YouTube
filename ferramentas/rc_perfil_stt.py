@@ -45,6 +45,7 @@ from statistics import median
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import rc_kb as KB  # noqa: E402
+import rc_leitura as RL  # noqa: E402
 import rc_lexicon as L  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -80,18 +81,33 @@ ROTULOS_FALA = [
 
 
 def ler(caminho: Path) -> dict:
-    """Lê o arquivo preservando o que importa medir: bytes reais, fins de linha, linhas."""
+    """Lê o arquivo preservando o que importa medir: bytes reais, fins de linha, linhas.
+
+    Desde 16/09/2026 os quatro eixos medem o **corpo**, pelo mesmo critério único de `rc_leitura.py`
+    que `rc_novo`/`rc_indice`/`rc_qa` usam — antes este instrumento media o arquivo inteiro, o que era
+    inócuo num bruto de 100 mil caracteres com 12 linhas de cabeçalho e passa a ser grave num texto
+    curto cujo cabeçalho traz o "Guia de fontes" resumido: no vídeo 2 o cabeçalho tem 167 palavras
+    sobre um corpo de 1.810, e inflou a divergência medida de 8,12% para 14,37%. O arquivo inteiro
+    continua disponível em `texto_integral`/`linhas_integrais` — é o que o eixo 4 precisa, porque a
+    pergunta dele ("onde começa o corpo?") é sobre o arquivo, não sobre o corpo.
+    """
     dados = caminho.read_bytes()
     texto = dados.decode("utf-8-sig", errors="replace")
     linhas = texto.splitlines()
+    info = RL.localizar_corpo(texto)
+    corpo = info["corpo"]
+    linhas_corpo = corpo.splitlines()
     return {
         "caminho": caminho,
         "bytes": len(dados),
         "crlf": texto.count("\r\n"),
         "lf": texto.count("\n") - texto.count("\r\n"),
-        "texto": texto,
-        "linhas": linhas,
-        "nao_vazias": [l for l in linhas if l.strip()],
+        "texto": corpo,
+        "texto_integral": texto,
+        "linhas": linhas_corpo,
+        "linhas_integrais": linhas,
+        "nao_vazias": [l for l in linhas_corpo if l.strip()],
+        "corpo_info": info,
     }
 
 
@@ -359,21 +375,25 @@ def eixo_proveniencia(a: dict, b: dict) -> dict:
 
 def eixo_integracao(arq: dict) -> dict:
     """As suposições que a esteira faz hoje, testadas contra este arquivo."""
-    texto, linhas = arq["texto"], arq["linhas"]
+    # o arquivo inteiro responde "onde começa o corpo"; o corpo responde todo o resto. Misturar os
+    # dois é o que fazia o cabeçalho pontuado do vídeo 2 (o "Guia de fontes" resumido) virar
+    # "pontuação nativa" do ASR — 6,6 sinais por 1.000 palavras inventados.
+    texto, linhas = arq.get("texto_integral", arq["texto"]), arq.get("linhas_integrais", arq["linhas"])
+    corpo = arq["texto"]
     maior = max((len(l) for l in linhas), default=0)
     corpo_linha = max(linhas, key=len) if linhas else ""
     cobertura = len(corpo_linha) / max(len(texto), 1)
     marcador = "Transcrição Automática" in texto
     rotulos = {}
     for i, padrao in enumerate(ROTULOS_FALA):
-        achados = padrao.findall(texto)
+        achados = padrao.findall(corpo)
         if achados:
             rotulos[f"padrão {i + 1}"] = len(achados)
     # um ou dois achados são falso positivo ("Falei:" casa com "Nome: fala"); diarização nativa
     # de verdade aparece dezenas de vezes num arquivo de 2 horas
     diarizacao = any(v >= 3 for v in rotulos.values())
-    sinais = sum(texto.count(s) for s in (",", ".", "?", "!"))
-    pls = max(len(palavras(texto)), 1)
+    sinais = sum(corpo.count(s) for s in (",", ".", "?", "!"))
+    pls = max(len(palavras(corpo)), 1)
     densidade = sinais * 1000 / pls
     # Três desfechos, e a diferença entre os dois últimos é o que decide o parecer:
     #   ok       — a suposição continua valendo;

@@ -2,15 +2,29 @@
 
 **Projeto:** Transcri-YouTube · **Data:** 16 de setembro de 2026 · **Elaborado por:** Agente 86 (Arena.ai Agent Mode)
 
-**Objeto:** receber e auditar `upload/alienigenas-ou-seres-de-outro-universo.docx` — a revisão que o
+**Objeto:** receber e auditar a revisão que o Comandante fez do 2º vídeo, entregue como
+`upload/alienigenas-ou-seres-de-outro-universo.docx` e hoje instalada em
+`transcricoes/2026-09-12-alienigenas-e-humanos-entre-nos/00-fonte/revisao-comandante.docx` — a revisão que o
 Comandante fez do 2º vídeo, produzida fora da esteira da casa, no contexto do teste de "uma outra
 ferramenta de transcrição que forneça conteúdo mais higienizado".
 
-**Status: COMPLETO no que depende da casa; BLOQUEADO na camada 1.** A auditoria terminológica contra
-a KB-RC está feita e é conclusiva. A auditoria de **proveniência** (o que a ferramenta mudou em
-relação ao que foi dito) está feita contra uma **captura de referência**, não contra um bruto
-oficial — e essa diferença está declarada em cada achado. Saída bruta do instrumento:
-`docs/pareceres/video-2-medicao.md` e `docs/pareceres/video-2-perfil.json`.
+**Status: COMPLETO. Bruto oficial recebido em 16/09/2026 (commit `87a3525`) — e ele RETIFICA duas
+partes deste parecer.** A auditoria terminológica contra a KB-RC estava certa e continua valendo
+(§6). A auditoria de proveniência foi refeita contra o bruto oficial: **8,12%** de divergência, não
+9,23% (§4). E o **§3 está RETRATADO**: a pontuação que atribuí ao ASR do YouTube era da minha rota de
+captura, não do YouTube — a mesma rota que corrompeu "ovo cósmico" em "novo cósmico". Ver §3, que foi
+reescrito como retratação, e §2, que registra a chegada do bruto.
+
+**ESTEIRA EXECUTADA em 16/09/2026**, por despacho do Comandante ("uma esteira normal", sem
+comparação de motores): pasta `transcricoes/2026-09-12-alienigenas-e-humanos-entre-nos`, bruto oficial instalado, diagnóstico, 3 blocos,
+livro-razão com 29 linhas decididas, produto `.docx`, devolução à KB e fonte `Y2026-09-12`
+registrada. **Portões G1–G8 `ok`, G9 `n/a`** (a revisão externa é humana, não derivado de
+máquina). As três regressões que este parecer apontou foram corrigidas nos blocos — e uma
+quarta apareceu na conferência final: `glues`→**gluons** (RC-034), `pósetron`→**pósitron**
+(RC-636) e "hoje a parte"→"hoje **à tarde**", que o bruto atesta e muda o sentido da frase de
+abertura. Detalhes em `40-devolucao/devolucao-a-kb.md` e `40-devolucao/adjudicacao.md`. Saída bruta do instrumento:
+`docs/pareceres/video-2-medicao.md` e `docs/pareceres/video-2-perfil.json` (medidos sobre a captura de
+referência — mantidos como evidência do defeito, não como medição do vídeo).
 
 ---
 
@@ -22,12 +36,15 @@ oficial — e essa diferença está declarada em cada achado. Saída bruta do in
 que o NotebookLM fez no vídeo 1 (`merda`×3 → `m****`, `bandido`×2 → `b******`). **Neste eixo, a
 ferramenta nova passa.**
 
-**2. A divergência de 9,23% não é perda — é correção.** Decomposta palavra a palavra (§4), ela é:
-anotações de áudio do YouTube removidas (`[roncando]`×4, `[limpando a garganta]`×5), correções
-ortográficas e terminológicas (*julgo*→*jugo*, *mitlogo*→*mitólogo*, *chamanismo*→*xamanismo*,
-*novo cósmico*→*ovo cósmico*, *acásicos/acáxicos*→*Akáshicos*, *locas/louoca*→*lokas*,
-*qualia*→*colmeia*) e resolução de dêiticos ("isso aqui" → "o lado antimaterial / Brahmaloka").
-A revisão é **curadoria doutrinária de qualidade**, não higienização.
+**2. A divergência de 8,12% não é perda — é correção** (medida contra o bruto oficial; eram 9,23%
+contra a minha captura, que estava corrompida). Decomposta palavra a palavra (§4): 23 tokens de
+corruptelas do ASR consertadas (*julgo*→*jugo*, *mitlogo*→*mitólogo*, *chamanismo*→*xamanismo*,
+*acásicos/acáxicos*→*Akáshicos*, *locas/louoca*→*lokas*, *qualia*→*colmeia*, *paraa*→*para a*,
+*reu*→*eu*, *colapse*→*colapsa*), 19 tokens de **dêiticos nomeados** — o que o Comandante explicou:
+Ellam apontava para a tela e dizia "este aqui"/"aquele ali", e a revisão nomeia o que ele apontava
+("o lado antimaterial", "Brahmaloka", "Bhuloka") —, 20 de reescrita de ligação, 4 de números
+normalizados e 4 de marcadores orais podados. A revisão é **curadoria doutrinária de qualidade**, não
+higienização.
 
 **3. O teto de 5% do portão G9 é da camada 2, e aplicá-lo a este arquivo é erro de categoria.**
 Um derivado de máquina não tem motivo para mudar palavra; uma revisão humana tem o dever de mudar.
@@ -35,21 +52,22 @@ Se este arquivo entrasse como derivado, o G9 o reprovaria — e estaria errado (
 teto por natureza da camada**, e auditoria de *rastreabilidade* (não de divergência) para revisão
 de terceiro.
 
-**4. Achado que muda a premissa do vídeo 1: o ASR do YouTube agora entrega texto PONTUADO.**
-A captura deste vídeo tem **13,66 sinais por 100 palavras** (144 vírgulas, 99 pontos); o bruto do
-vídeo 1 tinha **0,22** (1 vírgula, 15 pontos). Se confirmado no painel, o principal benefício da
-camada NotebookLM (pontuar e segmentar) encolhe drasticamente — e o risco dela (censurar) permanece
-(§3). Isso reabre a decisão do parecer anterior com dados novos.
+**4. RETRATADO — o ASR do YouTube NÃO pontua; quem pontuou foi a minha rota de captura.**
+O bruto oficial tem **0,11 sinais por 100 palavras** (0 vírgulas, 2 pontos, e os dois são os pontos
+decimais de "3.000" e "5.000"). A premissa do Guia §8 continua inteira, e a arquitetura de camadas
+do vídeo 1 não precisa ser reavaliada. O que o episódio ensina é outro, e vale mais: **captura de
+transcrição por fetch de página não é fonte** — a rota devolveu texto pontuado, capitalizado e com uma
+palavra corrompida ("ovo cósmico" → "novo cósmico"). Ver §3.
 
 **5. Duas regressões na revisão, ambas com canônico na KB** — e ambas com a mesma causa provável: o
 corretor ortográfico do editor de texto. *glues* → a KB diz **gluons** (RC-034). *pósetron* → a KB
 diz **pósitron** (RC-161, RC-636). É o equivalente doméstico da censura do LLM: uma camada
 automática entre o autor e o texto, trocando palavra sem avisar (§6).
 
-**6. Falta a camada 1.** Não há bruto oficial deste vídeo, e o sandbox não alcança o YouTube
-(TLS bloqueado; só o fetch de página passa). Sem bruto: G1 não tem o que hashar, G9 não tem contra
-que cruzar, e `rc_curadoria.py` não pode aplicar nenhuma variante na KB — a regra da casa é
-"**variante sem ocorrência no bruto não entra**". Toda a fila do §7 fica bloqueada por isso (§2).
+**6. A camada 1 chegou e a fila destravou.** O Comandante subiu `upload/video-2-transcri-youtube.txt`
+(commit `87a3525`, sha256 `16c9276ae847dd728b4be0d731132b8848e0b5fad4d9b0ced966121b0939e9a1`,
+11.638 bytes, corpo de **1.810 palavras** na linha 12). É o bruto oficial: G1 tem o que hashar, e as
+variantes do §7 passam a ter atestação — `rc_curadoria.py` pode aplicá-las (§7).
 
 ---
 
@@ -57,7 +75,7 @@ que cruzar, e `rc_curadoria.py` não pode aplicar nenhuma variante na KB — a r
 
 | campo | valor | fonte |
 |---|---|---|
-| arquivo | `upload/alienigenas-ou-seres-de-outro-universo.docx` | commit `0ea4388` (upload web do Comandante) |
+| arquivo | `upload/alienigenas-ou-seres-de-outro-universo.docx` → `transcricoes/2026-09-12-alienigenas-e-humanos-entre-nos/00-fonte/revisao-comandante.docx` | commit `0ea4388` (upload web do Comandante); migrado da zona de trânsito em 16/09/2026 |
 | sha256 | `d188b7eed166f6005c9c00b011099b1742ac08134424e3154d848c41335784a2` | medido |
 | tamanho | 20.138 bytes · 58 parágrafos (28 reais) · 0 tabelas | medido |
 | corpo | **1.817 palavras** em 25 parágrafos · 206 vírgulas · 81 pontos · 6 interrogações | medido, cabeçalho separado |
@@ -85,7 +103,7 @@ que cruzar, e `rc_curadoria.py` não pode aplicar nenhuma variante na KB — a r
 
 ---
 
-## 2. A camada 1 está faltando — e o que fiz a respeito
+## 2. A camada 1: o que faltava, o que chegou, e o que o sandbox não alcança
 
 A arquitetura aprovada ontem tem três camadas: **fonte** (bruto imutável, sha256, G1),
 **trabalho** (derivado, G9) e **saída** (blocos e produto, G2/G3/G5/G6). O arquivo recebido é
@@ -118,88 +136,131 @@ testado: `SSLError('TLS/SSL connection has been closed (EOF)')` nas três tentat
 * **todo achado deste parecer que depende dela está marcado "a confirmar"** — a conferência definitiva
   exige a captura oficial.
 
-**O que resolve em 30 segundos:** abrir o vídeo → *Mostrar transcrição* → copiar → colar num `.txt`,
-como o Comandante fez no vídeo 1. Aí a casa instala `00-fonte/transcricao-bruta.txt`, grava o sha256,
-o G1 fica verde, o G9 passa a ter contra que cruzar e a fila de curadoria destrava.
+**RESOLVIDO em 16/09/2026:** o Comandante subiu `upload/video-2-transcri-youtube.txt` (commit
+`87a3525`) — a cópia do painel, no mesmo formato do vídeo 1 (cabeçalho com título, URL, data e *guia
+de fontes*; corpo numa linha só). Números: 11.638 bytes · 12 linhas · sha256
+`16c9276ae847dd728b4be0d731132b8848e0b5fad4d9b0ced966121b0939e9a1` · corpo na linha 12 com
+**10.008 caracteres e 1.810 palavras** · critério de corpo `linha-mais-longa` com cobertura de 88,3%
+(acima do piso de 80% do `rc_leitura.py`, então sem aviso). G1 e a fila de curadoria destravados.
 
-**Decisão que não tomei:** não criei `transcricoes/<slug>/`. O slug depende do título (§1), a pasta
-depende do bruto (§2) e o precedente da casa é explícito — entrega do Comandante não muda de lugar
-por conta do agente. A auditoria inteira foi feita na **zona de trânsito** `upload/`, que é exatamente
-o lugar documentado para isso (Plano de Organização §7; o próprio `rc_perfil_stt` reconhece o estágio
-"solto — arquivo fora de `transcricoes/`").
+**Uma divergência de registro, para decidir:** o cabeçalho do bruto diz "publicado em **13/09/2026**",
+o `.docx` do Comandante diz **12/09/2026** e a página do YouTube diz *uploaded* **2026-09-12**. A casa
+fica com a plataforma (12/09) e registra as outras duas datas nos metadados — o vídeo 1 já tinha o
+mesmo padrão (live em 14/09, upload em 15/09).
+
+**Decisão que não tomei na primeira versão:** não criei `transcricoes/<slug>/`, porque o slug depende
+do título (§1) e a pasta dependia do bruto. A auditoria foi feita na **zona de trânsito** `upload/`,
+que é o lugar documentado para isso (Plano de Organização §7). Com o despacho seguinte — "podemos
+tratar este 2º vídeo normalmente, uma esteira normal" — a pasta passa a ser o caminho, e a captura de
+referência deixa de ser insumo: fica em `docs/pareceres/` como **evidência do defeito de rota** do §3.
 
 ---
 
-## 3. O achado que muda a premissa: o ASR do YouTube pontua
+## 3. RETRATAÇÃO — o ASR do YouTube não pontua; a minha rota de captura pontuou
 
-| | vídeo 1 (bruto, 14/09) | vídeo 2 (captura, 12/09) |
-|---|---:|---:|
-| sinais por 100 palavras | **0,22** | **13,66** |
-| vírgulas | 1 | 144 |
-| pontos | 15 | 99 |
-| anotações de áudio | nenhuma | `[roncando]`, `[limpando a garganta]` |
+**O que este parecer afirmou na primeira versão:** que a captura deste vídeo tinha 13,66 sinais por
+100 palavras contra 0,22 no bruto do vídeo 1, e que portanto o ASR do YouTube teria passado a
+entregar texto pontuado — o que reabriria a decisão sobre a camada derivada. **Está errado.** O bruto
+oficial, entregue pelo Comandante no commit `87a3525`, não tem pontuação nenhuma.
 
-Três indícios de que a pontuação é do próprio ASR, e não de quem capturou:
+| | bruto oficial (Comandante) | minha captura por fetch | revisão do Comandante |
+|---|---:|---:|---:|
+| palavras | **1.810** | 1.830 | 1.817 |
+| vírgulas | **0** | 144 | 206 |
+| pontos | **2** (os decimais de "3.000" e "5.000") | 99 | 81 |
+| interrogações | **0** | 7 | 6 |
+| sinais por 100 palavras | **0,11** | 13,66 | 16,13 |
+| "ovo cósmico" | **ovo cósmico** | "novo cósmico" | ovo cósmico |
+| `[roncando]`, `[limpando a garganta]` | ausentes | presentes (9) | ausentes |
 
-1. **minúscula depois de ponto** — "os mesmos discos voadores de sempre. que seja, porque é, mas a
-   história é muito complexa". Revisor humano ou LLM capitaliza; ASR não;
-2. **as anotações de áudio sobrevivem** — camada de reescrita as remove (foi o que o NotebookLM fez);
-3. **as corruptelas sobrevivem todas** — `Un 3.000`, `mitlogo`, `paraa`, `glu`, `reu`.
+A rota de fetch de página **reescreveu o texto**: pontuou, capitalizou, separou em linhas de legenda,
+acrescentou marcadores de áudio que o bruto oficial não tem e **trocou uma palavra** — "dentro do
+**ovo** cósmico" virou "dentro do **novo** cósmico". Os três "indícios" que apresentei na primeira
+versão eram, todos, artefatos da mesma rota: a minúscula depois de ponto e as corruptelas preservadas
+provavam apenas que a reescrita era conservadora, não que a pontuação fosse do ASR.
 
-**Consequência para a decisão de ontem.** O parecer do motor STT deu ao derivado NotebookLM a vitória
-no eixo 1 (pontuação/segmentação) com placar 4/4 — mas medido contra um bruto **sem pontuação**. Se o
-YouTube agora pontua na origem, o ganho do derivado encolhe para 13,66 → 15,98 sinais/100 palavras
-(neste vídeo) e para segmentação de linhas de legenda, enquanto o risco documentado dele (censura de
-vocabulário, microedição que quebra casamento com a KB) continua inteiro. **A relação custo-benefício
-da camada derivada precisa ser reavaliada com um bruto novo** — e a ferramenta que o Comandante está
-testando pode tornar a camada desnecessária.
+**Consequências, todas já aplicadas neste parecer:**
 
-**A confirmar pelo Comandante:** abrir o painel de transcrição de um vídeo recente e ver se vem
-pontuado. Se vier, o Guia §8 precisa de uma terceira redação: pontuação nativa **na fonte**, não só
-no derivado.
+1. **A premissa do Guia §8 continua inteira** — o STT não traz pontuação, pontuar continua sendo
+   trabalho. A arquitetura de três camadas do vídeo 1 **não** precisa ser reavaliada; o derivado
+   continua valendo o que o parecer anterior mediu.
+2. **A fila do §7 perde um item**: `novo cósmico → Ovo Cósmico` (RC-034) era corrupção minha, não do
+   ASR. O bruto oficial já diz "ovo cósmico" — não há variante a registrar.
+3. **Nenhum achado deste parecer continua apoiado na captura de referência.** A auditoria foi refeita
+   contra o bruto oficial (§4) e as duas regressões do §6.1 foram reconfirmadas nele: o bruto diz
+   "quarks e **glu**" e "nenhum **pósitron** daqui".
+4. **Norma nova, que vale para a casa inteira:** *transcrição obtida por fetch de página não é fonte.*
+   É derivado de fidelidade desconhecida — pontua, capitaliza e troca palavra. Serve para descobrir
+   que um vídeo existe e para ler o conteúdo; **não** serve para instalar `transcricao-bruta.txt`, nem
+   para atestar variante, nem para medir. O bruto só entra por cópia do painel feita por gente
+   (o caminho do vídeo 1 e deste) ou por download da legenda. Registrado em `upload/README.md` e nos
+   becos sem saída do diário.
+
+**Por que isso importa mais do que o achado retractado:** a casa passou o dia 16/09 construindo uma
+arquitetura cuja regra central é "derivado nunca vira fonte". Aqui foi o **agente** que quase instalou
+um derivado como fonte — com hash, parecer e fila de curadoria apoiados nele. O G1 teria ficado verde
+sobre uma cópia que trocou "ovo" por "novo". A defesa que funcionou foi a mesma de sempre: o
+Comandante entregou a fonte, e a fonte desmentiu o derivado.
 
 ---
 
 ## 4. Auditoria da revisão: o que mudou, palavra por palavra
 
-Instrumento: `rc_perfil_stt.py`, eixo de proveniência. Captura (A) × revisão (B):
+Medido contra o **bruto oficial** (`video-2-medicao-oficial.md`, gerado pelo instrumento):
 
-| métrica | A (captura) | B (revisão) | leitura |
+| métrica | A (bruto oficial) | B (revisão) | leitura |
 |---|---:|---:|---|
-| palavras | 1.830 | 1.817 | −13 (−0,7%): mesma cobertura de áudio |
-| divergência lexical | — | **9,23%** | 91 palavras de A ausentes em B, 78 de B ausentes em A |
-| Jaccard de vocabulário | — | 0,910 | mesmo léxico, edição pontual |
-| hapax em comum | — | 0,917 | |
+| palavras | 1.810 | 1.817 | +7 (+0,4%): mesma cobertura de áudio, do primeiro ao último enunciado |
+| sinais por 100 palavras | **0,11** | 16,13 | o STT não pontua (§3); a revisão pontuou |
+| sentenças · maior sentença | 3 · 1.737 | 85 · 282 | segmentação criada pela revisão |
+| divergência lexical | — | **8,12%** | 70 palavras de A ausentes em B, 77 de B ausentes em A |
+| Jaccard de vocabulário | — | 0,916 | mesmo léxico, edição pontual |
+| hapax em comum | — | 0,922 | |
 | marcadores orais idênticos | — | 4 de 6 (67%) | então 8=8, sabe 8=8, tipo 4=4, aí 2=2 |
-| disfluências | 26 (14,21/1.000) | 24 (13,09/1.000) | **a revisão NÃO trata disfluência** |
-| sinais por 100 palavras | 13,66 | 15,98 | pontuação refinada, não criada |
-| canônicos KB presentes | 26 | **31** | +5: o revisor aplicou a base |
-| variantes STT / formas proibidas | 0 / 0 | 0 / 0 | nada a substituir |
+| disfluências | 27 (14,92/1.000) | 24 (13,21/1.000) | **a revisão quase não trata disfluência** |
+| canônicos KB presentes | 12 formas / 26 ocorrências | **16 formas / 31 ocorrências** | o revisor aplicou a base |
+| variantes STT · formas proibidas | 0 · 0 | 0 · 0 | nada a substituir, nada proibido |
 | tokens mascarados com `*` | **0** | **0** | nenhuma censura |
 | veredito do instrumento | — | — | "mesma base de áudio com edição substancial em um dos lados" |
 
-**Decomposição das 91 perdas** (todas conferidas uma a uma):
+**Decomposição das 70 perdas** — todas conferidas uma a uma no bruto oficial:
 
 | categoria | tokens | exemplos |
 |---|---:|---|
-| anotações de áudio do YouTube | 14 | `[roncando]`×4, `[limpando a garganta]`×5 (limpando+garganta) |
-| dêiticos resolvidos em termo doutrinário | ~19 | *aqui*×13, *esse*×4, *isso*×2 → "o lado antimaterial", "Brahmaloka", "Bhuloka" |
-| corruptelas corrigidas | ~12 | *julgo*, *mitlogo*, *chamanismo*, *paraa*, *reu*, *esculhamba*, *sem*, *colapse*, *ancorado*, *glu*, *un*, *loca/louoca* |
-| normalização de números | 3 | `3.000`/`5.000` → "3 mil"/"5 mil" (valor preservado — dentro do Guia §7) |
-| artigos/preposições de reescrita | ~10 | *a*×6, *pra*×2, *e*×2 |
-| marcadores orais podados | 2 | *eh*, *oh* |
-| artefato da captura | 1 | o `M.` final (§2) |
+| corruptelas do ASR corrigidas | **23** | *julgo*, *mitlogo*, *chamanismo*, *glu*, *positron*, *acásicos*, *acáxicos*, *locas*×2, *louoca*, *qualia*, *paraa*, *reu*, *colapse*, *ancorado*, *esculhamba*+*sem*, *vir*, *reproduzindo* |
+| **dêiticos nomeados pelo revisor** | **19** | *aqui*×13, *esse*×4, *isso*×2 — "este aqui"/"aquele ali" ditos apontando para a tela |
+| reescrita de ligação | 20 | *e*×2, *a*, *pra*×2, *um*, *ou*, *em*, *como*, *fosse*, *era*, *foi*, *ele*, *eu*, *tinha*, *num*, *grande*, *lenta*, *duas*, *depois*, *essas*, *coisas*, *gente*, *tarde* |
+| números normalizados | 4 | `3.000`/`5.000`/"un" → "3 mil"/"5 mil"/"Uns" (valor preservado — Guia §7) |
+| marcadores orais podados | 4 | *eh*, *oh*, *né* |
 
-**Decomposição dos 78 acréscimos:** termos doutrinários explícitos (*antimaterial*×5, *material*×3,
-*lado*×3, *loka(s)*×3, *brahmaloka*×2, *bhuloka*, *akashicos*), correções (*jugo*, *mitólogo*,
-*xamanismo*, *esculhambassem*, *colapsa*, *ancorada*, *ovo*, *glues*, *posetron*), artigos de
-reescrita (*o*×10, *que*×3, *para*×3, *tem*×3, *da*×2) e *mil*×3 da normalização numérica.
+**Decomposição dos 77 acréscimos:** nomes doutrinários que o bruto não traz — *antimaterial*×5,
+*material*×3, *lado*×3, *loka(s)*×3, *brahmaloka*×2, *bhuloka*, *universo*×2, *chamado*, *chamamos*,
+*colmeia*, *akashicos* —; correções (*xamanismo*, *jugo*, *mitólogo*, *esculhambassem*, *colapsa*,
+*ancorada*, *mil*×3, *uns*, *5*, *dois*); artigos e verbos de reescrita (*o*×10, *que*×3, *para*×3,
+*tem*×3, *de*, *da*, *do*, *os*, *são*, *com*, *for*, *nossa*, *tudo*, *além*, *nisso*, *lados*,
+*parte*, *fossem*, *esses*, *reproduzido*, *servir*); e as **duas regressões do §6.1** (*glues*,
+*posetron*).
 
-**Leitura.** Nenhuma categoria é supressão de conteúdo. A revisão faz três coisas que a casa também
-faz: **corrige o ASR contra a KB**, **explicita dêiticos** ("esse aqui" → "o lado antimaterial") e
-**normaliza números**. O que ela **não** faz é tratar disfluência (24 marcas remanescentes, nível
-acima do Guia §10) nem inserir marcadores editoriais — ou seja, sobra trabalho para a esteira, e é
-trabalho pequeno.
+**A observação do Comandante explica o maior bloco de mudanças.** Do despacho de 16/09/2026: *"ao
+revisar o vídeo notei que o Ellam dizia algo e não nominava, porque estava apontando para uma tela de
+apresentação, então o que eu fiz, nomeie o que ele estava falando e basicamente está relacionado à
+formação do universo, com seu lado material e o antimaterial, que ela apontava e falava este aqui ou
+aquele ali."* É exatamente o que a medição mostra: 19 dêiticos perdidos, 5 *antimaterial* + 3
+*material* + 3 *lado* + 2 *Brahmaloka* + *Bhuloka* ganhos. Não é acréscimo de doutrina por
+interpretação livre — é **nomeação do referente ostensivo**, e a KB confirma os nomes
+(RC-106 *Universo Antimaterial (Brahmaloka)*, RC-107 *Universo Material (Bhuloka)*).
+
+O que a casa faz com isso, e por quê: o Guia §12 pede marcador editorial para intervenção do revisor
+que não está na fonte. Nomear o que o autor apontou é intervenção legítima e documentada — mas o
+leitor do produto final não pode confundir a palavra do autor com a do revisor. Tratamento proposto:
+`[NOTA]` na **primeira** ocorrência de cada nome inserido (Brahmaloka, Bhuloka, lado
+material/antimaterial), explicando que o autor apontava para a tela e o revisor nomeou o referente,
+com a ficha da KB ao lado. Nas ocorrências seguintes, texto limpo.
+
+**Leitura final.** Nenhuma categoria é supressão de conteúdo. A revisão faz três das cinco camadas do
+Guia §3 (ortografia/gramática, terminologia contra a KB, segmentação e pontuação) e **não** faz as
+outras duas: disfluência (24 marcas remanescentes, acima do nível LEVE do §10) e marcadores
+editoriais (zero `[NOTA]`, zero `[A CONFIRMAR]`). O que sobra para a esteira é pequeno e está no §8.
 
 ---
 
@@ -210,7 +271,7 @@ O G9 foi calibrado ontem com teto de 5% para o **derivado de máquina**: um text
 troca, é censura ou microedição — foi o que pegou `merda`/`bandido` e o RC-954 zerado.
 
 Este arquivo é outra coisa: **revisão humana**. Divergir é o trabalho. Medido com a régua da camada
-2, um texto excelente reprova (9,23% > 5%) — e um portão que reprova o bom trabalho ensina as pessoas
+2, um texto excelente reprova (8,12% > 5%) — e um portão que reprova o bom trabalho ensina as pessoas
 a ignorar o portão.
 
 **Proposta de norma (Guia §2.6, item 3) — teto por natureza:**
@@ -319,18 +380,21 @@ forma correta do texto** — a fila vai propor sempre, e a resposta é sempre *r
 
 ---
 
-## 7. Fila de curadoria proposta — **bloqueada até existir bruto**
+## 7. Fila de curadoria proposta — **destravada: o bruto oficial chegou**
 
 `rc_curadoria.py` não aplica variante sem ocorrência atestada no bruto (regra da casa, Guia §15 e
-`CONTRIBUTING`). Nenhuma destas linhas pode entrar em `KB-RC/_fila-de-curadoria.csv` enquanto
-`00-fonte/transcricao-bruta.txt` não existir. Ficam aqui, prontas:
+`CONTRIBUTING`). Com `upload/video-2-transcri-youtube.txt` entregue (commit `87a3525`) e instalado em
+`transcricoes/2026-09-12-alienigenas-e-humanos-entre-nos/00-fonte/transcricao-bruta.txt`, todas as
+linhas abaixo passam a ter atestação — conferida uma a uma no corpo do bruto. **O item 4 da primeira
+versão foi retirado**: `novo cósmico` era corrupção da minha captura, não do ASR (§3); o bruto oficial
+já diz "ovo cósmico".
 
 | # | tipo | forma | canônico | evidência |
 |---|---|---|---|---|
 | 1 | nova variante STT | `locas`, `louoca` | RC-077 Lokas | "milhões de locas… Cada louoca é um buraquinho" |
 | 2 | nova variante STT **com suspensão por homografia** | `qualia` | RC-174 Colmeia Universal | §6.3 — colide com *Qualia como Processamento Humano* |
 | 3 | nova variante STT | `acásicos`, `acáxicos` | Registros Akáshicos (a registrar, §6.2) | "os registros acásicos ou acáxicos" |
-| 4 | nova variante STT | `novo cósmico` | RC-034 Ovo Cósmico | "ficaram dentro do novo cósmico" |
+| ~~4~~ | ~~`novo cósmico` → RC-034 Ovo Cósmico~~ | **RETIRADO** | — | corrupção da captura por fetch, não do ASR: o bruto oficial diz "ovo cósmico" (§3) |
 | 5 | nova variante STT | `glu` | gluons (RC-034) | "com quarks e glu" |
 | 6 | nova variante STT | `mitlogo` | mitólogo | "Nenhum mitlogo consegue" |
 | 7 | nova variante STT | `julgo` | jugo | "se libertaram do julgo dos deuses" |
@@ -379,10 +443,23 @@ A revisão do Comandante adiantou o que a casa faria nos blocos. Sobra, medido:
 | 5 | item 2 do parecer anterior: `rc_diagnostico.py:372` ciente de inicial de frase | `rc_diagnostico.py` | média — 80% do ruído em texto limpo |
 | 6 | reconciliar as duas réguas de contagem (`split()` × `PALAVRA_RE`) | `rc_leitura.py`, `rc_diagnostico.py` | baixa — documentada no Guia §2.6 item 6 |
 
-Feito neste turno, sem custo: os **vereditos do eixo 4 do `rc_perfil_stt.py` estavam mentindo** —
-diziam que `rc_novo`/`rc_indice` medem o corpo pela linha mais longa, o que deixou de ser verdade
-hoje de manhã com o `rc_leitura.py`. Atualizados para descrever o código real, inclusive o resíduo do
-critério 3. Testes: **154 verificações, 0 falhas**.
+**Feito neste turno:**
+
+* os **vereditos do eixo 4 do `rc_perfil_stt.py` estavam mentindo** — diziam que `rc_novo`/`rc_indice`
+  medem o corpo pela linha mais longa, o que deixou de ser verdade hoje de manhã com o
+  `rc_leitura.py`. Atualizados para descrever o código real;
+* **`rc_perfil_stt.py` passou a medir o corpo pelo critério único** (`rc_leitura`), e não o arquivo
+  inteiro. Era a **terceira régua de corpo** da casa e a mais perigosa, porque ninguém a via: no vídeo
+  2 o cabeçalho traz o "Guia de fontes" resumido (167 palavras sobre um corpo de 1.810, pontuado por
+  ser resumo automático), e o instrumento devolveu **14,37%** de divergência onde o corpo tem
+  **8,12%**, além de anunciar "pontuação nativa" do ASR com 6,6 sinais por 1.000 palavras inventados
+  pelo cabeçalho. O eixo 4 continua olhando o arquivo inteiro — é a pergunta dele ("onde começa o
+  corpo?") — mas agora com `texto_integral` separado de `texto`;
+* com isso o instrumento passa a dizer a verdade sobre o vídeo 2: bruto **0,11** sinais por 100
+  palavras → Guia §8 **compatível** (o STT não pontua); revisão 16,13 → premissa superada, como é
+  esperado de um texto revisado.
+
+Testes: **154 verificações, 0 falhas**.
 
 ---
 
@@ -397,7 +474,8 @@ critério 3. Testes: **154 verificações, 0 falhas**.
   junto com os dois que estavam presos localmente. A branch está 22 commits à frente de `origin/main`;
   **nenhum PR foi aberto** — a decisão é do Comandante.
 * **Este turno não criou pasta de transcrição, não mexeu em `KB-RC/` e não moveu o arquivo do
-  Comandante.** A auditoria vive em `docs/pareceres/` e o arquivo continua em `upload/`, de onde só
+  Comandante.** A auditoria vive em `docs/pareceres/`; o arquivo migrou de `upload/` para
+  `transcricoes/2026-09-12-alienigenas-e-humanos-entre-nos/00-fonte/revisao-comandante.docx`, de onde só
   sai com destino decidido.
 
 ---
@@ -409,7 +487,7 @@ python3 -m venv /tmp/venv && /tmp/venv/bin/pip install -r ferramentas/requiremen
 
 # 1. extrair o corpo do .docx (descartando as 3 linhas de cabeçalho)
 /tmp/venv/bin/python -c "from docx import Document; u=[p.text for p in \
-Document('upload/alienigenas-ou-seres-de-outro-universo.docx').paragraphs if p.text.strip()]; \
+Document('transcricoes/2026-09-12-alienigenas-e-humanos-entre-nos/00-fonte/revisao-comandante.docx').paragraphs if p.text.strip()]; \
 open('docs/pareceres/video-2-revisao-corpo.txt','w',encoding='utf-8').write(chr(10).join(u[3:])+chr(10))"
 
 # 2. os quatro eixos + proveniência: captura de referência × revisão
@@ -432,18 +510,28 @@ grep -rn "akásicos\|akáshicos" KB-RC/termos/RC-548-*.md KB-RC/termos/RC-161-*.
 
 ---
 
-## 11. Decisões pendentes do Comandante
+## 11. Decisões — o que o despacho de 16/09 já respondeu, e o que sobra
 
-1. **O bruto oficial** — copiar a transcrição do painel do YouTube (30 s) e entregar. Destrava G1, G9
-   e toda a fila do §7. Sem ele, a casa tem uma revisão boa e nenhuma forma de auditá-la.
-2. **Título e slug** — "Alienígenas e humanos: Eles já estão entre nós?" (oficial) ou "Alienígenas ou
-   seres de outro universo?" (do arquivo)? O slug vira nome de pasta e vai para o catálogo e o
-   `biblio.json`.
-3. **Natureza da camada** (§5) — o arquivo entra como **revisão externa** (sem teto de divergência,
-   com auditoria de rastreabilidade) ou como **derivado de trabalho** (teto, e então 9,23% reprova)?
-   Proponho o primeiro, com `derivado.natureza: revisao-externa`.
-4. **Quem termina o texto** (§8) — a casa converte para blocos `.md`, aplica as 2 correções, a
-   disfluência leve e os `[NOTA]` nas inserções doutrinárias, e remonta o `.docx`? Ou o Comandante
-   prefere manter a revisão dele como está, com este parecer anexado?
-5. **A premissa do §3** — confirmar no painel se o YouTube agora pontua. Se sim, o Guia §8 muda de
-   novo e a camada derivada do vídeo 1 precisa ser reavaliada com dados novos.
+**Respondidas pelo Comandante** (despacho: *"podemos tratar este 2º vídeo normalmente, sem necessidade
+de comparação, ou seja, uma esteira normal"*):
+
+1. **Bruto oficial** — entregue (`upload/video-2-transcri-youtube.txt`, commit `87a3525`). Instalado
+   em `00-fonte/transcricao-bruta.txt`; G1 verde; fila de curadoria com atestação.
+2. **Comparação entre motores** — dispensada. O vídeo 2 entra como **esteira normal**: bruto →
+   diagnóstico → blocos → produto → devolução → nove portões. A auditoria deste parecer fica como
+   registro do teste que o Comandante fez, não como etapa do fluxo.
+3. **Natureza da camada** — resolvida na prática: o texto do Comandante não é derivado de máquina, é
+   **revisão**. Entra como matéria dos blocos (`20-blocos/`), não como `derivado:` em metadados; o G9
+   responde `N/A` nesta pasta e o §5 fica como proposta de norma para quando houver revisão de
+   terceiro de novo.
+4. **Os dêiticos nomeados** — justificados pelo autor da revisão (§4). Entram no texto com `[NOTA]` na
+   primeira ocorrência de cada nome, como o Guia §12 pede.
+
+**Sobram duas, e só duas:**
+
+* **título e slug** — o YouTube diz "Alienígenas e humanos: Eles já estão entre nós?"; o `.docx` diz
+  "Alienígenas ou seres de outro universo?". A casa adotou o oficial para o slug
+  (`2026-09-12-alienigenas-e-humanos-entre-nos`) e registrou o do Comandante como título de trabalho;
+  trocar depois é um `git mv` mais três campos de metadados.
+* **data** — o cabeçalho do bruto diz 13/09/2026, o `.docx` diz 12/09/2026 e a plataforma diz
+  *uploaded* 2026-09-12. A casa ficou com a plataforma e registrou as três (§2).

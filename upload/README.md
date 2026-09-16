@@ -26,6 +26,15 @@ dizer onde o arquivo estava.
 | **A. reanexar no chat** | arrastar o arquivo de novo na conversa | a via normal; quando funciona, eu mesmo gravo em `upload/` |
 | **B. colar o texto no chat** | colar o conteúdo na mensagem | bom até ~50 KB; acima disso fica truncado |
 | **C. link público** | mandar a URL | eu busco com `fetch_page`. Link de Drive precisa estar como "qualquer pessoa com o link"; Drive privado não abre |
+
+**A via C serve para documento, não para transcrição.** O `fetch_page` lê a página do YouTube e
+devolve também o transcript do painel — mas esse texto vem **reescrito**: pontuado, capitalizado,
+com anotações de áudio que o ASR não produziu e palavras trocadas. Conferido contra o bruto oficial
+do vídeo 2 em 16/09/2026, corrompeu "ovo cósmico" em "novo cósmico" e inventou 144 vírgulas onde o
+bruto tem zero (Guia v2 §2.6, regra 8). **Bruto de transcrição só entra por A, B ou D** — de
+preferência D (`git add -f upload/<video>--<motor>.txt`), que preserva o arquivo byte a byte e me
+deixa registrar sha256 no `metadados.yaml`. Sem bruto, a fila de curadoria fica bloqueada e a pasta
+espera: eu não instalo texto de *fetch* como fonte, nem o uso para atestar variante.
 | **D. commit do Comandante** | `git add -f upload/x.txt && git commit && git push` | o `-f` vence o ignore; eu puxo no turno seguinte |
 
 ## O que acontece quando um arquivo chega aqui

@@ -16,6 +16,23 @@ Formato de cada entrada:
 
 ---
 
+## 2026-09-16 — fonte Y2026-09-12 registrada (vídeo 2)
+
+- **Y2026-09-12** "Alienígenas e humanos: Eles já estão entre nós?" (canal Jan Val Ellam,
+  https://www.youtube.com/watch?v=v0gJWn50gg8, 19:24, publicado 2026-09-12) — segunda fonte
+  audiovisual do padrão Y (Guia v2 §2.5). Bruto oficial entregue pelo Comandante em 16/09/2026
+  (1.810 palavras de corpo, ASR sem pontuação); matéria dos blocos foi a **revisão externa** dele,
+  feita em aplicativo especialista — divergência lexical de 8,12% contra o bruto, lida como correção e
+  não como perda. Revisada em 3 blocos, 1.874 palavras, 29 linhas de livro-razão, 5 `[NOTA]`, portões
+  G1–G8 `ok` e G9 `n/a` (não há derivado de máquina). Trecho da palestra "A Dramática Fusão dos
+  Universos de Hyren e Hyron" (B085). Mídia não arquivada (Plano §7). — origem:
+  `transcricoes/2026-09-12-alienigenas-e-humanos-entre-nos` · fila id 0042 · aplicado pelo Agente 86
+- **Nenhum termo alterado neste lote.** As 9 propostas restantes do vídeo 2 (5 variantes STT —
+  `locas`, `louoca`, `glu`, `chamanismo`, `acásicos/acáxicos`; 1 ressalva de falso amigo em RC-894;
+  2 Quarentenas — `NUNCA "glues"` em RC-034 e `NUNCA "pósetron"` em RC-636; 1 divergência factual de
+  data) estão **pendentes** em `_fila-de-curadoria.csv`, ids 0043–0051, e a proposta de `Jesus` na
+  camada 3 está em `40-devolucao/externos-novos.csv`. Alteração de ficha é decisão do curador.
+
 ## 2026-09-16 — abertura do registro de curadoria
 
 Nenhuma alteração aplicada ainda. Este arquivo foi criado pela migração do repositório

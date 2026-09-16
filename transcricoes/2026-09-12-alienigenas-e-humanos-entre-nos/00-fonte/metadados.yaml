@@ -1,0 +1,115 @@
+# Metadados da transcrição — preenchidos na captura, conferidos pelo rc_qa.py (G1/G7).
+# Este arquivo é a identidade do vídeo: sem ele, o bruto é um .txt órfão.
+# rc_novo.py preenche sozinho o que consegue derivar; o resto é responsabilidade de quem captura.
+
+slug: 2026-09-12-alienigenas-e-humanos-entre-nos
+titulo: "Alienígenas e humanos: Eles já estão entre nós?"
+titulo_completo: "Alienígenas e humanos: Eles já estão entre nós?"
+chamada: "Alienígenas ou seres de outro universo?"   # título de trabalho do revisor (cabeçalho do .docx entregue);
+                                                     # o título oficial do vídeo é o do campo `titulo` acima
+canal: "Jan Val Ellam"
+url: https://www.youtube.com/watch?v=v0gJWn50gg8
+url_com_marcador: "https://www.youtube.com/watch?v=v0gJWn50gg8&t=281s"   # como consta no cabeçalho do .docx do revisor;
+                                                                           # é a que entra em biblio.json como fonte Y
+data_gravacao: 2026-09-12
+data_publicacao: 2026-09-12   # plataforma (uploaded 2026-09-12). Divergência registrada: o cabeçalho do bruto
+                              # traz 13/09/2026 e o do .docx revisado, 12/09/2026 — ver 40-devolucao/devolucao-a-kb.md
+data_captura: 2026-09-16
+duracao_min: 19               # 19:24 na plataforma
+idioma: pt-BR
+ferramenta_stt: youtube-autosub
+licenca: uso interno do Projeto
+
+falantes:
+  - rotulo: "[JAN VAL ELLAM]"
+    papel: palestrante
+    turnos: 25
+    observacao: "monólogo; trecho da palestra 'A Dramática Fusão dos Universos de Hyren e Hyron' (B085). "
+                "Alexandre Sherminator é citado no encerramento, mas não fala."
+# Preencher após a primeira leitura, com os rótulos usados na diarização:
+#  - rotulo: "[NOME]"
+#    papel: apresentador | entrevistado | coapresentador | nao-identificado
+#    turnos: 0
+#    observacao: ""
+
+bruto:
+  arquivo: transcricao-bruta.txt
+  bytes: 11638
+  linhas: 12
+  sha256: 16c9276ae847dd728b4be0d731132b8848e0b5fad4d9b0ced966121b0939e9a1
+  linhas_cabecalho: 11   # linhas antes do corpo (guia de fontes etc.)
+  corpo_linha: 12             # linha onde o corpo começa (1-based)
+  corpo_caracteres: 10008
+  corpo_palavras: 1810       # tokenizador: sequência de letras/dígitos/apóstrofo
+  corpo_segmentos: 1     # linhas não vazias do corpo (turnos, se o STT os separa)
+  criterio_corpo: linha-mais-longa       # marcador | linha-mais-longa | arquivo-inteiro (rc_leitura.py)
+  cobertura_maior_linha: 0.8832   # < 0,80 com critério "arquivo-inteiro" = conferir
+  pontuacao_original: nenhuma              # STT puro não entrega vírgula, ponto nem interrogação
+
+# Revisão externa recebida do Comandante em 16/09/2026. NÃO é `derivado:` — não é texto de máquina
+# derivado do bruto, é revisão humana feita em aplicativo especialista. Por isso o portão G9
+# (derivados) responde N/A nesta pasta: a autoridade sobre o que foi dito continua sendo `bruto`.
+revisao_externa:
+  arquivo: revisao-comandante.docx
+  sha256: d188b7eed166f6005c9c00b011099b1742ac08134424e3154d848c41335784a2
+  origem: "aplicativo especialista de transcrição + revisão do Comandante (despacho de 16/09/2026)"
+  palavras_de_corpo: 1817
+  divergencia_lexical_contra_o_bruto: 8.12   # rc_perfil_stt.py, eixo de proveniência (medido no corpo)
+  leitura: "mesma base de áudio com edição substancial: correção, não perda"
+  parecer: docs/pareceres/parecer-video-2-revisao-externa.md
+  medicao: docs/pareceres/video-2-medicao-oficial.md
+  regressoes_corrigidas_pela_casa:
+    - "glues -> gluons (RC-034: 'sopa de quarks e gluons', B031; P2025-03-15)"
+    - "pósetron -> pósitron (RC-636: 'jogo de pósitrons [STT positelétron]', P2024-11-09)"
+    - "hoje a parte -> hoje à tarde (o bruto atesta 'à tarde'; 'a parte' não existe na língua)"
+  nomeacao_de_deiticos: "o autor apontava para a tela e dizia 'este aqui'/'aquele ali'; o revisor nomeou o
+                         referente (lado material = Bhuloka, lado antimaterial = Brahmaloka). Legítimo e
+                         documentado: [NOTA] na primeira ocorrência, conforme despacho do Comandante."
+
+# Camada derivada (arquitetura de três camadas, despacho de 16/09/2026). Preencher SÓ se existir
+# um texto de trabalho derivado do bruto — ex.: pontuação/segmentação por outra ferramenta.
+# O derivado NUNCA é a fonte: a autoridade sobre o que foi dito é `bruto` acima, e o portão G9
+# fiscaliza sha256, teto de divergência e restauração das palavras que a camada mascarou.
+#derivado:
+#  arquivo: transcricao-pontuada.txt
+#  motor: ""                   # ferramenta que gerou o derivado
+#  mesma_escuta_que_o_bruto: sim|nao|desconhecido   # ver rc_perfil_stt.py, eixo de proveniência
+#  bytes: 0
+#  linhas: 0
+#  sha256: ""
+#  palavras: 0
+#  segmentos: 0
+#  divergencia_lexical: 0.0    # medido por rc_perfil_stt.py contra o bruto
+#  divergencia_maxima: 0.05    # teto do portão G9
+#  palavras_mascaradas: []     # cada item: {mascara, ocorrencias, restaurar_para, presente_no_bruto}
+
+midia:
+  audio: nao-arquivado        # política do Plano §7: só link externo
+  video: nao-arquivado
+  link: "https://www.youtube.com/watch?v=v0gJWn50gg8&t=281s"   # início do trecho, como no cabeçalho do .docx
+
+revisao:
+  guia: docs/normas/guia-revisao-v2.md
+  anexo: docs/normas/resolucao-de-conflitos.md
+  disfluencia: leve           # leve | medio | pesado — fixado por despacho
+  diarizacao: opcao-b-rotulos-inferidos-explicitos
+  anuncios: preservados-no-corpo
+  guia_de_fontes: removido-do-produto-final
+  politica_de_numeros: nenhum número alterado; divergência vira [NOTA]
+  despachos:
+    - 90-registro/despachos/2026-09-16-esteira-normal-e-nomeacao-de-deiticos.md
+    - ../2026-09-14-revelacoes-cosmicas-urgente/90-registro/despachos/2026-09-15-contrato-editorial.md  # contrato que rege a casa
+
+resultado:
+  blocos: 3
+  palavras_revisadas: 1874   # texto corrido dos blocos, sem os marcadores editoriais
+  paragrafos: 25
+  notas: 5                   # 3 de correção contra o bruto/KB, 1 de nomeação de dêiticos, 1 de proveniência
+  a_confirmar: 0
+  inaudivel: 0               # o bruto oficial não traz nenhum trecho inaudível
+  adjudicacao: 29 linhas decididas (19 informativas, 2 aprovadas pela semente do Guia, 1 aceita, 1 aceita-parcial, 5 recusadas, 1 proteção)
+  novos_termos_propostos: 11 # 40-devolucao/_fila-de-curadoria-proposta.csv
+  variantes_stt_devolvidas: 2 (locas -> Lokas RC-077; chamanismo -> xamanismo, parcial)
+  divergencias_factuais: 4   # datas 12/09 × 13/09; "à tarde" × "a parte"; "glues" × "glu"; "pósetron" × "pósitron"
+  revisor: "Comandante (revisão externa) + Agente 86 (camadas 1–5 do Guia v2)"
+  concluido_em: 2026-09-16

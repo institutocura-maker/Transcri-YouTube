@@ -1,0 +1,508 @@
+[
+ {
+  "arquivo": "upload/video-2-transcri-youtube.txt",
+  "nome": "video-2-transcri-youtube.txt",
+  "estagio": "solto",
+  "leitura_estagio": "arquivo fora de transcricoes/ (ex.: upload/) — leitura de BRUTO, é o caso do experimento de motor",
+  "bytes": 11638,
+  "crlf": 11,
+  "lf": 0,
+  "linhas": 1,
+  "linhas_nao_vazias": 1,
+  "paragrafos_reais": 1,
+  "estrutura": {
+   "palavras": 1810,
+   "contagem": {
+    "vírgula": 0,
+    "ponto": 2,
+    "interrogação": 0,
+    "exclamação": 0,
+    "dois-pontos": 0,
+    "ponto-e-vírgula": 0,
+    "travessão": 0,
+    "meia-risca": 0,
+    "reticências": 0,
+    "reticências (3 pontos)": 0,
+    "aspas retas": 0,
+    "aspas curvas": 0,
+    "parêntese": 0
+   },
+   "densidade_por_1000": {
+    "vírgula": 0.0,
+    "ponto": 1.1,
+    "interrogação": 0.0,
+    "exclamação": 0.0,
+    "dois-pontos": 0.0,
+    "ponto-e-vírgula": 0.0,
+    "travessão": 0.0,
+    "meia-risca": 0.0,
+    "reticências": 0.0,
+    "reticências (3 pontos)": 0.0,
+    "aspas retas": 0.0,
+    "aspas curvas": 0.0,
+    "parêntese": 0.0
+   },
+   "sinais_por_100_palavras": 0.11,
+   "sentencas": 3,
+   "palavras_por_sentenca": 603.3,
+   "mediana_palavras_por_sentenca": 61,
+   "maior_sentenca_palavras": 1737,
+   "paragrafos": 1,
+   "palavras_por_paragrafo": 1810.0,
+   "paragrafos_por_1000_palavras": 0.55,
+   "segmentos_por_quebra": 1,
+   "palavras_por_segmento": 1810.0
+  },
+  "pontuacao": {
+   "palavras": 1810,
+   "contagem": {
+    "vírgula": 0,
+    "ponto": 2,
+    "interrogação": 0,
+    "exclamação": 0,
+    "dois-pontos": 0,
+    "ponto-e-vírgula": 0,
+    "travessão": 0,
+    "meia-risca": 0,
+    "reticências": 0,
+    "reticências (3 pontos)": 0,
+    "aspas retas": 0,
+    "aspas curvas": 0,
+    "parêntese": 0
+   },
+   "densidade_por_1000": {
+    "vírgula": 0.0,
+    "ponto": 1.1,
+    "interrogação": 0.0,
+    "exclamação": 0.0,
+    "dois-pontos": 0.0,
+    "ponto-e-vírgula": 0.0,
+    "travessão": 0.0,
+    "meia-risca": 0.0,
+    "reticências": 0.0,
+    "reticências (3 pontos)": 0.0,
+    "aspas retas": 0.0,
+    "aspas curvas": 0.0,
+    "parêntese": 0.0
+   },
+   "sinais_por_100_palavras": 0.11,
+   "sentencas": 3,
+   "palavras_por_sentenca": 603.3,
+   "mediana_palavras_por_sentenca": 61,
+   "maior_sentenca_palavras": 1737,
+   "paragrafos": 1,
+   "palavras_por_paragrafo": 1810.0,
+   "paragrafos_por_1000_palavras": 0.55,
+   "segmentos_por_quebra": 1,
+   "palavras_por_segmento": 1810.0
+  },
+  "disfluencia": {
+   "marcadores_orais": {
+    "né": 0,
+    "eh": 1,
+    "uhum": 0,
+    "hum": 0,
+    "ah": 0,
+    "ó": 1,
+    "tá": 0,
+    "tô": 0,
+    "aí": 2,
+    "então": 8,
+    "tipo": 4,
+    "sabe": 8,
+    "cara": 0,
+    "quer dizer": 0,
+    "hã": 0,
+    "sei lá": 0,
+    "olha": 0,
+    "vamos dizer": 0
+   },
+   "total_marcadores": 24,
+   "repeticoes_palavra": 3,
+   "repeticoes_bigrama": 0,
+   "repeticoes_trigrama": 0,
+   "prolongamentos": 3,
+   "total_disfluencias": 27,
+   "por_1000_palavras": 14.92
+  },
+  "terminologia": {
+   "canonicos_distintos": 12,
+   "canonicos_ocorrencias": 26,
+   "canonicos_amostra": [
+    [
+     "criador",
+     "RC-041",
+     4
+    ],
+    [
+     "eletrons",
+     "RC-162",
+     4
+    ],
+    [
+     "loop mental",
+     "RC-924",
+     4
+    ],
+    [
+     "deuses",
+     "RC-053",
+     3
+    ],
+    [
+     "antimateria",
+     "RC-527",
+     3
+    ],
+    [
+     "principio da externalizacao",
+     "RC-768",
+     2
+    ],
+    [
+     "big bang",
+     "RC-034",
+     1
+    ],
+    [
+     "jesus",
+     "RC-072",
+     1
+    ],
+    [
+     "universo paralelo",
+     "RC-108",
+     1
+    ],
+    [
+     "memoria quantica dos eletrons",
+     "RC-161",
+     1
+    ],
+    [
+     "abelha rainha",
+     "RC-175",
+     1
+    ],
+    [
+     "o tal",
+     "RC-881",
+     1
+    ]
+   ],
+   "variantes_stt_distintas": 0,
+   "variantes_stt_ocorrencias": 0,
+   "variantes_stt_amostra": [],
+   "proibidas_distintas": 0,
+   "proibidas_ocorrencias": 0,
+   "proibidas_amostra": [],
+   "externos_distintos": 0,
+   "externos_ocorrencias": 0,
+   "externos_canonicos_distintos": 0,
+   "externos_canonicos_ocorrencias": 0,
+   "corrupcoes_por_1000_palavras": 0.0,
+   "taxa_fiducia": 1.0
+  },
+  "integracao": {
+   "maior_linha_chars": 10008,
+   "cobertura_corpo_por_linha": 0.8832,
+   "marcador_cabecalho": false,
+   "rotulos_nativos": {},
+   "diarizacao_nativa": false,
+   "sinais_por_1000": 1.1,
+   "quebras": [
+    {
+     "suposicao": "rc_novo.py / rc_indice.py medem o corpo pelo critério único de rc_leitura.py (marcador → linha mais longa → arquivo inteiro, com aviso)",
+     "tipo": "ok",
+     "compativel": true,
+     "detalhe": "a maior linha cobre 88.3% do arquivo"
+    },
+    {
+     "suposicao": "rc_diagnostico.carregar_transcricao separa cabeçalho pelo marcador 'Transcrição Automática' (pendência: parecer-motor-stt §8 item 2)",
+     "tipo": "codigo",
+     "compativel": false,
+     "detalhe": "sem marcador: o arquivo inteiro vira corpo e o cabeçalho sai vazio"
+    },
+    {
+     "suposicao": "diarização opção B (rótulos inferidos pelo revisor)",
+     "tipo": "ok",
+     "compativel": true,
+     "detalhe": "sem rótulos nativos: o revisor continua inferindo"
+    },
+    {
+     "suposicao": "Guia §8 (pontuação é corretiva, o STT não traz)",
+     "tipo": "ok",
+     "compativel": true,
+     "detalhe": "1.1 sinais por 1.000 palavras — pontuação praticamente ausente"
+    }
+   ],
+   "ferramentas_afetadas": [
+    "rc_novo.py — mede o bruto (bytes, linhas, sha256, corpo) e grava metadados.yaml",
+    "rc_indice.py — coluna palavras_brutas do catálogo vem da linha mais longa",
+    "rc_diagnostico.py — separação de cabeçalho pelo marcador",
+    "metadados.yaml — campos corpo_linha, corpo_caracteres, corpo_palavras, pontuacao_original",
+    "rc_qa.py G1 — sha256 do bruto (não muda, mas o bruto passa a ter outra forma)",
+    "Guia §8 e §9 — pontuação e diarização deixam de ser corretivas se o motor já as traz"
+   ]
+  },
+  "diagnostico": null,
+  "regua": {
+   "proibidas": 5,
+   "pasta_ledger": "",
+   "aviso_ledger": ""
+  }
+ },
+ {
+  "arquivo": "docs/pareceres/video-2-revisao-corpo.txt",
+  "nome": "video-2-revisao-corpo.txt",
+  "estagio": "solto",
+  "leitura_estagio": "arquivo fora de transcricoes/ (ex.: upload/) — leitura de BRUTO, é o caso do experimento de motor",
+  "bytes": 10664,
+  "crlf": 0,
+  "lf": 25,
+  "linhas": 25,
+  "linhas_nao_vazias": 25,
+  "paragrafos_reais": 1,
+  "estrutura": {
+   "palavras": 1817,
+   "contagem": {
+    "vírgula": 206,
+    "ponto": 81,
+    "interrogação": 6,
+    "exclamação": 0,
+    "dois-pontos": 0,
+    "ponto-e-vírgula": 0,
+    "travessão": 0,
+    "meia-risca": 0,
+    "reticências": 0,
+    "reticências (3 pontos)": 1,
+    "aspas retas": 0,
+    "aspas curvas": 0,
+    "parêntese": 0
+   },
+   "densidade_por_1000": {
+    "vírgula": 113.37,
+    "ponto": 44.58,
+    "interrogação": 3.3,
+    "exclamação": 0.0,
+    "dois-pontos": 0.0,
+    "ponto-e-vírgula": 0.0,
+    "travessão": 0.0,
+    "meia-risca": 0.0,
+    "reticências": 0.0,
+    "reticências (3 pontos)": 0.55,
+    "aspas retas": 0.0,
+    "aspas curvas": 0.0,
+    "parêntese": 0.0
+   },
+   "sinais_por_100_palavras": 16.13,
+   "sentencas": 85,
+   "palavras_por_sentenca": 21.4,
+   "mediana_palavras_por_sentenca": 15,
+   "maior_sentenca_palavras": 282,
+   "paragrafos": 1,
+   "palavras_por_paragrafo": 1817.0,
+   "paragrafos_por_1000_palavras": 0.55,
+   "segmentos_por_quebra": 25,
+   "palavras_por_segmento": 72.7
+  },
+  "pontuacao": {
+   "palavras": 1817,
+   "contagem": {
+    "vírgula": 206,
+    "ponto": 81,
+    "interrogação": 6,
+    "exclamação": 0,
+    "dois-pontos": 0,
+    "ponto-e-vírgula": 0,
+    "travessão": 0,
+    "meia-risca": 0,
+    "reticências": 0,
+    "reticências (3 pontos)": 1,
+    "aspas retas": 0,
+    "aspas curvas": 0,
+    "parêntese": 0
+   },
+   "densidade_por_1000": {
+    "vírgula": 113.37,
+    "ponto": 44.58,
+    "interrogação": 3.3,
+    "exclamação": 0.0,
+    "dois-pontos": 0.0,
+    "ponto-e-vírgula": 0.0,
+    "travessão": 0.0,
+    "meia-risca": 0.0,
+    "reticências": 0.0,
+    "reticências (3 pontos)": 0.55,
+    "aspas retas": 0.0,
+    "aspas curvas": 0.0,
+    "parêntese": 0.0
+   },
+   "sinais_por_100_palavras": 16.13,
+   "sentencas": 85,
+   "palavras_por_sentenca": 21.4,
+   "mediana_palavras_por_sentenca": 15,
+   "maior_sentenca_palavras": 282,
+   "paragrafos": 1,
+   "palavras_por_paragrafo": 1817.0,
+   "paragrafos_por_1000_palavras": 0.55,
+   "segmentos_por_quebra": 25,
+   "palavras_por_segmento": 72.7
+  },
+  "disfluencia": {
+   "marcadores_orais": {
+    "né": 0,
+    "eh": 0,
+    "uhum": 0,
+    "hum": 0,
+    "ah": 0,
+    "ó": 0,
+    "tá": 0,
+    "tô": 0,
+    "aí": 2,
+    "então": 8,
+    "tipo": 4,
+    "sabe": 8,
+    "cara": 0,
+    "quer dizer": 0,
+    "hã": 0,
+    "sei lá": 0,
+    "olha": 0,
+    "vamos dizer": 0
+   },
+   "total_marcadores": 22,
+   "repeticoes_palavra": 2,
+   "repeticoes_bigrama": 0,
+   "repeticoes_trigrama": 0,
+   "prolongamentos": 1,
+   "total_disfluencias": 24,
+   "por_1000_palavras": 13.21
+  },
+  "terminologia": {
+   "canonicos_distintos": 16,
+   "canonicos_ocorrencias": 31,
+   "canonicos_amostra": [
+    [
+     "criador",
+     "RC-041",
+     4
+    ],
+    [
+     "eletrons",
+     "RC-162",
+     4
+    ],
+    [
+     "deuses",
+     "RC-053",
+     3
+    ],
+    [
+     "antimateria",
+     "RC-527",
+     3
+    ],
+    [
+     "loop mental",
+     "RC-924",
+     3
+    ],
+    [
+     "brahmaloka",
+     "RC-038",
+     2
+    ],
+    [
+     "lokas",
+     "RC-077",
+     2
+    ],
+    [
+     "principio da externalizacao",
+     "RC-768",
+     2
+    ],
+    [
+     "bhuloka",
+     "RC-033",
+     1
+    ],
+    [
+     "big bang",
+     "RC-034",
+     1
+    ],
+    [
+     "jesus",
+     "RC-072",
+     1
+    ],
+    [
+     "universo antimaterial",
+     "RC-106",
+     1
+    ]
+   ],
+   "variantes_stt_distintas": 0,
+   "variantes_stt_ocorrencias": 0,
+   "variantes_stt_amostra": [],
+   "proibidas_distintas": 0,
+   "proibidas_ocorrencias": 0,
+   "proibidas_amostra": [],
+   "externos_distintos": 0,
+   "externos_ocorrencias": 0,
+   "externos_canonicos_distintos": 0,
+   "externos_canonicos_ocorrencias": 0,
+   "corrupcoes_por_1000_palavras": 0.0,
+   "taxa_fiducia": 1.0
+  },
+  "integracao": {
+   "maior_linha_chars": 2070,
+   "cobertura_corpo_por_linha": 0.1993,
+   "marcador_cabecalho": false,
+   "rotulos_nativos": {},
+   "diarizacao_nativa": false,
+   "sinais_por_1000": 161.25,
+   "quebras": [
+    {
+     "suposicao": "rc_novo.py / rc_indice.py medem o corpo pelo critério único de rc_leitura.py (marcador → linha mais longa → arquivo inteiro, com aviso)",
+     "tipo": "codigo",
+     "compativel": false,
+     "detalhe": "a maior linha cobre 19.9% do arquivo — cai no critério 3 (arquivo inteiro): o corpo inclui o cabeçalho, medição contaminada; rc_leitura AVISA em metadados.yaml, mas ainda não separa"
+    },
+    {
+     "suposicao": "rc_diagnostico.carregar_transcricao separa cabeçalho pelo marcador 'Transcrição Automática' (pendência: parecer-motor-stt §8 item 2)",
+     "tipo": "codigo",
+     "compativel": false,
+     "detalhe": "sem marcador: o arquivo inteiro vira corpo e o cabeçalho sai vazio"
+    },
+    {
+     "suposicao": "diarização opção B (rótulos inferidos pelo revisor)",
+     "tipo": "ok",
+     "compativel": true,
+     "detalhe": "sem rótulos nativos: o revisor continua inferindo"
+    },
+    {
+     "suposicao": "Guia §8 (pontuação é corretiva, o STT não traz)",
+     "tipo": "superada",
+     "compativel": true,
+     "detalhe": "161.3 sinais por 1.000 palavras — pontuação nativa: a norma passa a ser de conferência, não de reconstrução"
+    }
+   ],
+   "ferramentas_afetadas": [
+    "rc_novo.py — mede o bruto (bytes, linhas, sha256, corpo) e grava metadados.yaml",
+    "rc_indice.py — coluna palavras_brutas do catálogo vem da linha mais longa",
+    "rc_diagnostico.py — separação de cabeçalho pelo marcador",
+    "metadados.yaml — campos corpo_linha, corpo_caracteres, corpo_palavras, pontuacao_original",
+    "rc_qa.py G1 — sha256 do bruto (não muda, mas o bruto passa a ter outra forma)",
+    "Guia §8 e §9 — pontuação e diarização deixam de ser corretivas se o motor já as traz"
+   ]
+  },
+  "diagnostico": null,
+  "regua": {
+   "proibidas": 5,
+   "pasta_ledger": "",
+   "aviso_ledger": ""
+  }
+ }
+]
