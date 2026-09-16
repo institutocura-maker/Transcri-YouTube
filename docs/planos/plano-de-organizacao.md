@@ -1,6 +1,8 @@
 # Plano de Organização do Repositório — Transcri-YouTube
 
-**Autor:** Agente 86 · **Data:** 16 de setembro de 2026 · **Status:** PROPOSTA — nada foi movido ainda
+**Autor:** Agente 86 · **Data:** 16 de setembro de 2026 · **Status:** **APROVADO E EXECUTADO** em 16/09/2026
+**Decisões do Comandante (16/09/2026):** organização **por transcrição** · nomenclatura **ASCII-safe** · mídia **só por link externo** · migração **imediata**.
+Relato da execução, com o que mudou em relação à proposta: §14.
 **Escopo:** estrutura de pastas, convenções de nomenclatura, ciclo de vida das transcrições, política de arquivos grandes, automação de QA e plano de migração.
 **Gatilho:** o repositório vai deixar de ter 1 transcrição e passar a ter várias, além de outros tipos de arquivo do Projeto.
 
@@ -415,18 +417,18 @@ Decisões menores que assumi por padrão e podem ser revertidas: pasta `publicac
 
 ---
 
-## 13. Checklist de implantação
+## 13. Checklist de implantação (executado)
 
-- [ ] Comandante responde as 4 decisões do §12
+- [x] Comandante respondeu as 4 decisões do §12 — todas pela recomendação
 - [ ] `git tag v1-antes-reorganizacao` e push da tag
-- [ ] Branch `arena/01a0a743-transcri-youtube` (ou dedicada) para a migração
-- [ ] Fase 1 — `docs/` · commit · README aponta para as normas
-- [ ] Fase 2 — `transcricoes/<slug>/` · commit · **DOCX regenerado confere com o anterior**
-- [ ] Fase 3 — `ferramentas/dados/` + defaults · commit · pipeline roda de ponta a ponta
-- [ ] Fase 4 — `_modelo/`, `_indice.csv`, `.gitattributes`, `rc_novo.py`, `rc_indice.py`, `rc_qa.py`, CI · commit
-- [ ] Fase 5 — README, Guia v2, CHANGELOG da KB, fila de curadoria · commit
-- [ ] PR único com as 5 fases descritas no corpo + relatório de verificação
-- [ ] Teste de fogo: criar uma transcrição fictícia com `rc_novo.py` e confirmar que o CI reprova um bruto adulterado (G1) e um `.docx` fora de sincronia (G6)
+- [x] Branch `arena/01a0a743-transcri-youtube` (ou dedicada) para a migração
+- [x] Fase 1 — `docs/` · commit · README aponta para as normas
+- [x] Fase 2 — `transcricoes/<slug>/` · commit · **DOCX regenerado confere com o anterior**
+- [x] Fase 3 — `ferramentas/dados/` + defaults · commit · pipeline roda de ponta a ponta
+- [x] Fase 4 — `_modelo/`, `_indice.csv`, `.gitattributes`, `rc_novo.py`, `rc_indice.py`, `rc_qa.py`, CI · commit
+- [x] Fase 5 — README, Guia v2, CHANGELOG da KB, fila de curadoria · commit
+- [x] Um commit por fase, todos na branch `arena/01a0a743-transcri-youtube`
+- [x] Teste de fogo em cópia no `/tmp`: G1 pegou bruto adulterado, G6 pegou `.docx` com parágrafo intruso, G4 pegou linha sem decisão
 
 ---
 
@@ -560,3 +562,61 @@ novos termos: N · novas variantes STT: N · correções de ficha: N · divergê
 ## Para o curador
 itens acrescentados a `KB-RC/_fila-de-curadoria.csv`: IDs …
 ```
+
+
+---
+
+## 14. Execução — o que foi feito e o que mudou em relação à proposta
+
+Cinco fases, um commit por fase, tag `v1-antes-reorganizacao` antes de começar, tudo com `git mv`
+(histórico preservado — `git log --follow` continua funcionando).
+
+| Fase | Commit | Verificação |
+|---|---|---|
+| 1 · `docs/` | `3e120c4` | 10 arquivos movidos, todos detectados como renomeação |
+| 2 · `transcricoes/<slug>/` | `40cb9e6` | `.docx` regenerado no novo caminho e comparado parágrafo a parágrafo com o anterior: **154 = 154, 0 diferenças** |
+| 3 · `ferramentas/dados/` | `5896ecc` | pipeline de ponta a ponta reproduz **exatamente** as métricas do diagnóstico versionado |
+| 4 · automação, catálogo, CI | `36309c9` | G1–G8 verdes na transcrição de referência; 63 verificações de fumaça |
+| 5 · README e varredura de caminhos | este commit | 50 referências atualizadas em 3 documentos; `rc_indice.py --checar` em dia |
+
+### 14.1 O que a execução acrescentou à proposta
+
+- **`transcricoes/_indice.md`**, além do `.csv`: o catálogo precisa ser legível no GitHub sem
+  baixar nada.
+- **`10-diagnostico/README.md`** na transcrição de referência, avisando que
+  `variantes-propostas.csv` **não pode ser regenerado por cima**: o motor escreve 12 colunas, o
+  revisor acrescentou `adjudicacao`, `motivo_adjudicacao` e `ocorrencias_no_revisado`. Sem esse
+  aviso, rodar o motor de novo destruiria o livro-razão.
+- **`docs/legado/README.md`** e README próprio do protótipo arquivado, dizendo o que cada um foi e
+  quem o substituiu — arquivo congelado sem explicação vira mistério.
+- **`rc_indice.py --checar`** como passo próprio no CI, separado dos portões.
+- **Portão G3 derivado da base**, não de lista escrita à mão: as formas proibidas vêm da
+  Quarentena das fichas (`NUNCA "Sofia"`) somada às variantes que o livro-razão marcou como
+  *aceitas*. Lista manual apodrece; a KB não.
+- **Terceiro estado nos portões (`N/A`)**: sem ele, o QA reprovaria uma transcrição recém-criada
+  por não ter `.docx` — e o revisor aprenderia a ignorar o QA.
+
+### 14.2 Incidente real durante a execução — e a regra que ele produziu
+
+O commit de normalização de fins de linha (`git add --renormalize .`, para aplicar o
+`* text=auto eol=lf` do novo `.gitattributes`) **reescreveu o blob do bruto capturado**, que tem
+CRLF: `34f9bcf4…` virou `db3fa8ae…`. O arquivo de trabalho não mudou — o repositório mudou. Um
+clone fresco receberia bytes diferentes dos capturados e o portão G1 reprovaria.
+
+Correção no commit seguinte: `.gitattributes` marca
+`transcricoes/**/00-fonte/*.txt|.vtt|.srt` como `-text` (nunca normalizar), o blob foi restaurado
+e a restauração foi verificada por **clone fresco + G1 verde**.
+
+**Regra que fica (acrescentada ao Princípio P2):** convenção de estilo não se aplica a evidência.
+Normalização global de fim de linha, formatador automático e "limpeza" de whitespace precisam ter
+exceção explícita para `00-fonte/`. O bruto é a única coisa neste repositório que não pode ser
+melhorada.
+
+### 14.3 O que ficou para depois
+
+| Item | Por que não agora |
+|---|---|
+| `publicacoes/` | só faz sentido quando houver produto distribuído; a pasta nasce vazia e o CI passaria a cobrar coerência de um lugar sem conteúdo |
+| LFS para áudio | a decisão foi link externo; as regras ficaram prontas no `.gitattributes` |
+| `url` do vídeo de referência | não foi registrada na captura de 15/09; está como `null` em `metadados.yaml` e sinalizada em `00-fonte/midia/README.md` — quem localizar o vídeo preenche |
+| Reescrever o Guia v2 inteiro para a nova estrutura | os caminhos foram atualizados (26 referências); uma revisão de texto do Guia é trabalho de curadoria, não de migração |

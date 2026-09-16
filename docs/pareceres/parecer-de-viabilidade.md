@@ -3,9 +3,9 @@
 **Projeto:** Transcri-YouTube · **Data:** 15 de setembro de 2026 · **Elaborado por:** Agente 86 (Arena.ai Agent Mode)
 
 **Objeto da análise**
-1. `Guia - SISTEMA DE REVISÃO E GOVERNANÇA TERMINOLÓGICA.docx` — a *skill* vinda de outra plataforma;
-2. `base-terminologica.xlsx` — ontologia consolidada das Revelações Cósmicas (Jan Val Ellam);
-3. `Revelações Cósmicas Urgente – Jan Val Ellam.txt` — primeira transcrição a processar (live do canal Paranormal Experience, 14/09/2026).
+1. `docs/legado/2026-09-guia-v1/guia-sistema-de-revisao-e-governanca-terminologica-v1.docx` — a *skill* vinda de outra plataforma;
+2. `docs/legado/2026-09-base-terminologica.xlsx` — ontologia consolidada das Revelações Cósmicas (Jan Val Ellam);
+3. `transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-bruta.txt` — primeira transcrição a processar (live do canal Paranormal Experience, 14/09/2026).
 
 ---
 
@@ -19,10 +19,10 @@ O que foi feito para chegar a essa conclusão (não é opinião, é medição):
 |---|---|
 | Biblioteca de acesso à base (946 termos, 104 obras, 1.887 relações) | `ferramentas/rc_lexicon.py` |
 | Varredura automática transcrição × base | `ferramentas/rc_diagnostico.py` |
-| Tabela de variantes do Guia convertida em dado (39 pares, 55 superfícies analisadas) | `ferramentas/sementes-variantes-stt.csv` |
-| Guarda de vocabulário comum pt-BR (1.844 formas) | `ferramentas/vocabular-guarda-pt.txt` |
+| Tabela de variantes do Guia convertida em dado (39 pares, 55 superfícies analisadas) | `ferramentas/dados/sementes-variantes-stt.csv` |
+| Guarda de vocabulário comum pt-BR (1.844 formas) | `ferramentas/dados/vocabular-guarda-pt.txt` |
 | Montagem determinística do DOCX final (Passo 3) | `ferramentas/rc_docx.py` |
-| Diagnóstico completo desta transcrição | `analise/revelacoes-cosmicas-urgente-jan-val-ellam/` |
+| Diagnóstico completo desta transcrição | `docs/legado/2026-09-prototipo-analise/` |
 | **Amostra revisada do bloco 1 + DOCX montado** | `…/exemplo-bloco-01.md`, `…/EXEMPLO-saida-bloco-01.docx` |
 
 **Os três pressupostos do Guia que falham aqui**
@@ -123,7 +123,7 @@ Das 55 superfícies citadas nas tabelas do Guia (5.1 nomes próprios, 5.2 termos
 variante | canonico | codigo_base | tipo | origem | evidencia | ocorrencias | aprovacao | data
 ```
 
-Já entregue como **`ferramentas/sementes-variantes-stt.csv`** — os 39 pares do Guia convertidos em dado, com coluna `status_aprovacao` separando `aprovada` (29) de `conflito` (10, ver §3). O script de diagnóstico consome esse arquivo e passa a detectar automaticamente, em qualquer transcrição futura, as variantes já conhecidas: nesta live ele pegou `Sofia`→Sophia (2×), `Yahé`/`Xavé`→Javé (3×), `Sherminetro`→Sherminator (1×), `Manuel Kant`/`Emanuel Kant`→Immanuel Kant (2×), `Raymond Czel`→Ray Kurzweil (1×).
+Já entregue como **`ferramentas/dados/sementes-variantes-stt.csv`** — os 39 pares do Guia convertidos em dado, com coluna `status_aprovacao` separando `aprovada` (29) de `conflito` (10, ver §3). O script de diagnóstico consome esse arquivo e passa a detectar automaticamente, em qualquer transcrição futura, as variantes já conhecidas: nesta live ele pegou `Sofia`→Sophia (2×), `Yahé`/`Xavé`→Javé (3×), `Sherminetro`→Sherminator (1×), `Manuel Kant`/`Emanuel Kant`→Immanuel Kant (2×), `Raymond Czel`→Ray Kurzweil (1×).
 
 **E o ciclo se fecha:** cada revisão devolve variantes novas para a tabela (a varredura já emite `variantes-propostas.csv` com 77 linhas prontas para triagem: 38 propostas de correção, 7 sementes do Guia confirmadas no texto e 32 informativas). Da segunda transcrição em diante, o sistema fica progressivamente mais preciso — hoje ele precisa redescobrir tudo a cada arquivo.
 
@@ -210,7 +210,7 @@ Por isso `rc_lexicon.py` classifica cada superfície por confiança (`alta` / `m
 
 ### 4.5 Termos genéricos exigem guarda
 
-**241 dos 946 núcleos** têm uma única palavra, e vários são vocabulário corrente: `Deus` (108 ocorrências na live), `Deuses`, `Criador`, `Mente`, `Conceito`, `Sistema`, `Caos`, `Transição`, `Cognição`. Sem guarda, o negrito obrigatório de primeira menção e a "substituição compulsória" produziriam absurdos. `ferramentas/vocabular-guarda-pt.txt` (1.844 formas) e a lista `GENERICOS` em `rc_lexicon.py` cumprem esse papel; ambas são ampliáveis.
+**241 dos 946 núcleos** têm uma única palavra, e vários são vocabulário corrente: `Deus` (108 ocorrências na live), `Deuses`, `Criador`, `Mente`, `Conceito`, `Sistema`, `Caos`, `Transição`, `Cognição`. Sem guarda, o negrito obrigatório de primeira menção e a "substituição compulsória" produziriam absurdos. `ferramentas/dados/vocabular-guarda-pt.txt` (1.844 formas) e a lista `GENERICOS` em `rc_lexicon.py` cumprem esse papel; ambas são ampliáveis.
 
 ### 4.6 O caso Kurzweil: por que a camada de variantes é indispensável
 
@@ -270,7 +270,7 @@ O cabeçalho traz um **"Guia de fontes"** (resumo automático de ~850 caracteres
 
 ```
 Transcri-YouTube/
-├── base-terminologica.xlsx            # fonte de verdade canônica (camada 1)
+├── docs/legado/2026-09-base-terminologica.xlsx            # fonte de verdade canônica (camada 1)
 ├── Guia - SISTEMA DE REVISÃO ....docx  # norma editorial (a atualizar: v2)
 ├── ferramentas/
 │   ├── requirements.txt
@@ -304,7 +304,7 @@ Transcri-YouTube/
 
 ### 6.3 As quatro camadas de conhecimento
 
-1. **Canônico** — `base-terminologica.xlsx` (e, idealmente, `termos/*.md`). Só a base cria canônicos.
+1. **Canônico** — `docs/legado/2026-09-base-terminologica.xlsx` (e, idealmente, `termos/*.md`). Só a base cria canônicos.
 2. **Variantes STT** — CSV versionado; cresce a cada transcrição; distingue `aprovada` / `proposta` / `conflito`.
 3. **Externos** — CSV novo para o mundo fora do cânone ellâmico (autores, obras, empresas, pessoas do canal). Remove ~90% dos `[NOTA]` indevidos. **Aqui proponho uma exceção controlada à proibição de busca externa:** consulta permitida *apenas* para esta camada, sempre registrada no CSV com a fonte e a data.
 4. **Guarda** — vocabulário comum pt-BR que nunca deve ser tratado como termo.
@@ -380,22 +380,22 @@ python3 -m venv .venv && . .venv/bin/activate
 pip install -r ferramentas/requirements.txt
 
 # 1. diagnóstico completo da transcrição contra a base
-python ferramentas/rc_diagnostico.py "Revelações Cósmicas Urgente – Jan Val Ellam.txt"
+python ferramentas/rc_diagnostico.py "transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-bruta.txt"
 
 # 2. montagem do DOCX final a partir dos blocos revisados + QA de variantes
-python ferramentas/rc_docx.py analise/<pasta>/blocos/*.md \
-    --lexico analise/<pasta>/dossie-bloco.txt \
+python ferramentas/rc_docx.py transcricoes/<pasta>/20-blocos/*.md \
+    --lexico transcricoes/<pasta>/10-diagnostico/dossie-bloco.txt \
     --saida "40-final.docx" \
     --titulo "Revelações Cósmicas Urgente — Jan Val Ellam" \
     --subtitulo "Transcrição revisada — Padronização terminológica conforme a Revelação Cósmica de Jan Val Ellam" \
-    --validar analise/<pasta>/variantes-propostas.csv
+    --validar transcricoes/<pasta>/10-diagnostico/variantes-propostas.csv
 ```
 
 ## Anexo B — Arquivos gerados nesta análise
 
 | arquivo | conteúdo |
 |---|---|
-| `analise/revelacoes-cosmicas-urgente-jan-val-ellam/diagnostico.md` | diagnóstico legível (6 seções) |
+| `docs/legado/2026-09-prototipo-analise/diagnostico.md` | diagnóstico legível (6 seções) |
 | `…/diagnostico.json` | diagnóstico completo para máquinas (inclui os 572 candidatos brutos) |
 | `…/variantes-propostas.csv` | 77 linhas prontas para triagem (variante, canônico, código, classe, contexto, aprovação) |
 | `…/ausentes-da-base.csv` | 169 entidades do texto sem registro na base |

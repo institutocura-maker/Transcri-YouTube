@@ -107,6 +107,16 @@ ou a outro agente, noutra sessão — retomar sem refazer descobertas.
   foram renomeados para `bloco-0N.md`, os produtos saíram da raiz e de `analise/`.
 - Tag `v1-antes-reorganizacao` marca o estado anterior; a migração foi em cinco fases, um commit por
   fase, tudo com `git mv`.
+- **Verificação pós-mudança:** o `.docx` foi regenerado no caminho novo e comparado parágrafo a
+  parágrafo com o anterior — 154 = 154, nenhuma diferença. O diagnóstico foi refeito com o código
+  novo e reproduziu exatamente as mesmas métricas (100 superfícies · 61 adjudicáveis · 145 ausentes
+  · 90 termos no dossiê · 98 linhas).
+- **Incidente:** o commit de normalização de fins de linha reescreveu o *blob* deste bruto no
+  repositório (CRLF → LF), sem tocar no arquivo de trabalho. O sha256 gravado em `metadados.yaml`
+  é o que permitiu perceber: `34f9bcf4…` contra `db3fa8ae…`. Corrigido no commit seguinte com
+  `-text` no `.gitattributes` para `00-fonte/*.txt|.vtt|.srt`, blob restaurado e conferido por
+  clone fresco + portão G1 verde. **Lição:** convenção de estilo não se aplica a evidência — o
+  bruto é o único arquivo deste repositório que não pode ser "melhorado".
 
 ---
 

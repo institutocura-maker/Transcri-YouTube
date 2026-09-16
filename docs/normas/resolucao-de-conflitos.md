@@ -4,7 +4,7 @@
 **Elaborado por:** Agente 86 (revisor terminológico)
 **Data:** 16 de setembro de 2026
 **Status:** submetido à aprovação do Comandante — nenhuma revisão de transcrição começa antes deste despacho
-**Fontes de evidência:** `KB-RC/canonico.json` (946 termos, formato canonico-1.1), `KB-RC/biblio.json` (104 obras), `KB-RC/termos/*.md` (820 fichas), `base-terminologica.xlsx` (fonte legada), `Guia - SISTEMA DE REVISÃO E GOVERNANÇA TERMINOLÓGICA.docx` (Guia v1), transcrição *Revelações Cósmicas Urgente – Jan Val Ellam*
+**Fontes de evidência:** `KB-RC/canonico.json` (946 termos, formato canonico-1.1), `KB-RC/biblio.json` (104 obras), `KB-RC/termos/*.md` (820 fichas), `docs/legado/2026-09-base-terminologica.xlsx` (fonte legada), `docs/legado/2026-09-guia-v1/guia-sistema-de-revisao-e-governanca-terminologica-v1.docx` (Guia v1), transcrição *Revelações Cósmicas Urgente – Jan Val Ellam*
 
 ---
 
@@ -36,7 +36,7 @@ Hierarquia aplicada em todos os oito casos, do mais forte para o mais fraco:
 3. **Seção "Etimologia e Grafias"** da ficha (406 fichas a possuem; 338 trazem grafia preferida) e o campo de variações de STT.
 4. **Prosa da ficha com data e fonte** (ex.: `[P2020-04-25 · …]`, `(U0084)`) — evidência datada vence evidência não datada.
 5. **`biblio.json`** — títulos de obras fixam grafias (ex.: B016 "O Quarto Logos").
-6. **Planilha `base-terminologica.xlsx`** — fonte legada, usada apenas para conferência.
+6. **Planilha `docs/legado/2026-09-base-terminologica.xlsx`** — fonte legada, usada apenas para conferência.
 7. **Guia v1** — menor peso: é derivado, não primário.
 
 Dois princípios complementares:
@@ -191,7 +191,7 @@ Contagem real: 104 registros = **97 B-codes (B001–B098, falta B095)**, 3 ART (
 Na transcrição: *"eu tenho um programa no YouTube chamado Valores Supremos da Consciência"*. Não é livro: é **programa/série do autor no YouTube**, ausente de `biblio.json` e de `canonico.json`. Proposta: novo registro bibliográfico (tipo PER/programa).
 
 ### 4.5 "Sherminetro" não é *Terminator*
-Hipótese inicial descartada pelo contexto: *"vamos aproveitar aqui meu querido Sherminetro para falar das mandalas arcturianas"*. É **apelido com que Jan se dirige ao apresentador**. Registrado em `ferramentas/externos.csv` como `[A CONFIRMAR]` — nenhuma alteração sem confirmação do produtor.
+Hipótese inicial descartada pelo contexto: *"vamos aproveitar aqui meu querido Sherminetro para falar das mandalas arcturianas"*. É **apelido com que Jan se dirige ao apresentador**. Registrado em `ferramentas/dados/externos.csv` como `[A CONFIRMAR]` — nenhuma alteração sem confirmação do produtor.
 
 ### 4.6 "Nick" (Nyx, RC-621) colide com Nick Bostrom
 A KB documenta "Nick" como variante STT de **Nyx**. Nesta transcrição, "Nick" é **Nick Bostrom** (*"Nick Bostron no seu livro chamado Utopia Profunda"*). O motor agora **suspende** a semente automaticamente (diagnóstico §3.1). Regra geral incorporada ao Guia v2: entidade da camada Externos nunca vira variante de termo interno.
@@ -251,7 +251,7 @@ Tabela a ser incorporada ao Guia v2 (§4.3) e às sementes do motor.
 | 7 | Registrar "Valores Supremos da Consciência" (programa de YouTube do autor) em `biblio.json` | `KB-RC/biblio.json` | média | curador |
 | 8 | Saneamento de "radiato" em títulos curatoriais (RC-631 l.75, RC-009 l.424, RC-565 l.48) sem tocar citações | fichas | baixa | curador |
 | 9 | Investigar B095 (código ausente) e corrigir a contagem de obras no Guia | `KB-RC/biblio.json` | baixa | curador |
-| 10 | Confirmar com o produtor: grafia de "Sherminetro", "Tati Quântica", "Sherminetro/Sherminator", canal "Paranormal Experience" | `ferramentas/externos.csv` | média | produtor |
+| 10 | Confirmar com o produtor: grafia de "Sherminetro", "Tati Quântica", "Sherminetro/Sherminator", canal "Paranormal Experience" | `ferramentas/dados/externos.csv` | média | produtor |
 
 Nenhuma destas ações bloqueia a revisão da transcrição: as decisões do §5 já são suficientes para operar.
 
@@ -262,12 +262,12 @@ Nenhuma destas ações bloqueia a revisão da transcrição: as decisões do §5
 ```bash
 # 1. extrair as relações variante -> canônico da prosa das 820 fichas
 python ferramentas/rc_variantes.py --kb KB-RC \
-    --transcricao "Revelações Cósmicas Urgente – Jan Val Ellam.txt"
-#    -> ferramentas/variantes-kb-extraidas.csv (1.590 pares; 299 regras de substituição)
+    --transcricao "transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-bruta.txt"
+#    -> ferramentas/dados/variantes-kb-extraidas.csv (1.590 pares; 299 regras de substituição)
 
 # 2. diagnóstico com a KB-RC como fonte de verdade (a planilha é ignorada)
-python ferramentas/rc_diagnostico.py "Revelações Cósmicas Urgente – Jan Val Ellam.txt" \
-    --kb KB-RC --saida analise/revelacoes-cosmicas-urgente-jan-val-ellam-kb
+python ferramentas/rc_diagnostico.py "transcricoes/2026-09-14-revelacoes-cosmicas-urgente/00-fonte/transcricao-bruta.txt" \
+    --kb KB-RC --saida transcricoes/2026-09-14-revelacoes-cosmicas-urgente
 #    -> diagnostico.md / .json, variantes-propostas.csv, ausentes-da-base.csv, dossie-bloco.txt
 ```
 

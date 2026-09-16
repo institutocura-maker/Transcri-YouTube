@@ -1,9 +1,9 @@
 # Guia de Revisão e Governança Terminológica — v2
 
 **Aplicação:** transcrições automáticas (STT) de palestras, lives e vídeos do YouTube de Jan Val Ellam e material correlato das Revelações Cósmicas.
-**Versão:** 2.0 — substitui integralmente o *Guia - SISTEMA DE REVISÃO E GOVERNANÇA TERMINOLÓGICA.docx* (v1).
+**Versão:** 2.0 — substitui integralmente o *docs/legado/2026-09-guia-v1/guia-sistema-de-revisao-e-governanca-terminologica-v1.docx* (v1).
 **Data:** 16 de setembro de 2026 · **Elaboração:** Agente 86 · **Aprovação:** Comandante
-**Anexo I:** `analise/RESOLUCAO-DE-CONFLITOS.md` (resolução dos oito conflitos da base — leitura obrigatória antes da primeira revisão)
+**Anexo I:** `docs/normas/resolucao-de-conflitos.md` (resolução dos oito conflitos da base — leitura obrigatória antes da primeira revisão)
 
 ---
 
@@ -11,7 +11,7 @@
 
 | # | Mudança | Motivo |
 |---|---|---|
-| 1 | **A fonte de verdade passou a ser `KB-RC/`** (`canonico.json` + `biblio.json` + `termos/*.md`). A planilha `base-terminologica.xlsx` fica como fonte legada de conferência. | Decisão do despacho. A KB-RC tem 946 termos, 820 fichas e 104 obras; a planilha é um retrato anterior e sem prosa |
+| 1 | **A fonte de verdade passou a ser `KB-RC/`** (`canonico.json` + `biblio.json` + `termos/*.md`). A planilha `docs/legado/2026-09-base-terminologica.xlsx` fica como fonte legada de conferência. | Decisão do despacho. A KB-RC tem 946 termos, 820 fichas e 104 obras; a planilha é um retrato anterior e sem prosa |
 | 2 | Os **oito conflitos da base foram resolvidos** e viraram registro formal (§4.3) | Não se revisa transcrição com a base em conflito |
 | 3 | Nova seção de **camadas de correção** com ordem de aplicação (§3) | A v1 misturava terminologia, ortografia e números na mesma tabela |
 | 4 | Novas regras de **quando NÃO substituir** (§4.2), com classes de variante extraídas da KB (§4.1) | 778 das 1.590 relações variante→canônico da KB são equivalência conceitual, não erro de grafia; substituí-las destruiria o texto |
@@ -42,12 +42,12 @@ Correção ortográfica e terminológica de transcrição automática, com padro
 | Números e datas | Nunca alterar o que foi dito; divergência verificada vai em `[NOTA]` e para o produtor (§7) |
 
 ### 1.3 Produtos de uma revisão completa
-1. `analise/<slug>/diagnostico.md` + `.json` — radiografia automática.
-2. `analise/<slug>/variantes-propostas.csv` — fila de decisão.
-3. `analise/<slug>/ausentes-da-base.csv` — candidatos a novo registro na KB.
-4. `analise/<slug>/blocos/bloco-N.md` — os oito blocos revisados (fonte versionável).
+1. `transcricoes/<slug>/10-diagnostico/diagnostico.md` + `.json` — radiografia automática.
+2. `transcricoes/<slug>/10-diagnostico/variantes-propostas.csv` — fila de decisão.
+3. `transcricoes/<slug>/10-diagnostico/ausentes-da-base.csv` — candidatos a novo registro na KB.
+4. `transcricoes/<slug>/20-blocos/bloco-NN.md` — os oito blocos revisados (fonte versionável).
 5. `<Título> (revisado).docx` — produto de leitura, montado por script.
-6. `analise/<slug>/DEVOLUCAO-A-KB.md` — achados que a revisão devolve à base (§15).
+6. `transcricoes/<slug>/40-devolucao/devolucao-a-kb.md` — achados que a revisão devolve à base (§15).
 
 ---
 
@@ -60,7 +60,7 @@ Correção ortográfica e terminológica de transcrição automática, com padro
 | `KB-RC/canonico.json` | 946 termos (formato canonico-1.1) + ≈1.887 relações tipadas | nome canônico, categoria, status, confiança, fontes, relacionados |
 | `KB-RC/biblio.json` | 104 obras: 97 códigos B (B001–B098, **falta B095**), 3 ART, 1 PER, 1 EXT, 2 P | grafia de títulos, datas, ISBN, tipo de obra |
 | `KB-RC/termos/*.md` | **820 fichas** (7,1 MB) com prosa curatorial | definição, contexto, etimologia e grafias, citações-chave, Quarentena |
-| `base-terminologica.xlsx` | retrato legado (abas Como usar, Índice Mestre, Fichas, Categorias, Bibliografia, Relações, Status) | conferência histórica; **não decide** |
+| `docs/legado/2026-09-base-terminologica.xlsx` | retrato legado (abas Como usar, Índice Mestre, Fichas, Categorias, Bibliografia, Relações, Status) | conferência histórica; **não decide** |
 
 **126 termos do `canonico.json` não têm ficha.** Para eles só se aplica o nome canônico; não há variantes documentadas.
 
@@ -139,8 +139,8 @@ Aplicar nesta ordem. Camada posterior não desfaz camada anterior.
 | Camada | O quê | Instrumento | Quem decide |
 |---|---|---|---|
 | 1 | **Terminologia canônica KB-RC** (nomes, conceitos, obras) | `canonico.json` + fichas + Quarentena | regra + revisor |
-| 2 | **Variantes STT documentadas** (Brama→Brahma, Yahé→Javé) | `ferramentas/variantes-kb-extraidas.csv` (1.590 pares; 299 regras de substituição) | revisor, com contexto |
-| 3 | **Externos** (autores, obras, empresas, pessoas do mundo real) | `ferramentas/externos.csv` (34 entidades) — busca externa autorizada | revisor, com fonte e data |
+| 2 | **Variantes STT documentadas** (Brama→Brahma, Yahé→Javé) | `ferramentas/dados/variantes-kb-extraidas.csv` (1.590 pares; 299 regras de substituição) | revisor, com contexto |
+| 3 | **Externos** (autores, obras, empresas, pessoas do mundo real) | `ferramentas/dados/externos.csv` (34 entidades) — busca externa autorizada | revisor, com fonte e data |
 | 4 | **Números, datas e valores** | §7 — nunca alterar o dito | produtor |
 | 5 | **Ortografia, pontuação, segmentação e disfluência** | §6, §8, §10 | revisor |
 
@@ -174,7 +174,7 @@ Duas marcações de risco atravessam todas as classes:
 1. **Classe `variacao`** (equivalência conceitual). Trocar "Criador" por "Javé" altera doutrina, não ortografia.
 2. **Citação literal entre aspas** — preserva a forma STT (§4.5).
 3. **Entidade da camada Externos** — "Nick" de Nick Bostrom nunca vira Nyx (RC-621).
-4. **Forma do vocabulário comum** (`ferramentas/vocabular-guarda-pt.txt`, 1.878 entradas) sem contexto inequívoco.
+4. **Forma do vocabulário comum** (`ferramentas/dados/vocabular-guarda-pt.txt`, 1.878 entradas) sem contexto inequívoco.
 5. **Termo de status 🔴 ou confiança baixa** sem evidência adicional.
 6. **Números, datas, valores e nomes de pessoas reais não confirmados** (§7, §5).
 7. **Quando a decisão exigir conhecimento que o texto não dá** — marcar `[A CONFIRMAR]`, nunca chutar.
@@ -224,7 +224,7 @@ A própria KB grafa "Brama", "Sofia" e "Lemion" **dentro de aspas**, porque repr
 
 **Única camada com busca externa autorizada.** Toda entrada registra **fonte e data**.
 
-Arquivo: `ferramentas/externos.csv` — colunas `variante,canonico,codigo_base,tipo,origem,observacao,status_aprovacao`.
+Arquivo: `ferramentas/dados/externos.csv` — colunas `variante,canonico,codigo_base,tipo,origem,observacao,status_aprovacao`.
 
 Regras:
 
@@ -368,7 +368,7 @@ python ferramentas/rc_variantes.py --kb KB-RC --transcricao "<Título>.txt"
 
 # 2) diagnóstico com a KB-RC como fonte de verdade
 python ferramentas/rc_diagnostico.py "<Título>.txt" --kb KB-RC \
-    --saida "analise/<slug>"
+    --saida "transcricoes/<slug>"
 ```
 
 Saídas usadas no dia a dia: `diagnostico.md` (leitura), `variantes-propostas.csv` (fila de decisão), `ausentes-da-base.csv` (novos registros), `dossie-bloco.txt` (recorte enxuto da base, ≈1.153 tokens).
@@ -385,19 +385,19 @@ Dividir por **fronteiras de assunto**, não por contagem fixa de palavras: cada 
 4. Adjudicar cada linha da fila `variantes-propostas.csv` que caia no bloco: **aceitar / recusar / decidir por contexto**, registrando o motivo.
 5. Segmentar parágrafos e pontuar (§8); diarizar (§9); podar disfluência leve (§10).
 6. Marcar anúncios (§11) e inserir marcadores (§12).
-7. Gravar `analise/<slug>/blocos/bloco-N.md`.
+7. Gravar `transcricoes/<slug>/20-blocos/bloco-NN.md`.
 8. Revisão de fechamento do bloco: ler em voz alta; nada de termo canônico sem conferência na ficha.
 
 ### 13.4 Montagem final
 
 ```bash
-python ferramentas/rc_docx.py analise/<slug>/blocos/*.md \
-    --lexico analise/<slug>/dossie-bloco.txt \
+python ferramentas/rc_docx.py transcricoes/<slug>/20-blocos/*.md \
+    --lexico transcricoes/<slug>/10-diagnostico/dossie-bloco.txt \
     --saida "<Título> (revisado).docx" \
     --titulo "<Título>" \
     --subtitulo "Transcrição revisada — padronização terminológica conforme as Revelações Cósmicas" \
-    --validar analise/<slug>/variantes-propostas.csv
-python ferramentas/md_para_docx.py analise/<slug>/DEVOLUCAO-A-KB.md --saida analise/<slug>/DEVOLUCAO-A-KB.docx
+    --validar transcricoes/<slug>/10-diagnostico/variantes-propostas.csv
+python ferramentas/md_para_docx.py transcricoes/<slug>/40-devolucao/devolucao-a-kb.md --saida transcricoes/<slug>/40-devolucao/devolucao-a-kb.docx
 ```
 
 O `--lexico` aplica negrito na **primeira menção** de cada termo canônico; `--validar` confere se alguma forma proibida sobreviveu no produto final.
@@ -425,7 +425,7 @@ O `--lexico` aplica negrito na **primeira menção** de cada termo canônico; `-
 
 ## 15. Governança: devolução à KB-RC
 
-Toda revisão produz `analise/<slug>/DEVOLUCAO-A-KB.md`, com quatro seções:
+Toda revisão produz `transcricoes/<slug>/40-devolucao/devolucao-a-kb.md`, com quatro seções:
 
 1. **Novos termos propostos** — formas do texto ausentes da base (145 nesta transcrição), com contexto, código sugerido, categoria e confiança.
 2. **Novas variantes STT** — corruptelas observadas que a KB ainda não documenta, com a citação literal e a data da fonte.
@@ -450,11 +450,11 @@ Regras de governança:
 | `ferramentas/rc_kb.py` | carrega `KB-RC` (camada 1): termos, fichas, relações, obras | objetos em memória |
 | `ferramentas/rc_variantes.py` | extrai variante→canônico da **prosa** das fichas, classifica por classe e confiança de mapeamento | `variantes-kb-extraidas.csv` |
 | `ferramentas/rc_lexicon.py` | normalização, chave fonética, índice de superfícies, sementes, dossiê | — |
-| `ferramentas/rc_diagnostico.py` | varredura completa: exatas, sementes, fuzzy adjudicável, ausentes | `analise/<slug>/*` |
+| `ferramentas/rc_diagnostico.py` | varredura completa: exatas, sementes, fuzzy adjudicável, ausentes | `transcricoes/<slug>/*` |
 | `ferramentas/rc_docx.py` | monta o .docx revisado (negrito de 1ª menção, validação) | `<Título> (revisado).docx` |
 | `ferramentas/md_para_docx.py` | converte documentos de governança (.md → .docx) | `.docx` |
 
-Arquivos de controle: `ferramentas/vocabular-guarda-pt.txt` (1.878 formas comuns), `ferramentas/sementes-variantes-stt.csv`, `ferramentas/externos.csv` (34 entidades), `ferramentas/variantes-kb-extraidas.csv` (1.590 pares).
+Arquivos de controle: `ferramentas/dados/vocabular-guarda-pt.txt` (1.878 formas comuns), `ferramentas/dados/sementes-variantes-stt.csv`, `ferramentas/dados/externos.csv` (34 entidades), `ferramentas/dados/variantes-kb-extraidas.csv` (1.590 pares).
 
 ## 17. Apêndice B — Diagnóstico de referência desta transcrição
 

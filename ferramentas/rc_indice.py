@@ -182,8 +182,19 @@ def main(argv: list[str] | None = None) -> int:
         if csv_path.exists():
             with csv_path.open(encoding="utf-8-sig", newline="") as fh:
                 antigo = list(csv.DictReader(fh))
-        if antigo != linhas:
-            problemas.append("o catálogo está desatualizado (rode `rc_indice.py` sem --checar)")
+        # compara como texto: o CSV devolve tudo string, enquanto medir() devolve
+        # inteiros nos campos numéricos — sem normalizar, a checagem acusaria
+        # desatualização mesmo com o catálogo em dia
+        def _como_texto(lotes):
+            return [{k: str(v) for k, v in l.items()} for l in lotes]
+        if _como_texto(antigo) != _como_texto(linhas):
+            diffs = []
+            for a, b in zip(_como_texto(antigo), _como_texto(linhas)):
+                diffs += [f"{k}: {a.get(k)!r} -> {b.get(k)!r}" for k in b if a.get(k) != b.get(k)]
+            if len(_como_texto(antigo)) != len(_como_texto(linhas)):
+                diffs.append(f"{len(antigo)} linhas no CSV x {len(linhas)} medidas no disco")
+            problemas.append("o catálogo está desatualizado (rode `rc_indice.py` sem --checar): "
+                             + "; ".join(diffs[:4]))
         if args.json:
             print(json.dumps(dict(ok=not problemas, problemas=problemas, indice=linhas),
                              ensure_ascii=False, indent=1))
