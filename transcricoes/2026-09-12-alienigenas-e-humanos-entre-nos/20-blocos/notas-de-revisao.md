@@ -95,5 +95,9 @@ corre limpo. Zero `[A CONFIRMAR]`, zero `[INAUDÍVEL]`: o bruto oficial está co
   *imbeciliz-*, *coelhos* preservadas. "O que diabos é isso" (bloco 1) e "esculhambassem" (bloco 3
   do bruto → bloco 2 revisado) estão no produto.
 * Falso amigo: `qualia` no bruto é corruptela de **colmeia** (RC-174), não RC-894 — ressalva
-  proposta na fila de curadoria (id 0048).
-* Portões: G1–G8 `ok`, G9 `n/a`. Catálogo: `30-revisada`, 3 blocos, 1.874 palavras.
+  gravada na seção *Cautela editorial* da ficha RC-894 em 17/09/2026 (fila 0048, aprovada).
+* Portões: G1–G8 `ok`, G9 `n/a`. Catálogo: `40-devolvida`, 3 blocos, **1.865** palavras — eram 1.874
+  até 17/09/2026, quando o `MARCADOR_RE`/`NOTA_RE` do `rc_docx.py` passou a tolerar colchete
+  aninhado: o rabo da `[NOTA]` do *pósitron* (que cita a notação `[STT 'positelétron']` da ficha
+  RC-636) era contado como corpo e saía sem itálico no `.docx`. Contagem e renderização conferidas
+  de novo; produto regenerado.

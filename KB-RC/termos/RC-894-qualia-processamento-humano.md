@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["P2023-10-15", "P2023-11-18", "P2024-01-13", "P2024-02-04", "P2024-03-17"]
 via = "P6-evidência"
 confianca_fonte = "média"
-atualizado = "2026-09-13"
+atualizado = "2026-09-17"
 +++
 # Qualia como Processamento Humano — RC-894
 
@@ -45,3 +45,12 @@ Conceito desenvolvido na palestra «A Falsa Queda do Ser Humano e a Indignidade 
 | Fonte | Localização | Tipo |
 |---|---|---|
 | P2024-02-04 | A Falsa Queda do Ser Humano e a Indignidade Entronizada como Religião (palestra) | transcrição automatizada; citação |
+
+## Cautela editorial
+
+- **"qualia" exige validação de contexto antes de casar com este código.** Em
+  `2026-09-12-alienigenas-e-humanos-entre-nos` (Y2026-09-12), bloco 2, o bruto traz "sabe uma **qualia** que tem aqueles buraquinhos
+  cada **louoca** é um buraquinho daquele" — é corruptela de **colmeia** (RC-174), não Qualia.
+  A varredura automática casa a forma; só o contexto decide. Risco simétrico ao do Guia v2 §4.2
+  para formas curtas. Fila 0048, aprovada no despacho do Comandante de 17/09/2026 ("exigir validação de contexto e evitar falsos
+  positivos automatizados"); curadoria Agente 86.

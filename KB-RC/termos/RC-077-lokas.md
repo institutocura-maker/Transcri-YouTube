@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["B031", "B021"]
 via = "P6-evidência"
 confianca_fonte = "alta"
-atualizado = "2026-09-13"
+atualizado = "2026-09-17"
 +++
 # Lokas — RC-077
 
@@ -19,6 +19,10 @@ Em sânscrito, «mundo, morada, lugar ou plano de existência»: as lokas são a
 ## Contexto / Origem
 
 **Materialização (não é criação).** Este código vivia só no cadastro (`ficha=False`). A virada foi despachada pelo Curador em 13/09/2026 — rota **R1** do dossiê `diagnostico/CENSO-GAP-FICHAS-2026-09-13.md` — e executada na unidade U42 (lote 1 da família B), na esteira do precedente U30 (RC-367/RC-537) e do piloto U41. Conteúdo restrito ao que a fonte sustém.
+
+## Etimologia e Grafias
+- **Grafia preferida:** Lokas
+- **Variações STT capturadas:** locas; louoca
 
 ## Escopo e evidência
 
@@ -42,6 +46,14 @@ Em sânscrito, «mundo, morada, lugar ou plano de existência»: as lokas são a
 | Obra (sigla) | Título | Página | Tipo |
 |---|---|---|---|
 | B031 | Painéis Emergentes da Revelação Cósmica | p. 139, p. 28 | livro; citação intra-linha |
+
+## Atualização
+### 2026-09-17 — variante STT devolvida por `2026-09-12-alienigenas-e-humanos-entre-nos` (fila 0043)
+- **"locas"** — 2 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 2; atestada 2× no corpo do bruto: "esse aqui tem milhões de locas o que é locas". Canônico Lokas. Decisão aceita no livro-razão desta pasta.
+### 2026-09-17 — variante STT devolvida por `2026-09-12-alienigenas-e-humanos-entre-nos` (fila 0044)
+- **"louoca"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 2; atestada 1× no bruto: "cada louoca é um buraquinho daquele". Singular de Lokas; a revisão grafou "loka".
 
 ## Citações-chave
 

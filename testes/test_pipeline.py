@@ -167,6 +167,20 @@ if QA:
     proibidas = QA.formas_proibidas(REFERENCIA, RAIZ / "KB-RC")
     verificar("formas proibidas derivadas da KB + ledger", len(proibidas) >= 10, f"{len(proibidas)}")
     verificar("Quarentena 'Sofia' capturada", "Sofia" in proibidas, str(sorted(proibidas)[:5]))
+    # quase-canônicas do corretor do editor (vídeo 2, fila 0049/0050, despacho de 17/09/2026)
+    verificar("Quarentena 'glues' capturada (RC-034)", "glues" in proibidas, str(sorted(proibidas)[:6]))
+    verificar("Quarentena 'pósetron' capturada (RC-636)", "pósetron" in proibidas)
+
+    # uma [NOTA] pode citar a notação da KB, que tem colchete dentro: «pósitrons [STT 'positelétron']».
+    # Sem tolerar o aninhamento o marcador fecha cedo, o rabo volta a ser corpo e a forma proibida
+    # citada como evidência vira falso positivo no G3 (defeito achado no vídeo 2, bloco 3).
+    aninhado = 'corpo [NOTA: o editor trocou por "pósetron"; RC-636 registra "pósitrons [STT x]", fim] mais corpo'
+    expurgo = QA.MARCADOR_RE.sub(" ", aninhado)
+    verificar("marcador com colchete aninhado é expurgado por inteiro",
+              "pósetron" not in expurgo and "[" not in expurgo, expurgo)
+    n = DX.NOTA_RE.search("[NOTA: a [STT b] c]")
+    verificar("NOTA_RE casa a nota inteira quando há colchete dentro",
+              bool(n) and n.group(0) == "[NOTA: a [STT b] c]", n.group(0) if n else "sem casamento")
 
 # --------------------------------------------------------------------------------------
 print("\n7. portões rápidos na transcrição de referência")

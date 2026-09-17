@@ -7,7 +7,7 @@
 | bruto oficial | `00-fonte/transcricao-bruta.txt` — sha256 `16c9276a…`, 1.810 palavras de corpo, **sem pontuação** |
 | matéria dos blocos | `00-fonte/revisao-comandante.docx` — sha256 `d188b7ee…`, 1.817 palavras (revisão humana externa) |
 | divergência bruto × revisão | **8,12%** — mesma base de áudio, edição substancial: correção, não perda |
-| blocos / produto | 3 blocos · `30-produto/transcricao-revisada.docx` · 1.874 palavras de corpo · 5 `[NOTA]` |
+| blocos / produto | 3 blocos · `30-produto/transcricao-revisada.docx` · 1.865 palavras de corpo · 5 `[NOTA]` |
 | portões | G1–G8 `ok`, G9 `n/a` (não há camada derivada: a revisão externa não é derivado de máquina) |
 | parecer | `docs/pareceres/parecer-video-2-revisao-externa.md` (§3 **retratado** neste turno) |
 | devolvido em | 16/09/2026, por Agente 86 |
@@ -17,7 +17,8 @@
 ## 1. Novas variantes STT observadas (a acrescentar às fichas)
 
 Todas atestadas **no corpo do bruto oficial** — não em captura de página, que a casa rebaixou a
-não-fonte (parecer §3). Fila: `KB-RC/_fila-de-curadoria.csv`, ids **0043 a 0047**.
+não-fonte (parecer §3). Fila: `KB-RC/_fila-de-curadoria.csv`, ids **0043 a 0047** —
+**APROVADAS pelo Comandante em 17/09/2026 e aplicadas nas fichas** (§8).
 
 | forma do bruto | canônico | código | bloco | evidência no bruto |
 |---|---|---|:---:|---|
@@ -42,7 +43,8 @@ manteve e registrou as duas corruptelas do ASR como variantes a acrescentar.
 
 ## 2. Formas quase-canônicas do editor — proposta de Quarentena
 
-Fila ids **0049 e 0050**. Este é o achado mais útil da auditoria: o corretor ortográfico do editor
+Fila ids **0049 e 0050** — **APROVADAS e gravadas em 17/09/2026**: o portão G3 desta pasta
+passou de 6 para **8 formas proibidas varridas**. Este é o achado mais útil da auditoria: o corretor ortográfico do editor
 usado pelo Comandante **troca termo técnico por palavra existente** e nenhuma régua da casa pega.
 
 | forma no `.docx` | o que o bruto diz | canônico | por que escapa dos portões |
@@ -139,17 +141,24 @@ final sabe onde termina a palavra do autor e onde começa a do revisor.
 
 ## 8. Aplicação — o que já voltou para a base
 
+**Atualizado em 17/09/2026: o Comandante adjudicou a fila inteira em despacho — tudo APROVADO e
+aplicado.** Relatório: `KB-RC/_relatorio-curadoria-lote-03.md`.
+
 | o quê | onde | status |
 |---|---|---|
-| fonte `Y2026-09-12` | `KB-RC/biblio.json` (106 obras) | **aplicada** em 16/09/2026 · fila id 0042 · `KB-RC/CHANGELOG.md` |
-| 5 variantes STT (§1) | fichas RC-077, RC-034, RC-577, RC-548 | propostas · fila 0043–0047 · **pendentes** |
-| ressalva de falso amigo (§3) | ficha RC-894 | proposta · fila 0048 · **pendente** |
-| 2 Quarentenas (§2) | fichas RC-034, RC-636 | propostas · fila 0049–0050 · **pendentes** |
-| divergência de data (§5.1) | — | registrada · fila 0051 |
-| `Jesus` na camada 3 | `ferramentas/dados/externos.csv` | proposta · `40-devolucao/externos-novos.csv` · **pendente** |
+| fonte `Y2026-09-12` | `KB-RC/biblio.json` (106 obras) | **aplicada** em 16/09/2026 · fila 0042 |
+| `locas`, `louoca` → Lokas | ficha **RC-077** (seção *Etimologia e Grafias* criada + *Atualização*) | **aplicada** em 17/09/2026 · fila 0043, 0044 · `rc_curadoria.py` |
+| `glu` → gluons | ficha **RC-034** | **aplicada** · fila 0045 · `rc_curadoria.py` |
+| `chamanismo` (parcial) | ficha **RC-577** + seção *Cautela editorial* nova | **aplicada** · fila 0046 |
+| `acásicos`, `acáxicos` | ficha **RC-548** | **aplicada** · fila 0047 · `rc_curadoria.py` |
+| ressalva de falso amigo (`qualia` ≠ RC-894) | ficha **RC-894**, seção *Cautela editorial* nova | **aplicada** · fila 0048 |
+| `NUNCA "glues"` | ficha **RC-034**, seção *Quarentena Terminológica* nova | **aplicada** · fila 0049 · G3 passa de 6 para 8 formas varridas |
+| `NUNCA "pósetron"` | ficha **RC-636**, seção *Quarentena Terminológica* nova | **aplicada** · fila 0050 |
+| data oficial 12/09/2026 | `metadados.yaml` e `Y2026-09-12` | **decidida** · fila 0051 · nada a gravar na KB |
+| `Jesus` na camada 3 | `ferramentas/dados/externos.csv` (38 entidades) | **aprovada e aplicada** · `externos-novos.csv` |
 
-Nada além da fonte Y foi aplicado: alteração de ficha é decisão do curador
-(`KB-RC/CHANGELOG.md` só recebe linha quando a mudança foi aplicada).
+Fila do vídeo 2: **10 de 10 itens aplicados**, nenhuma pendência. `KB-RC/CHANGELOG.md` recebeu as
+duas entradas do lote (a mecânica, gravada pelo `rc_curadoria.py`, e a manual).
 
 ---
 

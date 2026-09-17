@@ -43,11 +43,18 @@ try:
 except ImportError as exc:  # pragma: no cover
     raise SystemExit("python-docx não instalado. Rode: pip install -r ferramentas/requirements.txt") from exc
 
-NOTA_RE = re.compile(r"\[NOTA:[^\]]*\]")
+# Uma nota pode CITAR a notação da KB, e essa notação tem colchetes dentro — ex.:
+# RC-636 registra «o jogo de pósitrons [STT 'positelétron']». Sem tolerar um nível de
+# aninhamento, o marcador fechava cedo demais e o rabo da nota voltava a ser corpo:
+# no .docx saía sem itálico, e no G3 uma forma proibida citada como evidência depois do
+# colchete interno daria falso positivo. Evidência do defeito: vídeo 2, bloco 3
+# (`transcricoes/2026-09-12-alienigenas-e-humanos-entre-nos`), 17/09/2026.
+CORPO_MARCADOR = r"(?:[^\[\]]|\[[^\]]*\])*"
+NOTA_RE = re.compile(r"\[NOTA:" + CORPO_MARCADOR + r"\]")
 # Marcadores editoriais que CITAM o bruto de propósito. O QA de sobrevivência de
 # variantes não pode punir uma [NOTA] que documenta a forma ouvida ("Xavé" -> Javé),
 # senão o revisor é incentivado a apagar a evidência em vez de registrá-la.
-MARCADOR_RE = re.compile(r"\[(?:NOTA|A CONFIRMAR|INAUDÍVEL|ANÚNCIO):?[^\]]*\]")
+MARCADOR_RE = re.compile(r"\[(?:NOTA|A CONFIRMAR|INAUDÍVEL|ANÚNCIO):?" + CORPO_MARCADOR + r"\]")
 NEGRITO_RE = re.compile(r"\*\*(.+?)\*\*")
 # Ordem importa: a NOTA é casada antes dos asteriscos para que o markup interno
 # (*título de livro*) não vire run separado — dentro da nota tudo já sai em itálico.

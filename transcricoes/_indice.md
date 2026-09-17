@@ -4,7 +4,7 @@
 
 | slug | data | título | canal | estágio | blocos | palavras | `[NOTA]` | devolução | revisor |
 |---|---|---|---|---|---:|---:|---:|---|---|
-| `2026-09-12-alienigenas-e-humanos-entre-nos` | 2026-09-12 | Alienígenas e humanos: Eles já estão entre nós? | Jan Val Ellam | **40-devolvida** | 3 | 1,874 | 5 | 2026-09-16 | Comandante (revisão externa) + Agente 86 (camadas 1–5 do Guia v2) |
+| `2026-09-12-alienigenas-e-humanos-entre-nos` | 2026-09-12 | Alienígenas e humanos: Eles já estão entre nós? | Jan Val Ellam | **40-devolvida** | 3 | 1,865 | 5 | 2026-09-16 | Comandante (revisão externa) + Agente 86 (camadas 1–5 do Guia v2) |
 | `2026-09-14-revelacoes-cosmicas-urgente` | 2026-09-14 | Revelações Cósmicas Urgente | Paranormal Experience | **40-devolvida** | 8 | 18,966 | 32 | 2026-09-16 | Agente 86 |
 
 ## Estágios

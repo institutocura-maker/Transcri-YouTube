@@ -98,18 +98,20 @@ revisao:
   politica_de_numeros: nenhum número alterado; divergência vira [NOTA]
   despachos:
     - 90-registro/despachos/2026-09-16-esteira-normal-e-nomeacao-de-deiticos.md
+    - 90-registro/despachos/2026-09-17-adjudicacao-da-fila.md   # aprovou os 10 itens da fila e Jesus na camada 3
     - ../2026-09-14-revelacoes-cosmicas-urgente/90-registro/despachos/2026-09-15-contrato-editorial.md  # contrato que rege a casa
 
 resultado:
   blocos: 3
-  palavras_revisadas: 1874   # texto corrido dos blocos, sem os marcadores editoriais
+  palavras_revisadas: 1865   # texto corrido dos blocos, sem os marcadores editoriais
   paragrafos: 25
   notas: 5                   # 3 de correção contra o bruto/KB, 1 de nomeação de dêiticos, 1 de proveniência
   a_confirmar: 0
   inaudivel: 0               # o bruto oficial não traz nenhum trecho inaudível
   adjudicacao: 29 linhas decididas (19 informativas, 2 aprovadas pela semente do Guia, 1 aceita, 1 aceita-parcial, 5 recusadas, 1 proteção)
-  novos_termos_propostos: 11 # 40-devolucao/_fila-de-curadoria-proposta.csv
-  variantes_stt_devolvidas: 2 (locas -> Lokas RC-077; chamanismo -> xamanismo, parcial)
+  novos_termos_propostos: 10 # KB-RC/_fila-de-curadoria.csv, ids 0042–0051 — todos aplicados em 17/09/2026
+  variantes_stt_devolvidas: 5 (locas e louoca -> RC-077; glu -> RC-034; chamanismo -> RC-577 parcial; acásicos/acáxicos -> RC-548)
+  curadoria_aplicada: lote 03 em 17/09/2026 — 5 variantes STT (RC-077, RC-034, RC-577, RC-548), 2 Quarentenas (glues em RC-034, pósetron em RC-636), 2 cautelas editoriais (RC-894, RC-577), Jesus na camada 3; relatório em KB-RC/_relatorio-curadoria-lote-03.md
   divergencias_factuais: 4   # datas 12/09 × 13/09; "à tarde" × "a parte"; "glues" × "glu"; "pósetron" × "pósitron"
   revisor: "Comandante (revisão externa) + Agente 86 (camadas 1–5 do Guia v2)"
   concluido_em: 2026-09-16

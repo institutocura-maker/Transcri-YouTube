@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["P2022-12-17", "P2026-04-02", "P2025-02-16", "P2025-02-15", "P2024-11-30", "P2026-08-04", "P2024-09-28", "P2024-08-03"]
 via = "P6-evidência"
 confianca_fonte = "média"
-atualizado = "2026-08-18"
+atualizado = "2026-09-17"
 +++
 # Xamanismo Cósmico (comunicação e deslacre) — RC-577
 
@@ -21,6 +21,7 @@ No uso da palestra, protocolo antigo de comunicação entre o universo antimater
 ## Etimologia e Grafias
 - Grafia preferida: Xamanismo Cósmico. STT: chamanismo, ch humanismo.
 - **Fonte da grafia neste ciclo:** pré-curadoria da palestra `P2022-12-17`, validada pelo curador em 2026-08-14.
+- **Variações STT capturadas:** chamanismo
 
 
 ## Ampliação
@@ -99,3 +100,17 @@ A palestra relaciona cannabis e outras plantas à expansão de consciência e ao
 
 > Notas de processo: 1 bloco(s) arquivado(s) VERBATIM em `notas/fichas/RC-577.md` (migração 2.4 — 12/09/2026). Histórico de mutirão/governança — consultar lá, não reescrever.
 - ⚠️ **Quarentena epistemológica — citações da geração pré-Portão B (A5, U86, 14/09/2026):** o trecho entre aspas desta ficha **não** resiste à verificação byte a byte do Portão B — são transcrições editadas (elisões, colchetes, suavização de transcrição) ou paráfrases, não extractos conferidos. Deixa vestígio no corpus; a reextração fica diferida. As únicas citações verificadas da Base são as que trazem aparelho de linha (`— SIGLA · original.txt LNNNN`). Censo: `diagnostico/A5-CITACOES-PRE-PORTAO-B-2026-09-14.json`.
+### 2026-09-17 — variante STT devolvida por `2026-09-12-alienigenas-e-humanos-entre-nos` (fila 0046)
+- **"chamanismo"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 2; atestada 1× no bruto: "o que a gente entende como sendo chamanismo". PARCIAL: a grafia correta é xamanismo, mas o termo RC-577 (Xamanismo Cósmico) NÃO se aplica — o autor fala do xamanismo genérico como mecanismo histórico de comando.
+
+## Cautela editorial
+
+- **"chamanismo" nem sempre é Xamanismo Cósmico.** Quando o autor usa *xamanismo* no sentido
+  genérico — mecanismo histórico pelo qual os humanos passaram a ser comandados depois do
+  fechamento dos portais —, a substituição pelo termo desta ficha **não** se aplica: forçaria um
+  conceito onde ele não foi dito. Precedente: `2026-09-12-alienigenas-e-humanos-entre-nos` (Y2026-09-12), bloco 2, "o que a gente
+  entende como sendo chamanismo resultou desse processo"; adjudicada `aceita-parcial` no
+  livro-razão (fila 0046) e confirmada no despacho do Comandante de 17/09/2026: "mantendo a integridade doutrinária sem forçar
+  um conceito onde ele não foi aplicado". A variante gráfica fica registrada; a substituição
+  automática, condicionada ao contexto. Curadoria Agente 86.

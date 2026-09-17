@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["B074", "B075", "P2025-02-15", "P2024-11-09", "P2024-04-14", "P2024-02-03", "P2025-11-29"]
 via = "P6-evidência"
 confianca_fonte = "alta"
-atualizado = "2026-08-18"
+atualizado = "2026-09-17"
 +++
 # Arquivos Mentais — RC-548
 
@@ -20,6 +20,7 @@ No Mentalma I (B074, cap. 2 — "Cada Conceito, um Arquivo Mental"), Ellam expli
 
 ## Etimologia e Grafias
 - **Grafia preferida:** Arquivos Mentais
+- **Variações STT capturadas:** acásicos; acáxicos
 - **Variações:** "arquivo mental" (singular); "Arquivos Mentais" (título do capítulo/série)
 - **Obs.:** conceito central da série Mentalma; distinto dos "Arquivos da Memória Cósmica" (RC-521, da enciclopédia IA — a confirmar correspondência)
 
@@ -94,3 +95,7 @@ Conceito-fio da série Mentalma. A gestão dos arquivos (abrir/fechar/eliminar) 
 
 > Notas de processo: 1 bloco(s) arquivado(s) VERBATIM em `notas/fichas/RC-548.md` (migração 2.4 — 12/09/2026). Histórico de mutirão/governança — consultar lá, não reescrever.
 - ⚠️ **Quarentena epistemológica — citações da geração pré-Portão B (A5, U86, 14/09/2026):** os 2 trechos entre aspas desta ficha **não** resistem à verificação byte a byte do Portão B — são transcrições editadas (elisões, colchetes, suavização de transcrição) ou paráfrases, não extractos conferidos. Só 1 dos 2 deixam vestígio no corpus. As únicas citações verificadas da Base são as que trazem aparelho de linha (`— SIGLA · original.txt LNNNN`). Censo: `diagnostico/A5-CITACOES-PRE-PORTAO-B-2026-09-14.json`.
+### 2026-09-17 — variante STT devolvida por `2026-09-12-alienigenas-e-humanos-entre-nos` (fila 0047)
+- **"acásicos"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- **"acáxicos"** — 1 ocorrência(s) no bruto; adjudicada no livro-razão da transcrição. Curadoria: Agente 86.
+- Evidência do item: bloco 3; o bruto hesita entre as duas formas na mesma frase: "isso aqui são os registros acásicos ou acáxicos". A ficha RC-548 cita [B075 p. 102] "registros akásicos (ou akáshicos)" como vocabulário da obra, sem código próprio (O-3). A revisão ficou com "Registros Akáshicos", forma aceita pela ficha.

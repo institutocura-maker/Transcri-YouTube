@@ -65,7 +65,7 @@ vídeo https://www.youtube.com/watch?v=v0gJWn50gg8 (canal Jan Val Ellam, 19:24, 
   adjudicáveis**, 2 ausentes. Livro-razão com 29 linhas.
 - Blocos montados **por script**, sem redigitação: cada substituição assertada contra o texto do
   `.docx` (contador de ocorrências exato). 3 blocos por fronteira de assunto — 484 / 933 / 586
-  palavras, 25 parágrafos, 1.874 palavras de corpo, 5 `[NOTA]`, 3 rótulos `**[JAN VAL ELLAM]**`.
+  palavras, 25 parágrafos, 1.865 palavras de corpo, 5 `[NOTA]`, 3 rótulos `**[JAN VAL ELLAM]**`.
 - As três regressões do editor corrigidas aqui: `glues` → **gluons**, `pósetron` → **pósitron**,
   "hoje a parte" → "hoje **à tarde**". Mais ortografia/hífen: *dia a dia*, *abelha-rainha*,
   *preestabelecidas*. Disfluência LEVE: 1 falso início removido, 1 anáfora enfática preservada.
@@ -85,6 +85,34 @@ vídeo https://www.youtube.com/watch?v=v0gJWn50gg8 (canal Jan Val Ellam, 19:24, 
 - **Portões: G1–G8 `ok`, G9 `n/a`** (sem camada derivada — a revisão externa é humana, não derivado de
   máquina). Catálogo: `30-revisada`.
 
+## 2026-09-17 — fila adjudicada pelo Comandante: lote 03 aplicado, pacote fechado
+
+- Despacho de 17/09/2026 (`90-registro/despachos/2026-09-17-adjudicacao-da-fila.md`): os **10 itens**
+  da fila do vídeo 2 APROVADOS, mais `Jesus` na camada 3. Abertura do despacho valida a retratação do
+  §3 e a norma de nunca atestar variante por *fetch* de página.
+- Parte mecânica pelo **`rc_curadoria.py --aplicar`** (exige atestação no bruto antes de gravar):
+  `locas` e `louoca` → RC-077, `glu` → RC-034, `chamanismo` → RC-577, `acásicos`/`acáxicos` → RC-548.
+  RC-077 e RC-034 ganharam seção *Etimologia e Grafias* nova; a ferramenta mesma atualizou fila e
+  CHANGELOG.
+- Parte manual (o que a ferramenta não aplica): **Quarentena** `NUNCA "glues"` em RC-034 e
+  `NUNCA "pósetron"` em RC-636; **Cautela editorial** em RC-894 (`qualia` exige contexto: aqui é
+  corruptela de *colmeia*) e em RC-577 (`chamanismo` genérico não vira Xamanismo Cósmico — a ficha já
+  trazia a variante desde a pré-curadoria de P2022-12-17, então o risco era real, não hipotético).
+- **G3 passou de 6 para 8 formas proibidas** nesta pasta (25 → 27 no vídeo 1), 0 ocorrências: as duas
+  formas só aparecem dentro das `[NOTA]` que documentam a regressão, e o QA expurga marcadores.
+- **Defeito de instrumento achado no caminho:** a `[NOTA]` do *pósitron* cita a notação da ficha
+  RC-636, que tem colchete dentro («pósitrons [STT 'positelétron']»). `MARCADOR_RE`/`NOTA_RE` fechavam
+  no primeiro `]`: o rabo da nota voltava a ser corpo — sem itálico no `.docx`, contado como palavra
+  (1.874 em vez de **1.865**) e, pior, uma forma proibida citada depois do colchete interno daria
+  **falso positivo no G3, punindo o revisor por documentar**. Corrigido em `rc_docx.py` (um nível de
+  aninhamento), 4 verificações novas: **158 testes, 0 falhas**. Produto regenerado, contagem corrigida
+  em metadados, catálogo, CHANGELOG e nos documentos da pasta.
+- `Jesus` → Jesus de Nazaré em `ferramentas/dados/externos.csv` como semente de proteção (38
+  entidades). Fila: 51 itens, 36 aplicados, 14 pendentes (todas do vídeo 1), **zero pendência do
+  vídeo 2**. Relatório: `KB-RC/_relatorio-curadoria-lote-03.md`.
+- Radar (pedido pelo Comandante, não é encargo fechado): **varredura de formas quase-canônicas**.
+  Enquanto não existir, a defesa é reativa — Quarentena ficha a ficha, só barra o que já foi visto.
+
 ---
 
 ## Becos sem saída — não repetir
@@ -99,3 +127,7 @@ vídeo https://www.youtube.com/watch?v=v0gJWn50gg8 (canal Jan Val Ellam, 19:24, 
 | Deixar o revisor decidir "a parte" por "à tarde" sem conferir | Troca de uma palavra mudou o sentido da frase de abertura. O bruto atesta "à tarde". Divergência de palavra comum também se confere, não só termo da KB |
 | Propor variante de `qualia` → RC-894 automaticamente | Nesta transcrição `qualia` é corruptela de **colmeia** (RC-174). Falso amigo: a varredura casa a forma, o sentido não |
 | `ask_user` com quatro perguntas quando o Comandante já respondeu por mensagem | O despacho veio por extenso no chat (esteira normal, bruto entregue, nomeação justificada). Perguntar de novo seria pedir o que já foi dito |
+| Citar notação da KB com colchete dentro de uma `[NOTA]` antes de 17/09/2026 | `MARCADOR_RE`/`NOTA_RE` fechavam no primeiro `]`: o rabo da nota virava corpo (sem itálico, contando palavra, e exposto a falso positivo do G3). Corrigido para tolerar um nível de aninhamento — mas conferir o render de qualquer nota que cite `[STT …]` |
+| Editar arquivo por script que reescreve o conteúdo inteiro, sem conferir o tamanho depois | Uma linha perdida no meio do script reatribuiu a variável do conteúdo e gravou o relatório de curadoria **vazio** (0 byte). Regra prática: comparar `len(antes)` × `len(depois)` e conferir `wc -c` dos arquivos escritos em lote |
+| Confiar que `rc_qa.ler_metadados` lê listas aninhadas | Não lê: `revisao.despachos` volta vazio e `falantes` volta só com o último item (nas duas transcrições). Nenhum portão depende disso hoje; campo que o QA precisa ler vai em linha única |
+| Escrever linha de CSV com `','.join(campos)` | Campo com vírgula não aspasada (`(vídeo 2, bloco 1)`) quebrou a linha em 8 campos numa tabela de 7 — o `rc_diagnostico` leria um Externos corrompido. Usar sempre `csv.writer` |

@@ -23,7 +23,7 @@ Formato de cada entrada:
   audiovisual do padrão Y (Guia v2 §2.5). Bruto oficial entregue pelo Comandante em 16/09/2026
   (1.810 palavras de corpo, ASR sem pontuação); matéria dos blocos foi a **revisão externa** dele,
   feita em aplicativo especialista — divergência lexical de 8,12% contra o bruto, lida como correção e
-  não como perda. Revisada em 3 blocos, 1.874 palavras, 29 linhas de livro-razão, 5 `[NOTA]`, portões
+  não como perda. Revisada em 3 blocos, 1.865 palavras, 29 linhas de livro-razão, 5 `[NOTA]`, portões
   G1–G8 `ok` e G9 `n/a` (não há derivado de máquina). Trecho da palestra "A Dramática Fusão dos
   Universos de Hyren e Hyron" (B085). Mídia não arquivada (Plano §7). — origem:
   `transcricoes/2026-09-12-alienigenas-e-humanos-entre-nos` · fila id 0042 · aplicado pelo Agente 86
@@ -115,3 +115,37 @@ Fonte registrada: **Y2026-09-14** em `biblio.json`. `canonico.json` foi de 946 p
 - RC-954 **Planeta de Expiação e Provas** (Lokas & Geografias / 3.3 Localidades terrestres; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0008 da fila
 - RC-955 **Javé 2.0** (Seres & Entidades / 1.1 Divindades / Criadores; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0009 da fila
 - RC-956 **Força da Consciência Dignificada** (Conceitos Cosmológicos / 2.6 Ética / Carma / Compromissos; status provisório) — origem: 2026-09-14-revelacoes-cosmicas-urgente, item 0010 da fila
+
+## 2026-09-17 — lote 01: variantes STT devolvidas por `2026-09-12-alienigenas-e-humanos-entre-nos`
+
+Curadoria: Agente 86. Ferramenta: `ferramentas/rc_curadoria.py` (atestação no bruto antes de gravar).
+
+- RC-077 acrescentadas "locas" — origem: 2026-09-12-alienigenas-e-humanos-entre-nos, item 0043 da fila (2 ocorrências no bruto)
+- RC-077 acrescentadas "louoca" — origem: 2026-09-12-alienigenas-e-humanos-entre-nos, item 0044 da fila (1 ocorrência no bruto)
+- RC-034 acrescentadas "glu" — origem: 2026-09-12-alienigenas-e-humanos-entre-nos, item 0045 da fila (1 ocorrência no bruto)
+- RC-577 acrescentadas "chamanismo" — origem: 2026-09-12-alienigenas-e-humanos-entre-nos, item 0046 da fila (1 ocorrência no bruto)
+- RC-548 acrescentadas "acásicos", "acáxicos" — origem: 2026-09-12-alienigenas-e-humanos-entre-nos, item 0047 da fila (2 ocorrências no bruto)
+
+## 2026-09-17 — lote 03 (vídeo 2): Quarentena de quase-canônicas, cautelas e camada 3
+
+Curadoria: Agente 86, por **despacho do Comandante de 17/09/2026** (adjudicação da fila do vídeo 2:
+10 de 10 itens aprovados). A parte mecânica do lote — as 5 variantes STT — está na entrada anterior,
+gravada pelo `rc_curadoria.py`; o que segue é a parte que a ferramenta não aplica sozinha.
+Relatório: `_relatorio-curadoria-lote-03.md`.
+
+- RC-034 **Quarentena Terminológica criada**: NUNCA "glues" — forma quase-canônica produzida por
+  corretor ortográfico de editor sobre o bruto "quarks e glu"; canônico *gluons* — origem:
+  2026-09-12-alienigenas-e-humanos-entre-nos, item 0049 da fila
+- RC-636 **Quarentena Terminológica criada**: NUNCA "pósetron" — o bruto oficial já dizia
+  *pósitron*; a regressão é inteira do editor — origem: item 0050 da fila
+- RC-894 **Cautela editorial criada**: "qualia" exige validação de contexto — no vídeo 2 é corruptela
+  de *colmeia* (RC-174), não Qualia — origem: item 0048 da fila
+- RC-577 **Cautela editorial criada**: "chamanismo" nem sempre é Xamanismo Cósmico; no sentido
+  genérico a substituição não se aplica (aceita-parcial confirmada pelo Comandante) — origem: item
+  0046 da fila
+- **Camada 3 (Externos):** `Jesus` → Jesus de Nazaré, semente de proteção — origem:
+  `40-devolucao/externos-novos.csv` do vídeo 2, aprovado no mesmo despacho
+- **Decisão de data (nada a gravar):** Y2026-09-12 fica com `data_publicacao` 2026-09-12, a da
+  plataforma; o cabeçalho do bruto traz 13/09/2026 e o do `.docx` revisado, 12/09/2026 — item 0051
+- Efeito nos portões: G3 desta pasta passou de 6 para **8 formas proibidas varridas**; o das demais
+  transcrições, de 25 para 27. Nenhuma ocorrência nos textos revisados.

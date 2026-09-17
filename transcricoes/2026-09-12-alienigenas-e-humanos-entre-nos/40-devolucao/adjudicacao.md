@@ -23,6 +23,13 @@ dois: **8,12%** (`docs/pareceres/video-2-medicao-oficial.md`).
 Nenhuma linha `superada`. Nenhuma linha ficou em `proposta`: o portão G4 não fecha com decisão em
 aberto, e desta vez a matéria já vinha revisada — sobrou para a casa conferir, não corrigir em massa.
 
+**Confirmado pelo Comandante em despacho de 17/09/2026** (`90-registro/despachos/2026-09-17-adjudicacao-da-fila.md`):
+as cinco variantes STT propostas a partir destas decisões foram gravadas nas fichas, a aceitação
+parcial de `chamanismo` foi explicitamente endossada ("mantendo a integridade doutrinária sem forçar
+um conceito onde ele não foi aplicado"), e as duas Quarentenas pedidas como "defesa crítica" estão
+valendo — o G3 desta pasta passou de 6 para 8 formas proibidas varridas. Execução:
+`KB-RC/_relatorio-curadoria-lote-03.md`.
+
 ---
 
 ## 2. Correções aplicadas nos blocos

@@ -8,7 +8,7 @@ status = "verificado"
 fontes = ["P2024-05-04", "P2025-03-15", "P2024-11-09", "P2022-12-03", "P2022-10-01", "P2022-09-18", "P2022-07-16", "P2021-02-28", "P2021-06-26"]
 via = "P6-evidência"
 confianca_fonte = "média"
-atualizado = "2026-08-14"
+atualizado = "2026-09-17"
 +++
 # Duas Pulsações da Criação (elétrons e antielétrons) — RC-636
 
@@ -111,3 +111,12 @@ Status candidato por depender de palestra e alegações ainda não cruzadas inte
 
 > Notas de processo: 1 bloco(s) arquivado(s) VERBATIM em `notas/fichas/RC-636.md` (migração 2.4 — 12/09/2026). Histórico de mutirão/governança — consultar lá, não reescrever.
 - ⚠️ **Quarentena epistemológica — citações da geração pré-Portão B (A5, U86, 14/09/2026):** o trecho entre aspas desta ficha **não** resiste à verificação byte a byte do Portão B — são transcrições editadas (elisões, colchetes, suavização de transcrição) ou paráfrases, não extractos conferidos. Não deixa vestígio no corpus ingerido. As únicas citações verificadas da Base são as que trazem aparelho de linha (`— SIGLA · original.txt LNNNN`). Censo: `diagnostico/A5-CITACOES-PRE-PORTAO-B-2026-09-14.json`.
+
+## Quarentena Terminológica
+
+- **pósitron** ("o jogo de pósitrons [STT 'positelétron']", P2024-11-09) — NUNCA "pósetron".
+  Aqui o bruto oficial estava **certo** ("nenhum pósitron daqui"): a regressão é inteira do corretor
+  ortográfico do editor, que trocou um termo técnico por forma quase-canônica acentuada de outro
+  jeito. Escapava de G3, G5 e G6 pelo mesmo motivo de "glues" (RC-034). Atestada em
+  `2026-09-12-alienigenas-e-humanos-entre-nos` (Y2026-09-12), bloco 3. Ver também RC-161 (Memória Quântica dos Elétrons).
+  Fila 0050, aprovada no despacho do Comandante de 17/09/2026; curadoria Agente 86.
